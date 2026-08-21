@@ -1,0 +1,6 @@
+AGENTS.md
+docs/
+references/
+node_modules/
+dist/
+.DS_store
