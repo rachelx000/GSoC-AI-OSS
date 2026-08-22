@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import AiOrientationSection from './components/AiOrientationSection';
+import ChallengesSection from './components/ChallengesSection';
 import DemographicsSection from './components/DemographicsSection';
 
 const TABS = ['Intro', 'Challenges', 'Strategies', 'Qualities', 'Enduring Values'];
@@ -206,7 +207,11 @@ export default function App() {
           })}
         </nav>
       </header>
-      <div id="main-content">{activeTab === 'Intro' ? <Intro /> : <Placeholder tab={activeTab} />}</div>
+      <div id="main-content">
+        {activeTab === 'Intro' && <Intro />}
+        {activeTab === 'Challenges' && <ChallengesSection />}
+        {!['Intro', 'Challenges'].includes(activeTab) && <Placeholder tab={activeTab} />}
+      </div>
     </>
   );
 }
