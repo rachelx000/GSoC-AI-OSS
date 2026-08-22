@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import AiOrientationSection from './components/AiOrientationSection';
 import ChallengesSection from './components/ChallengesSection';
 import DemographicsSection from './components/DemographicsSection';
+import StrategiesSection from './components/StrategiesSection';
 
 const TABS = ['Intro', 'Challenges', 'Strategies', 'Qualities', 'Enduring Values'];
 const INTRO_SLIDES = [
@@ -210,7 +211,8 @@ export default function App() {
       <div id="main-content">
         {activeTab === 'Intro' && <Intro />}
         {activeTab === 'Challenges' && <ChallengesSection />}
-        {!['Intro', 'Challenges'].includes(activeTab) && <Placeholder tab={activeTab} />}
+        {activeTab === 'Strategies' && <StrategiesSection />}
+        {!['Intro', 'Challenges', 'Strategies'].includes(activeTab) && <Placeholder tab={activeTab} />}
       </div>
     </>
   );
