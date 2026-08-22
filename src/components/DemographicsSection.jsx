@@ -53,21 +53,21 @@ export default function DemographicsSection() {
         <div className="chart-grid chart-grid-three interview-charts">
           <DistributionChart
             title="GSoC role"
-            description="Role in the sampled GSoC cycle."
+            description="Role in the GSoC 2026 cycle"
             data={distributions.roles}
             color="#99c1de"
             compact
           />
           <DistributionChart
-            title="OSS mentoring tenure"
-            description="Grouped mentoring experience."
+            title="Mentoring tenure"
+            description="Grouped mentoring experienc in OSS"
             data={distributions.tenure}
             color="#9fcac7"
             compact
           />
           <DistributionChart
             title="Organization size"
-            description="Normalized organization context."
+            description="Normalized organization scales"
             data={distributions.orgSize}
             color="#e6c8b8"
             compact
