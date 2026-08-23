@@ -183,7 +183,6 @@ export default function App() {
           aria-label="GSoC AI-to-OSS home"
           onClick={() => setActiveTab('Intro')}
         >
-          <span className="brand-mark" aria-hidden="true">G</span>
           <span>GSoC AI-to-OSS</span>
         </a>
         <nav className="tabs" aria-label="Dashboard sections" role="tablist">
