@@ -113,8 +113,8 @@ export const pipelineStages = [
     literatureTheme: 'Selection signals under information asymmetry',
     primaryReferences: ['spence1973', 'dabbish2012'],
     additionalReferences: ['silva2020'],
-    literatureSupport:
-      'Selection under limited information is a signaling problem (Spence, 1973); visible repository activity supports social inference in OSS (Dabbish et al., 2012), within GSoC’s proposal-based selection structure (Silva et al., 2020).',
+    literatureSupport: 
+      "Selection under limited information is a signaling problem (Spence, 1973); visible repository activity supports social inference in OSS (Dabbish et al., 2012), within GSoC's proposal-based selection structure (Silva et al., 2020).",
   },
   {
     id: 'S3',
@@ -254,7 +254,7 @@ export const challenges = [
     category: 'B4',
     name: 'Application fraud & abuse',
     definition:
-      'AI enables outright deception—fabricated capability, concealed employment, and plagiarized proposals—including applicants who cannot perform basic tasks.',
+      'AI enables outright deception, such as fabricated capabilities, concealed employment, and plagiarized proposals, including applicants who cannot perform basic tasks.',
     participantCount: 3,
     openCodeCount: 4,
     openCodes: [
@@ -269,7 +269,7 @@ export const challenges = [
     category: 'B3',
     name: 'The mentored learning loop goes quiet',
     definition:
-      'Mentees stop asking questions and cannot explain their own work, removing the feedback loop through which mentors gauge and grow a mentee’s understanding.',
+      "Mentees stop asking questions and cannot explain their own work, removing the feedback loop through which mentors gauge and grow a mentee's understanding.",
     participantCount: 3,
     openCodeCount: 4,
     openCodes: [
@@ -299,7 +299,7 @@ export const challenges = [
     category: 'B3',
     name: 'Loss of productive struggle / spirit of the program',
     definition:
-      'AI removes the friction that produced learning; doing the majority of the work with AI defeats the mentoring program’s developmental purpose.',
+      "AI removes the friction that produced learning; doing the majority of the work with AI defeats the mentoring program's developmental purpose.",
     participantCount: 2,
     openCodeCount: 3,
     openCodes: [
@@ -344,12 +344,12 @@ export const challenges = [
     category: 'B4',
     name: 'Trust erosion & authenticity-verification limits',
     definition:
-      'Polished artifacts no longer reliably demonstrate the author’s understanding, weakening trust and raising stress. AI detection is unreliable, heuristic, and potentially biased, so verification becomes costly.',
+      "Polished artifacts no longer reliably demonstrate the author's understanding, weakening trust and raising stress. AI detection is unreliable, heuristic, and potentially biased, so verification becomes costly.",
     participantCount: 9,
     openCodeCount: 14,
     openCodes: [
       ['Competent AI use is invisible', 'P3 · 27:36–28:17'],
-      ['AI PRs weaken maintainers’ trust and cause stress', 'P4 · 09:14–10:11'],
+      ["AI PRs weaken maintainers' trust and cause stress", 'P4 · 09:14–10:11'],
       ['Authenticity discrimination cost', 'P5 · 22:38–23:01'],
     ],
   },
@@ -420,7 +420,7 @@ export const challenges = [
     openCodeCount: 2,
     openCodes: [
       ['AI raises learning and retention doubts', 'P13 · 29:03–29:50'],
-      ['Investment–attachment–retention worry', 'P13 · 29:51–30:27'],
+      ['Investment-attachment-retention worry', 'P13 · 29:51–30:27'],
     ],
   },
   {
@@ -429,7 +429,7 @@ export const challenges = [
     category: 'B5',
     name: 'Licensing & intellectual-property contamination',
     definition:
-      'AI-generated code carries unclear provenance and license risk, including copyleft code entering permissive projects or output with uncertain copyright status—a recurring rationale for restrictions and bans.',
+      'AI-generated code carries unclear provenance and license risk, including copyleft code entering permissive projects or output with uncertain copyright status - a recurring rationale for restrictions and bans.',
     participantCount: 4,
     openCodeCount: 7,
     openCodes: [
@@ -473,7 +473,7 @@ export const challenges = [
     category: 'B2',
     name: 'Cross-stage verification burden, fatigue & withdrawal',
     definition:
-      'AI-amplified volume and uncertain authorship spread verification burden from screening through contribution review, eroding mentor enjoyment, patience, willingness to invest, and—in extreme cases—organizational participation in GSoC.',
+      'AI-amplified volume and uncertain authorship spread verification burden from screening through contribution review, eroding mentor enjoyment, patience, willingness to invest, and in extreme cases, organizational participation in GSoC.',
     participantCount: 11,
     openCodeCount: 16,
     openCodes: [

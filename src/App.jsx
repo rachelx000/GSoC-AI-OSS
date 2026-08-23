@@ -96,7 +96,7 @@ function Intro() {
                 <div className="coding-step">
                   <span>01</span>
                   <strong>15 interviews</strong>
-                  <p>Semi-structured conversations with sampled GSoC mentors and administrators</p>
+                  <p>Semi-structured conversations with 15 sampled GSoC mentors and organization administrators</p>
                 </div>
                 <div className="coding-step">
                   <span>02</span>
@@ -111,7 +111,7 @@ function Intro() {
                 <div className="coding-step">
                   <span>04</span>
                   <strong>Interactive synthesis</strong>
-                  <p>The dashboard turns the preliminary code structure into interactive traceable views</p>
+                  <p>The dashboard turns the code structure into interactive, traceable views</p>
                 </div>
               </div>
             </div>

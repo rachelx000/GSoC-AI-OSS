@@ -41,7 +41,7 @@ export const stanceCodes = [
   {
     name: 'AI Prohibitionist',
     definition:
-      'Explicitly bans all or nearly all AI use in contributions and/or proposals, treats any AI use as grounds for rejection.',
+      'Explicitly bans all or nearly all AI use in contributions and/or proposals, and treats any AI use as grounds for rejection.',
   },
   {
     name: 'AI Skeptic',
@@ -61,6 +61,6 @@ export const stanceCodes = [
   {
     name: 'AI Advocate',
     definition:
-      'Actively welcomes AI use as a legitimate part of modern software development; frames AI restriction as unrealistic or regressive.',
+      'Actively welcomes AI use as a legitimate part of modern software development; frames AI restrictions as unrealistic or regressive.',
   },
 ];

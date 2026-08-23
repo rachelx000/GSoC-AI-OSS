@@ -2,7 +2,14 @@ import { useEffect, useId, useRef } from 'react';
 import { axisBottom, axisLeft, max, scaleBand, scaleLinear, select } from 'd3';
 import { wrapLabels } from '../Utils';
 
-export default function DistributionChart({ title, description, data, color, compact = false }) {
+export default function DistributionChart({
+  title,
+  description,
+  data,
+  color,
+  compact = false,
+  infoNote = null,
+}) {
   const containerRef = useRef(null);
   const chartId = useId().replaceAll(':', '');
 
@@ -95,9 +102,32 @@ export default function DistributionChart({ title, description, data, color, com
   const accessibleSummary = data.map((item) => `${item.label}: ${item.count}`).join('; ');
 
   return (
-    <article className={`chart-card${compact ? ' chart-card-compact' : ''}`}>
+    <article className={`chart-card${compact ? ' chart-card-compact' : ''}${infoNote ? ' chart-card-has-info' : ''}`}>
       <div className="chart-heading">
-        <h3 id={`${chartId}-title`}>{title}</h3>
+        <div className="chart-title-row">
+          <h3 id={`${chartId}-title`}>{title}</h3>
+          {infoNote && (
+            <span className="chart-info">
+              <button
+                type="button"
+                aria-label={`Explain ${title} categories`}
+                aria-describedby={`${chartId}-info`}
+              >
+                i
+              </button>
+              <span id={`${chartId}-info`} className="chart-info-tooltip" role="tooltip">
+                <strong>Category definitions</strong>
+                <span className="chart-info-list">
+                  {infoNote.map((item) => (
+                    <span key={item.label}>
+                      <b>{item.label}:</b> {item.definition}
+                    </span>
+                  ))}
+                </span>
+              </span>
+            </span>
+          )}
+        </div>
         <p>{description}</p>
       </div>
       <div ref={containerRef} className="chart-shell">

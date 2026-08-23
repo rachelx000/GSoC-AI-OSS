@@ -264,7 +264,7 @@ export default function StrategiesSection() {
             <h1>Strategies for GSoC mentoring in the AI-era</h1>
             <p>
               Bars show how many of 15 interviewees contributed evidence to each strategy. 
-              Expanded rows to inspect the strategy's definition & example codes.
+              Expand rows to inspect the strategy's definition & example codes.
             </p>
           </div>
         </header>

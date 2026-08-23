@@ -69,7 +69,7 @@ export default function AiUseStanceHeatmap({ participants, description, onStance
         .attr('x', heatLeft + heatWidth / 2)
         .attr('y', 30)
         .attr('text-anchor', 'middle')
-        .text('AI stance frequency');
+        .text('AI stance distribution');
 
       svg
         .append('g')
@@ -113,7 +113,7 @@ export default function AiUseStanceHeatmap({ participants, description, onStance
         .attr('class', 'orientation-axis-title orientation-axis-title-left')
         .attr('transform', `translate(-10,${heatTop + heatHeight / 2}) rotate(-90)`)
         .attr('text-anchor', 'middle')
-        .text('OSS AI use frequency');
+        .text('OSS AI use distribution');
 
       svg
         .append('g')
@@ -214,9 +214,9 @@ export default function AiUseStanceHeatmap({ participants, description, onStance
       <figcaption className="orientation-figure-heading">
         <div className="orientation-figure-copy">
           <p className="orientation-figure-description">{description}</p>
-          <h3 id={`${titleId}-title`}>OSS AI use × analyst-coded stance</h3>
+          <h3 id={`${titleId}-title`}>OSS AI Use × AI Stance</h3>
           <p className="orientation-figure-guide">
-            Top: stance counts · Left: use-frequency counts · Center: cross-tabulated interviews
+            Top: stance counts | Left: use-frequency counts | Center: cross-tabulated interviews
           </p>
         </div>
         <div className="heatmap-legend" aria-hidden="true">

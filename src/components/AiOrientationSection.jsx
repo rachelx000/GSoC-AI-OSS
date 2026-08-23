@@ -23,7 +23,7 @@ export default function AiOrientationSection() {
           <div className="orientation-sidebar">
             <header className="orientation-heading">
               <span className="section-kicker">03 · AI orientation</span>
-              <h2 id="orientation-title">Use frequency and stance are distinct dimensions</h2>
+              <h2 id="orientation-title">AI use frequency and stance are distinct dimensions</h2>
             </header>
 
             <aside className="stance-codebook" aria-labelledby="stance-codebook-title">
@@ -70,7 +70,7 @@ export default function AiOrientationSection() {
 
           <AiUseStanceHeatmap
             participants={participants}
-            description="OSS AI-use frequency is self-reported, and stance is a preliminary analyst-coded orientation. Please select a heatmap cell or code to inspect the codebook definition."
+            description="OSS AI use frequency is self-reported, and AI stance is analyst-coded. Please select a heatmap cell or code to inspect the codebook definition for AI stance."
             onStanceSelect={selectStance}
           />
         </div>
