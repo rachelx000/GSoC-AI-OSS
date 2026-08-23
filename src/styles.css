@@ -3652,6 +3652,7 @@ a {
 .strategy-dimension-tag {
   display: inline-flex;
   max-width: 20rem;
+  text-align: center;
   padding: 0.16rem 0.38rem;
   overflow: hidden;
   border-radius: 999px;
@@ -3660,8 +3661,8 @@ a {
   font-size: 0.60rem;
   font-weight: 750;
   line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .strategies-page .strategy-coverage-track {
