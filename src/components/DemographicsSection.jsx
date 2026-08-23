@@ -8,6 +8,13 @@ import {
   tenureOrder,
 } from '../data/demographics';
 
+const ORGANIZATION_SIZE_NOTE = [
+  { label: 'Small', definition: 'fewer than 10 regular contributors' },
+  { label: 'Medium', definition: '10–50 regular contributors' },
+  { label: 'Large', definition: '51–200 regular contributors' },
+  { label: 'Very Large', definition: 'more than 200 regular contributors' },
+];
+
 function summarize(field, order) {
   const counts = rollup(participants, (group) => group.length, (participant) => participant[field]);
   return order.map((label) => ({ label, count: counts.get(label) ?? 0 }));
@@ -38,7 +45,7 @@ export default function DemographicsSection() {
           <p>
             From 132 GSoC mentors and organization administrators who completed a pre-survey, we
             purposively selected 15 interviewees to maximize variation in role, mentoring tenure,
-            organization context, and AI orientation. The sampling targets for analytical breadth, not statistical
+            organization size, and AI stance. The sampling targets analytical breadth, not statistical
             representativeness.
           </p>
         </header>
@@ -53,14 +60,14 @@ export default function DemographicsSection() {
         <div className="chart-grid chart-grid-three interview-charts">
           <DistributionChart
             title="GSoC role"
-            description="Role in the GSoC 2026 cycle"
+            description="Role in the GSoC 2026"
             data={distributions.roles}
             color="#99c1de"
             compact
           />
           <DistributionChart
             title="Mentoring tenure"
-            description="Grouped mentoring experienc in OSS"
+            description="Mentoring experience in OSS"
             data={distributions.tenure}
             color="#9fcac7"
             compact
@@ -70,6 +77,7 @@ export default function DemographicsSection() {
             description="Normalized organization scales"
             data={distributions.orgSize}
             color="#e6c8b8"
+            infoNote={ORGANIZATION_SIZE_NOTE}
             compact
           />
         </div>
@@ -78,7 +86,7 @@ export default function DemographicsSection() {
           <span aria-hidden="true">!</span>
           <p>
             <strong id="limitation-title">Gender representation is highly uneven:</strong>{' '}
-            The interview sample consists of 14 male and 1 non-binary participants; women and
+            The interview sample consists of 14 male and 1 non-binary participants. Women and
             other gender groups are underrepresented.
           </p>
         </aside>

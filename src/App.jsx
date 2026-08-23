@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import AiOrientationSection from './components/AiOrientationSection';
 import ChallengesSection from './components/ChallengesSection';
 import DemographicsSection from './components/DemographicsSection';
+import OutcomesSection from './components/OutcomesSection';
+import QualitiesSection from './components/QualitiesSection';
 import StrategiesSection from './components/StrategiesSection';
 
-const TABS = ['Intro', 'Challenges', 'Strategies', 'Qualities', 'Enduring Values'];
+const TABS = ['Intro', 'Challenges', 'Strategies', 'Qualities', 'Outcomes'];
 const INTRO_SLIDES = [
   { id: 'intro-research-status', label: 'Research Status' },
   { id: 'intro-who', label: 'Who We Interviewed' },
@@ -96,7 +98,7 @@ function Intro() {
                 <div className="coding-step">
                   <span>01</span>
                   <strong>15 interviews</strong>
-                  <p>Semi-structured conversations with sampled GSoC mentors and administrators</p>
+                  <p>Semi-structured conversations with 15 sampled GSoC mentors and organization administrators</p>
                 </div>
                 <div className="coding-step">
                   <span>02</span>
@@ -111,7 +113,7 @@ function Intro() {
                 <div className="coding-step">
                   <span>04</span>
                   <strong>Interactive synthesis</strong>
-                  <p>The dashboard turns the preliminary code structure into interactive traceable views</p>
+                  <p>The dashboard turns the code structure into interactive, traceable views</p>
                 </div>
               </div>
             </div>
@@ -212,7 +214,9 @@ export default function App() {
         {activeTab === 'Intro' && <Intro />}
         {activeTab === 'Challenges' && <ChallengesSection />}
         {activeTab === 'Strategies' && <StrategiesSection />}
-        {!['Intro', 'Challenges', 'Strategies'].includes(activeTab) && <Placeholder tab={activeTab} />}
+        {activeTab === 'Qualities' && <QualitiesSection />}
+        {activeTab === 'Outcomes' && <OutcomesSection />}
+        {!['Intro', 'Challenges', 'Strategies', 'Qualities', 'Outcomes'].includes(activeTab) && <Placeholder tab={activeTab} />}
       </div>
     </>
   );

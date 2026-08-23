@@ -170,7 +170,7 @@ export default function MentoringLifecycle({
             <span className="section-kicker">Literature pipeline × empirical challenges</span>
             <h2>GSoC mentoring as a regenerative lifecycle</h2>
             <p>
-              Select a broad phase, a specific stage, or cross-stage Governance to inspect the pipeline evidence & associated challenge(s).
+              Click a broad phase (inner-cycle), stage (outer-cycle), or cross-stage Governance to view relevant definitions, evidence, and challenges.
             </p>
           </div>
         </figcaption>

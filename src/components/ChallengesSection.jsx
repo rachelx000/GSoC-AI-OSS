@@ -181,7 +181,7 @@ export default function ChallengesSection() {
                 hidden={detailTab !== 'definition'}
               >
                 <section className="pipeline-stage-definition">
-                  <span className="evidence-provenance">Pipeline definition</span>
+                  <span className="evidence-provenance">Stage definition</span>
                   <p>{stage.pipelineDefinition}</p>
                 </section>
                 <LiteratureEvidence stage={stage} />

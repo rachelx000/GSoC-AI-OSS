@@ -7,18 +7,18 @@ export const strategyDimensions = [
       {
         id: 'ST-S2.1',
         name: 'Longitudinal engagement-based selection',
-        definition: `Select contributors based on months of verifiable work (merged PRs & demonstrated skills), participation, and interaction — not just polished proposals ("judge before they apply")`,
+        definition: `Select contributors based on months of verifiable work (merged PRs & demonstrated skills), participation, and interaction but not just polished proposals.`,
         respondentCount: 8,
         representativeCodes: [
           {
             code: 'Skill-evidence requirement (merged PRs per skill)',
             source: 'P1 · 18:06–18:33, 21:37–22:17',
-            quote: `Proposal must list >=2 merged PRs per required skill with links; missing = "automatically out."`,
+            quote: `Proposal must list >=2 merged PRs per required skill with links; missing = "automatically out".`,
           },
           {
             code: 'Proposal-template compliance filter',
             source: 'P1 · 19:03–19:09, 20:52–21:14',
-            quote: `AI-generated proposals not in the org's required template "were automatically rejected" — 200 proposals filtered in ~1 hour.`,
+            quote: `AI-generated proposals not in the organization's required template "were automatically rejected" - 200 proposals filtered in ~1 hour.`,
           },
           {
             code: 'Internal-team membership prerequisite',
@@ -41,10 +41,10 @@ export const strategyDimensions = [
           {
             code: 'Live-coding video interviews',
             source: 'P3 · 24:05–24:47',
-            quote: `Don't go by applications — video interviews with screen sharing, scenario-based questions, "make them write the code in front of us in the editor."`,
+            quote: `Don't go by applications - video interviews with screen sharing, scenario-based questions, "make them write the code in front of us in the editor."`,
           },
           {
-            code: 'Progessive selection II: interview',
+            code: 'Progressive selection II: interview',
             source: 'P5 · 14:05–14:50',
             quote: `"If we think that the micro task is good, then we give you an interview... [asking] how did you solve the problem [and] how much familiarity with the code base."`,
           },
@@ -53,23 +53,23 @@ export const strategyDimensions = [
       {
         id: 'ST-S2.3',
         name: 'Project-specific, AI-resistant selection tasks',
-        definition: `Redesign selection / entry tasks that require understanding of the project's own processes so a prompt cannot trivially solve them — stagger and deepen good-first-issues, curate them, or use deep-end tasks with close mentoring.`,
+        definition: `Redesign selection/entry tasks that require understanding of the project's own processes so a prompt cannot trivially solve them.`,
         respondentCount: 7,
         representativeCodes: [
           {
             code: 'Curated tasks resist AI',
             source: 'P3 · 25:51–27:07',
-            quote: `Curated good-first-issues; even if AI is used it's "to generate a part of the logic, not the entire logic"; no redesign needed — needs a human touch to judge.`,
+            quote: `Curated good-first-issues; even if AI is used it's "to generate a part of the logic, not the entire logic"; no redesign needed - needs a human touch to judge.`,
           },
           {
-            code: 'Progessive selection I: proposal + microtasks',
+            code: 'Progressive selection I: proposal + microtasks',
             source: 'P5 · 12:54–14:05',
             quote: `Newcomers have to post their proposal and complete micro tasks, "so that we can verify that they actually know our project."`,
           },
           {
             code: 'Deep-end pedagogy over good-first-issues',
             source: 'P7 · 38:00–39:39',
-            quote: `Abandoned good first issues: "They will drown at first for sure... we want people to experience difficulty" — with intensive mentor support.`,
+            quote: `Abandoned good first issues: "They will drown at first for sure... we want people to experience difficulty" with intensive mentor support.`,
           },
         ],
       },
@@ -83,7 +83,7 @@ export const strategyDimensions = [
       {
         id: 'ST-S5.2',
         name: 'Heuristics for triage, not verdict',
-        definition: '[Detection heuristics as routing (never verdicts)]\nUse folk-forensic cues (oversized PRs, comment bloat, style mismatch, wrong summaries, cutoff-date idioms) or code-similarity / provenance checks to route attention and licensing review — never to auto-reject. Several mentors doubt AI-detecting-AI.',
+        definition: 'Use folk-forensic cues (oversized PRs, comment bloat, style mismatch, wrong summaries, cutoff-date idioms) or code-similarity and provenance checks to guide scrutiny and licensing review, never automatic rejection. Several mentors doubt AI-detecting-AI.',
         respondentCount: 4,
         representativeCodes: [
           {
@@ -106,7 +106,7 @@ export const strategyDimensions = [
       {
         id: 'ST-S5.3',
         name: 'Explanation test at review',
-        definition: `[Detection by dialogue]\nIn review, ask 'why did you do it this way?'; inability to explain — not AI use — is the disqualifier. For example, Before issue assignment, require the contributor to reproduce the issue locally and submit a short video of the working local fix.`,
+        definition: `Require contributors to explain, reproduce, or validate their work. A lack of demonstrated understanding, whether or not AI is used, is disqualifying.`,
         respondentCount: 5,
         representativeCodes: [
           {
@@ -122,14 +122,14 @@ export const strategyDimensions = [
           {
             code: 'Detection by dialogue + non-accusatory inquiry promotes learning',
             source: 'P8 · 32:20–34:49',
-            quote: `"I'll ask.. why did you choose to do it this way If they can't answer that, then... [it is] a sign... [bloated code and extensive comments raise suspicions]... But I don't accuse them immediately... it's through a discussion... 'How did you check it?'... that's when you can have a learning relationship."`,
+            quote: `"I'll ask, 'Why did you choose to do it this way?' If they can't answer that, then ... [it is] a sign ... [Bloated code and extensive comments raise suspicions]. But I don't accuse them immediately. It's through a discussion: 'How did you check it?' That's when you can have a learning relationship."`,
           },
         ],
       },
       {
         id: 'ST-S5.6',
         name: 'Human-led verification',
-        definition: '[Human final review / refuse to outsource verification to AI]\nKeep the final acceptance judgment human; mentors read and understand the code themselves and refuse to trust AI to validate contributions.',
+        definition: 'Keep the final acceptance judgment human; mentors read and understand the code themselves and refuse to trust AI to validate contributions.',
         respondentCount: 4,
         representativeCodes: [
           {
@@ -140,7 +140,7 @@ export const strategyDimensions = [
           {
             code: 'Human validation of code logic due to limited trust in AI',
             source: 'P3 · 33:36–35:13',
-            quote: `Regrading the use of AI for validation, "I'll not have that confidence... we might mark a bad contributor as pass... until I go and see the code and understand the logic" — old-school human judgment.`,
+            quote: `Regrading the use of AI for validation, "I'll not have that confidence... we might mark a bad contributor as pass... until I go and see the code and understand the logic" - old-school human judgment.`,
           },
           {
             code: 'Case-by-case AI code acceptance',
@@ -166,7 +166,7 @@ export const strategyDimensions = [
             quote: `"[GitHub seems] to be equating... large lines of code as a metric of success. That's not good... A good metric would be: does it work? How much of your code is duplicated?"`,
           },
           {
-            code: 'Judge code quality, not AI use',
+            code: 'Code quality is more important than flagging AI',
             source: 'P15 · 27:47–28:11',
             quote: `"Code quality... is more important than flagging someone for using AI."`,
           },
@@ -182,7 +182,7 @@ export const strategyDimensions = [
       {
         id: 'ST-G.1',
         name: 'AI-use disclosure & accountability',
-        definition: 'Require or enable disclosure and process accountability via AI guidelines, accountability devices (self-certification, bot traps, prompt disclosure), acknowledgement checkboxes, or agent histories — with debate over how far prompt disclosure helps.',
+        definition: 'Require or enable disclosure and process accountability via AI guidelines, accountability devices (self-certification, bot traps, prompt disclosure), acknowledgement checkboxes, or agent histories.',
         respondentCount: 4,
         representativeCodes: [
           {
@@ -193,23 +193,23 @@ export const strategyDimensions = [
           {
             code: 'Disclosure as accountability mirror',
             source: 'P4 · 24:51–25:24',
-            quote: `"Holding up a mirror... I am telling this person I've used AI. Now if I don't read my code, they're going to say... So now I'm going to go read my code."`,
+            quote: `"Holding up a mirror... I am telling this person I've used AI. Now, if I don't read my code, they're going to say, 'You told me you used AI, and you didn't read your code.' So now I'm going to go read my code."`,
           },
           {
             code: 'PR acknowledgment checkbox',
             source: 'P4 · 29:47–30:07',
-            quote: '“When you\'re creating a PR, I want a checkbox that says I have read this code and I know what it does.”',
+            quote: '"When you\'re creating a PR, I want a checkbox that says I have read this code and I know what it does."',
           },
         ],
       },
       {
         id: 'ST-G.2',
         name: 'Calibrated Conditional-use Policy',
-        definition: 'Establish and iteratively refine project-specific boundaries for AI use, permitting bounded uses where contributors demonstrate understanding, explainability, verification, ownership, quality, and project fit — "AI as assistant, not owner".',
+        definition: 'Establish and iteratively refine project-specific boundaries for AI use, permitting bounded uses where contributors demonstrate understanding, explainability, verification, ownership, quality, and project fit.',
         respondentCount: 8,
         representativeCodes: [
           {
-            code: 'Policy: AI as assistant, not owner',
+            code: 'AI as assistant, not owner',
             source: 'P1 · 12:54–13:41',
             quote: `"You are using AI as your assistant. AI is not your owner." If contributors' responses to review comments are automated or they doesn't know, "we point that out. If this behavior repeats, we close the PR."`,
           },
@@ -219,7 +219,7 @@ export const strategyDimensions = [
             quote: `"We do follow a practice that always recommend to use AI as long as you know what you are working on and how it is working" with written instructions to contributors on expected AI use.`,
           },
           {
-            code: 'Policy: use AI for learning, you control the AI',
+            code: 'Use AI for learning, you control the AI',
             source: 'P2 · 31:51–32:20',
             quote: `"For the sake of the project, we just follow a sample practice: use AI to help you learn what you are working on...You control the AI, you don't let the AI control you." `,
           },
@@ -228,7 +228,7 @@ export const strategyDimensions = [
       {
         id: 'ST-G.3',
         name: 'Targeted AI restrictions with carve-outs',
-        definition: '[Restrictive / ban policy with carve-outs & norm preservation]\nRestrict or ban AI-generated code in specific artifacts (e.g., fully generated proposals / code / communication / styling & formatting) or stages (e.g., onboarding) while allowing bounded uses such as documentation, L2-language help, or review.',
+        definition: 'Restrict or ban AI-generated code in specific artifacts (e.g., proposals, code and communication) or stages (e.g., onboarding) while allowing bounded uses such as documentation, L2-language help, or review.',
         respondentCount: 6,
         representativeCodes: [
           {
@@ -244,7 +244,7 @@ export const strategyDimensions = [
           {
             code: 'Preserve project code style',
             source: 'P3 · 31:44–32:25',
-            quote: `Only project-side concern: AI must not change the project's established code style/conventions — "it should remain the same."`,
+            quote: `Only project-side concern: AI must not change the project's established code style/conventions - "it should remain the same."`,
           },
         ],
       },
@@ -262,30 +262,30 @@ export const strategyDimensions = [
           {
             code: 'Collect feedback before the program-level intervention',
             source: 'P10 · 32:16–32:46',
-            quote: `"It is good that [GSoC]... collect feedback. I think it's the first step; jumping into the solution is probably the worst thing to do..."`,
+            quote: `"It is good that [GSoC]... collect feedback. I think it's the first step; jumping into the solution is probably the worst thing to do."`,
           },
           {
             code: 'Program-level AI disclosure form',
             source: 'P12 · 23:51–25:00',
-            quote: `"At the program level... require a strict form where the mentee discloses in what capacity they're using AI... [so that] eases the burden from each community individually enforcing those rules"`,
+            quote: `"At the program level... require a strict form where the mentee discloses in what capacity they're using AI... [so that] eases the burden from each community individually enforcing those rules."`,
           },
         ],
       },
       {
         id: 'ST-G.7',
         name: 'Platform submission throttling',
-        definition: 'Rate-limit agent-driven submissions or cap concurrent open PRs so machine-speed contribution volume remains aligned with human review capacity.',
+        definition: 'Rate-limit agent-driven submissions or cap concurrent open PRs, so machine-speed contribution volume remains aligned with human review capacity.',
         respondentCount: 2,
         representativeCodes: [
           {
             code: 'Rate-limit agent-driven PR submissions',
             source: 'P11 · 34:23–35:17',
-            quote: `"Rate limiting agents on the submission of pull requests... Contributors... submit one pull request [to] 100 organizations at the same time... limiting that somehow would be helpful."`,
+            quote: `"Rate limiting agents on the submission of pull requests... Contributors submit one pull request [to] 100 organizations at the same time... limiting that somehow would be helpful."`,
           },
           {
             code: 'Cap concurrent open PRs per contributor',
             source: 'P13 · 17:55–18:29',
-            quote: '“GitHub could… limit how many open pull requests a person can have… [until one is merged].”',
+            quote: '"GitHub could limit how many open pull requests a person can have [until one is merged]."',
           },
         ],
       },
@@ -299,18 +299,18 @@ export const strategyDimensions = [
       {
         id: 'ST-G.6',
         name: 'AI-assisted mentoring & operations',
-        definition: 'Beyond stage-specific gates, use AI for proposal & issue triage, flagging AI use, onboarding, debugging, documentation, progress management, first-pass review (with second-pass human review), summaries, or other operations, while humans retain responsibility.',
+        definition: 'Use AI for mentoring operations such as proposal & issue triage, flagging AI use, onboarding, debugging, documentation, progress management, first-pass review, and summaries, while humans retain responsibility and final decision-making.',
         respondentCount: 10,
         representativeCodes: [
           {
             code: 'AI-powered triage dashboard built by mentor',
             source: 'P1 · 28:42–30:34',
-            quote: `Mentor built dashboard tracking unanswered issues/team health "with very less effort, and it's working so good."`,
+            quote: `Mentor built a dashboard tracking unanswered issues/team health "with very less effort, and it's working so good."`,
           },
           {
             code: 'AI-assisted documentation with human review',
             source: 'P1 · 33:08–33:41',
-            quote: `For "full-fledged docs, I just give my idea", and [AI] gives [content] according to my way... it has cut a significant amount of time for writing the complete docs and fix the grammar."`,
+            quote: `For "full-fledged docs, I just give my idea", and "[AI] gives [content] according to my way... it has cut a significant amount of time for writing the complete docs and fix the grammar."`,
           },
           {
             code: 'CodeRabbit as first-pass reviewer',
@@ -329,7 +329,7 @@ export const strategyDimensions = [
       {
         id: 'ST-S4.3',
         name: 'Responsible AI use modeling & coaching',
-        definition: 'Support contributors to use AI responsibly — read/verify everything generated, keep architecture human, test, disclose — as explicit mentoring curriculum or implicitly modeling practices.',
+        definition: 'Support contributors to use AI responsibly - read/verify everything generated, keep architecture human, test, disclose - as explicit mentoring curriculum or implicitly modeling practices.',
         respondentCount: 6,
         representativeCodes: [
           {
@@ -345,7 +345,7 @@ export const strategyDimensions = [
           {
             code: 'Use AI for learning and deep understanding',
             source: 'P7 · 31:37–32:24',
-            quote: `Contributors should use AI tools "transformatively to understand the deep intricacies of algorithms … not just to get your evaluations through... [and] not fool yourself into vibe coding."`,
+            quote: `Contributors should use AI tools "transformatively to understand the deep intricacies of algorithms ... not just to get your evaluations through... [and] not fool yourself into vibe coding."`,
           },
         ],
       },
@@ -359,7 +359,7 @@ export const strategyDimensions = [
       {
         id: 'ST-S2.4',
         name: 'Honesty-weighted selection with reconsideration',
-        definition: 'Weight honesty and rule-following about AI use in selection, where undisclosed / rule-breaking AI use lowers priority while borderline / called-out candidates may receive a chance to redo.',
+        definition: 'Weight honesty and rule-following about AI use in selection, where undisclosed or rule-breaking AI use lowers priority while borderline or called-out candidates may receive a chance to redo.',
         respondentCount: 4,
         representativeCodes: [
           {
@@ -370,7 +370,7 @@ export const strategyDimensions = [
           {
             code: 'Call-out with second chance',
             source: 'P9 · 26:01–26:22',
-            quote: `"Some of [AI-generated proposals] came back and rewrote it. And I was like, okay, this is fine" — deterrence plus redemption.`,
+            quote: `"Some of [AI-generated proposals] came back and rewrote it. And I was like, okay, this is fine" - deterrence plus redemption.`,
           },
           {
             code: 'Slop-filtering + second chance',

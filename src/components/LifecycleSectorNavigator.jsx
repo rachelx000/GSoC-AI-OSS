@@ -71,7 +71,7 @@ export default function LifecycleStageNavigator({
           <span aria-hidden="true">←</span> Full lifecycle
         </button>
         <h2 id={`${titleId}-title`}>Pipeline stages &amp; governance</h2>
-        <p>Choose any stage for associated challenges or an X-coded Governance challenge.</p>
+        <p>Choose any stage for associated challenges.</p>
       </header>
 
       <div className="flow-options" aria-label="S0 through S7, followed by expandable X Governance challenges">
