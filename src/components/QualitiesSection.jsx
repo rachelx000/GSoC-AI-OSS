@@ -103,7 +103,6 @@ function QualityDetail({ quality }) {
         <div>
           <span className="section-kicker">Quality Inspection</span>
           <h2>Please select any quality above</h2>
-          <p>The definition and traceable interview evidence will appear here without shifting the layered overview.</p>
         </div>
       </section>
     );
