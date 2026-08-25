@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import AiOrientationSection from './components/AiOrientationSection';
 import ChallengesSection from './components/ChallengesSection';
+import CommentModal from './components/CommentModal';
 import DemographicsSection from './components/DemographicsSection';
 import OutcomesSection from './components/OutcomesSection';
 import QualitiesSection from './components/QualitiesSection';
 import StrategiesSection from './components/StrategiesSection';
 
-const TABS = ['Intro', 'Challenges', 'Strategies', 'Qualities', 'Outcomes'];
+const TABS = ['Context', 'Challenges', 'Strategies', 'Qualities', 'Outcomes'];
 const INTRO_SLIDES = [
   { id: 'intro-research-status', label: 'Research Status' },
   { id: 'intro-who', label: 'Who We Interviewed' },
@@ -86,8 +87,9 @@ function Intro() {
                 <em>Turning AI-Assisted Work into Sustainable Open Source Contribution</em>
               </h1>
               <p className="hero-copy">
-                We examine how structured mentoring and accountability in GSoC shape AI-assisted output into 
-                maintainable contributions and longer-term participation in open source.
+                We examine how GSoC's human-centered mentoring infrastructure responds to AI-assisted participation, 
+                drawing on prior literature and interviews to trace emerging challenges, 
+                mentoring responses, qualities, and outcomes across the GSoC lifecycle.
               </p>
             </div>
 
@@ -158,8 +160,15 @@ function Placeholder({ tab }) {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('Intro');
+  const [activeTab, setActiveTab] = useState('Context');
+  const [commentOpen, setCommentOpen] = useState(false);
   const tabRefs = useRef([]);
+  const commentButtonRef = useRef(null);
+
+  const closeComment = () => {
+    setCommentOpen(false);
+    requestAnimationFrame(() => commentButtonRef.current?.focus());
+  };
 
   const activateTabFromKeyboard = (event, index) => {
     let nextIndex;
@@ -181,7 +190,7 @@ export default function App() {
           className="brand"
           href="#main-content"
           aria-label="GSoC AI-to-OSS home"
-          onClick={() => setActiveTab('Intro')}
+          onClick={() => setActiveTab('Context')}
         >
           <span>GSoC AI-to-OSS</span>
         </a>
@@ -208,15 +217,26 @@ export default function App() {
             );
           })}
         </nav>
+        <button
+          ref={commentButtonRef}
+          type="button"
+          className="comment-button"
+          aria-haspopup="dialog"
+          aria-expanded={commentOpen}
+          onClick={() => setCommentOpen(true)}
+        >
+          ✎ Feedback
+        </button>
       </header>
       <div id="main-content">
-        {activeTab === 'Intro' && <Intro />}
+        {activeTab === 'Context' && <Intro />}
         {activeTab === 'Challenges' && <ChallengesSection />}
         {activeTab === 'Strategies' && <StrategiesSection />}
         {activeTab === 'Qualities' && <QualitiesSection />}
         {activeTab === 'Outcomes' && <OutcomesSection />}
-        {!['Intro', 'Challenges', 'Strategies', 'Qualities', 'Outcomes'].includes(activeTab) && <Placeholder tab={activeTab} />}
+        {!TABS.includes(activeTab) && <Placeholder tab={activeTab} />}
       </div>
+      {commentOpen && <CommentModal onClose={closeComment} />}
     </>
   );
 }

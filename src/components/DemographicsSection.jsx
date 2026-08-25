@@ -9,10 +9,10 @@ import {
 } from '../data/demographics';
 
 const ORGANIZATION_SIZE_NOTE = [
-  { label: 'Small', definition: 'fewer than 10 regular contributors' },
-  { label: 'Medium', definition: '10–50 regular contributors' },
-  { label: 'Large', definition: '51–200 regular contributors' },
-  { label: 'Very Large', definition: 'more than 200 regular contributors' },
+  { label: 'Small', definition: '<10 regular contributors' },
+  { label: 'Medium', definition: '10-50 regular contributors' },
+  { label: 'Large', definition: '51-200 regular contributors' },
+  { label: 'Very Large', definition: '>200 regular contributors' },
 ];
 
 function summarize(field, order) {

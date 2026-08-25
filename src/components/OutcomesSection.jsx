@@ -255,8 +255,11 @@ export default function OutcomesSection() {
       <div className="strategies-frame">
         <header className="strategies-overview">
           <div className="strategies-intro">
-            <h1>Outcomes of GSoC Mentorship in the AI era</h1>
+            <h1>What GSoC makes possible in the AI Era</h1>
             <p>
+              <em className="outcomes-subtitle">
+                GSoC shapes AI-assisted output into maintainable contributions and longer-term participation in open source.
+              </em>
               Bars show how many of 15 interviewees contributed evidence to each outcome. Expand rows to inspect the outcome's definition & example codes.
             </p>
           </div>
