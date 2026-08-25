@@ -255,7 +255,7 @@ export default function OutcomesSection() {
       <div className="strategies-frame">
         <header className="strategies-overview">
           <div className="strategies-intro">
-            <h1>What GSoC makes possible in the AI Era</h1>
+            <h1>What GSoC makes possible in the AI era</h1>
             <p>
               <em className="outcomes-subtitle">
                 GSoC shapes AI-assisted output into maintainable contributions and longer-term participation in open source.

@@ -183,7 +183,7 @@ export default function QualitiesSection() {
       <div className="qualities-frame">
         <header className="qualities-overview">
           <div>
-            <h1>GSoC Mentorship Qualities in the AI-era</h1>
+            <h1>GSoC Mentorship Qualities in the AI era</h1>
           </div>
           <QualityCoverageLegend />
         </header>

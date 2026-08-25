@@ -13,7 +13,7 @@ import {
 } from '../data/challenges';
 
 const evidenceTabs = ['definition', 'challenges'];
-const governanceDefinition = 'It captures empirically derived challenges that affect multiple stages of the GSoC mentoring pipeline. They share concerns related to OSS governance, accountability, confidentiality, and the management of risks introduced or intensified in the AI-era.';
+const governanceDefinition = 'It captures empirically derived challenges that affect multiple stages of the GSoC mentoring pipeline. They share concerns related to OSS governance, accountability, confidentiality, and the management of risks introduced or intensified in the AI era.';
 const governanceLiteratureBoundary = 'Only S0-S7 are supported by previous literature, and this X stage is empirical.';
 
 function GovernanceSummary({ showSelectedDefinition = false }) {
