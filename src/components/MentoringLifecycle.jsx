@@ -168,9 +168,11 @@ export default function MentoringLifecycle({
         <figcaption id={`${titleId}-title`}>
           <div>
             <span className="section-kicker">Literature pipeline × empirical challenges</span>
-            <h2>GSoC mentoring as a regenerative lifecycle</h2>
+            <h2>Where AI challenge enters the GSoC mentoring lifecycle</h2>
             <p>
-              Click a broad phase (inner-cycle), stage (outer-cycle), or cross-stage Governance to view relevant definitions, evidence, and challenges.
+              Explore how AI-era concerns emerge across the regenerative GSoC mentoring pipeline. 
+              Select a broad phase (inner-cycle), stage (outer-cycle), or cross-stage Governance to 
+              view how each challenge occurs with supporting evidence.
             </p>
           </div>
         </figcaption>

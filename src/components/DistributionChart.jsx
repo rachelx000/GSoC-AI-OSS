@@ -116,7 +116,6 @@ export default function DistributionChart({
                 i
               </button>
               <span id={`${chartId}-info`} className="chart-info-tooltip" role="tooltip">
-                <strong>Category definitions</strong>
                 <span className="chart-info-list">
                   {infoNote.map((item) => (
                     <span key={item.label}>

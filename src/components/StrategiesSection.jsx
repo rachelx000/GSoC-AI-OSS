@@ -261,8 +261,9 @@ export default function StrategiesSection() {
       <div className="strategies-frame">
         <header className="strategies-overview">
           <div className="strategies-intro">
-            <h1>Strategies for GSoC mentoring in the AI-era</h1>
+            <h1>How GSoC mentors respond to AI-era challenges</h1>
             <p>
+              A list of interview-derived strategies by different dimensions.
               Bars show how many of 15 interviewees contributed evidence to each strategy. 
               Expand rows to inspect the strategy's definition & example codes.
             </p>
