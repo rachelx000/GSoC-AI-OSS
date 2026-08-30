@@ -5,6 +5,7 @@ import {
   respondentTextColor,
 } from '../data/challengeColors';
 import { strategyDimensions } from '../data/strategies';
+import StrategyFrameworkSection, { FrameworkOverlayToggle } from './StrategyFrameworkSection';
 
 const SAMPLE_SIZE = 15;
 const SOURCE_ORDER = [
@@ -123,6 +124,47 @@ function ViewSwitcher({ activeView, onChange }) {
   );
 }
 
+function StrategySourceTabs({ activeSource, onChange }) {
+  const selectWithKeyboard = (event) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const nextSource = event.key === 'ArrowLeft' || event.key === 'Home'
+      ? 'interviews'
+      : 'framework';
+    onChange(nextSource);
+    document.getElementById(`strategy-${nextSource}-tab`)?.focus();
+  };
+
+  return (
+    <div className="strategy-source-tabs" role="tablist" aria-label="Strategy source">
+      <button
+        id="strategy-interviews-tab"
+        type="button"
+        role="tab"
+        aria-selected={activeSource === 'interviews'}
+        aria-controls="strategy-interviews-view"
+        tabIndex={activeSource === 'interviews' ? 0 : -1}
+        onClick={() => onChange('interviews')}
+        onKeyDown={selectWithKeyboard}
+      >
+        Interview-derived strategies
+      </button>
+      <button
+        id="strategy-framework-tab"
+        type="button"
+        role="tab"
+        aria-selected={activeSource === 'framework'}
+        aria-controls="strategy-framework-view"
+        tabIndex={activeSource === 'framework' ? 0 : -1}
+        onClick={() => onChange('framework')}
+        onKeyDown={selectWithKeyboard}
+      >
+        Proposed framework
+      </button>
+    </div>
+  );
+}
+
 function StrategyEvidence({ strategy, hidden }) {
   return (
     <div
@@ -180,6 +222,7 @@ function StrategyRow({ strategy, expanded, onToggle, showDimension = false }) {
         onClick={onToggle}
       >
         <span className="strategy-row-title">
+          <span className="strategy-code-label">{strategy.id}</span>
           <strong>{strategy.name}</strong>
           {showDimension && (
             <span className="strategy-dimension-tag">{strategy.dimension.name}</span>
@@ -230,9 +273,11 @@ function StrategyDimension({ dimension, strategies, expandedId, onToggle }) {
 }
 
 export default function StrategiesSection() {
+  const [activeSource, setActiveSource] = useState('interviews');
   const [activeBand, setActiveBand] = useState(null);
   const [activeView, setActiveView] = useState('all');
   const [expandedId, setExpandedId] = useState(null);
+  const [frameworkOverlayVisible, setFrameworkOverlayVisible] = useState(false);
 
   const rankedStrategies = useMemo(() => rankStrategies(
     allStrategies.filter((strategy) => matchesBand(strategy, activeBand)),
@@ -258,61 +303,82 @@ export default function StrategiesSection() {
       role="tabpanel"
       aria-labelledby="strategies-tab"
     >
-      <div className="strategies-frame">
-        <header className="strategies-overview">
-          <div className="strategies-intro">
-            <h1>How GSoC mentors respond to AI-era challenges</h1>
-            <p>
-              A list of interview-derived strategies by different dimensions.
-              Bars show how many of 15 interviewees contributed evidence to each strategy. 
-              Expand rows to inspect the strategy's definition & example codes.
-            </p>
-          </div>
-        </header>
+      <div
+        className={`strategy-source-control-row${activeSource === 'framework' ? ' has-overlay' : ''}`}
+      >
+        {activeSource === 'framework' && (
+          <FrameworkOverlayToggle
+            visible={frameworkOverlayVisible}
+            onToggle={() => setFrameworkOverlayVisible((visible) => !visible)}
+          />
+        )}
+        <StrategySourceTabs activeSource={activeSource} onChange={setActiveSource} />
+      </div>
 
-        <div className="strategies-workspace">
-          <div className="strategies-control-row">
-            <ViewSwitcher activeView={activeView} onChange={setActiveView} />
-            <CoverageFilter
-              activeBand={activeBand}
-              onChange={setActiveBand}
-              visibleCount={rankedStrategies.length}
-            />
-          </div>
+      {activeSource === 'interviews' ? (
+        <div
+          id="strategy-interviews-view"
+          className="strategies-frame"
+          role="tabpanel"
+          aria-labelledby="strategy-interviews-tab"
+        >
+          <header className="strategies-overview">
+            <div className="strategies-intro">
+              <h1>How GSoC mentors respond to AI-era challenges</h1>
+              <p>
+                A list of interview-derived strategies by different dimensions.
+                Bars show how many of 15 interviewees contributed evidence to each strategy.
+                Expand rows to inspect the strategy's definition & example codes.
+              </p>
+            </div>
+          </header>
 
-          <section className="strategies-content" aria-label="Strategy taxonomy">
-            <div className="strategies-content-scroll" key={activeView}>
-              {activeView === 'all' ? (
-                <section className="strategy-all-panel" aria-label="All strategies ranked by coverage">
-                  <div className="strategy-ranked-list">
-                    {rankedStrategies.map((strategy) => (
-                      <StrategyRow
-                        strategy={strategy}
-                        expanded={expandedId === strategy.id}
-                        key={strategy.id}
-                        onToggle={() => toggleStrategy(strategy.id)}
-                        showDimension
+          <div className="strategies-workspace">
+            <div className="strategies-control-row">
+              <ViewSwitcher activeView={activeView} onChange={setActiveView} />
+              <CoverageFilter
+                activeBand={activeBand}
+                onChange={setActiveBand}
+                visibleCount={rankedStrategies.length}
+              />
+            </div>
+
+            <section className="strategies-content" aria-label="Strategy taxonomy">
+              <div className="strategies-content-scroll" key={activeView}>
+                {activeView === 'all' ? (
+                  <section className="strategy-all-panel" aria-label="All strategies ranked by coverage">
+                    <div className="strategy-ranked-list">
+                      {rankedStrategies.map((strategy) => (
+                        <StrategyRow
+                          strategy={strategy}
+                          expanded={expandedId === strategy.id}
+                          key={strategy.id}
+                          onToggle={() => toggleStrategy(strategy.id)}
+                          showDimension
+                        />
+                      ))}
+                    </div>
+                  </section>
+                ) : (
+                  <div className="strategy-dimension-grid">
+                    {filteredDimensions.map((dimension) => (
+                      <StrategyDimension
+                        dimension={dimension}
+                        strategies={dimension.strategies}
+                        expandedId={expandedId}
+                        key={dimension.id}
+                        onToggle={toggleStrategy}
                       />
                     ))}
                   </div>
-                </section>
-              ) : (
-                <div className="strategy-dimension-grid">
-                  {filteredDimensions.map((dimension) => (
-                    <StrategyDimension
-                      dimension={dimension}
-                      strategies={dimension.strategies}
-                      expandedId={expandedId}
-                      key={dimension.id}
-                      onToggle={toggleStrategy}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </section>
+                )}
+              </div>
+            </section>
+          </div>
         </div>
-      </div>
+      ) : (
+        <StrategyFrameworkSection overlayVisible={frameworkOverlayVisible} />
+      )}
     </main>
   );
 }
