@@ -34,7 +34,7 @@ export function LiteratureEvidence({ stage }) {
 
       <div className="literature-reference-grid">
         <div>
-          <span>Primary reference</span>
+          <span>Primary anchors</span>
           <ReferenceLinks referenceIds={stage.primaryReferences} />
         </div>
         <div>
