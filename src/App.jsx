@@ -1,238 +1,125 @@
 import { useEffect, useRef, useState } from 'react';
-import AiOrientationSection from './components/AiOrientationSection';
-import ChallengesSection from './components/ChallengesSection';
-import CommentModal from './components/CommentModal';
-import DemographicsSection from './components/DemographicsSection';
+import CoverPage from './components/CoverPage';
+import GenAIImpactsSection from './components/GenAIImpactsSection';
 import StrategiesSection from './components/StrategiesSection';
+import AIMSection from './components/AIMSection';
+import AppendixModal from './components/AppendixModal';
 
-const TABS = ['Context', 'Challenges', 'Strategies'];
-const INTRO_SLIDES = [
-  { id: 'intro-research-status', label: 'Research Status' },
-  { id: 'intro-who', label: 'Who We Interviewed' },
-  { id: 'intro-ai-orientation', label: 'AI Orientation' },
+const TABS = [
+  { id: 'impacts', label: 'GenAI Impacts' },
+  { id: 'strategies', label: 'GenAI Strategies' },
+  { id: 'aim', label: 'AIM' },
 ];
-const tabId = (tab) => tab.toLowerCase().replaceAll(' ', '-');
-
-function Intro() {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const scrollerRef = useRef(null);
-  const activeSlideRef = useRef(0);
-
-  useEffect(() => {
-    activeSlideRef.current = activeSlide;
-  }, [activeSlide]);
-
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return undefined;
-
-    const observer = new ResizeObserver(() => {
-      scroller.scrollTo({ left: activeSlideRef.current * scroller.clientWidth });
-    });
-    observer.observe(scroller);
-    return () => observer.disconnect();
-  }, []);
-
-  const goToSlide = (index) => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return;
-    activeSlideRef.current = index;
-    scroller.scrollTo({ left: index * scroller.clientWidth, behavior: 'smooth' });
-    setActiveSlide(index);
-  };
-
-  const syncActiveSlide = (event) => {
-    const { clientWidth, scrollLeft } = event.currentTarget;
-    if (!clientWidth) return;
-    const nextSlide = Math.max(0, Math.min(INTRO_SLIDES.length - 1, Math.round(scrollLeft / clientWidth)));
-    if (nextSlide !== activeSlideRef.current) {
-      activeSlideRef.current = nextSlide;
-      setActiveSlide(nextSlide);
-    }
-  };
-
-  const navigateSlidesWithKeyboard = (event) => {
-    if (event.target !== event.currentTarget) return;
-    if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      goToSlide(Math.min(activeSlide + 1, INTRO_SLIDES.length - 1));
-    }
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      goToSlide(Math.max(activeSlide - 1, 0));
-    }
-  };
-
-  return (
-    <main id="intro-panel" className="intro-page" role="tabpanel" aria-labelledby="intro-tab">
-      <div
-        ref={scrollerRef}
-        className="intro-scroller"
-        tabIndex={0}
-        aria-label="Intro gallery. Use horizontal scrolling or the navigation dots to change sections."
-        onScroll={syncActiveSlide}
-        onKeyDown={navigateSlidesWithKeyboard}
-      >
-        <section
-          id="intro-research-status"
-          className="intro-slide research-slide"
-          aria-labelledby="project-title"
-        >
-          <div className="slide-frame research-frame">
-            <div className="research-copy">
-              <h1 id="project-title">
-                GSoC as AI-to-OSS Infrastructure:
-                <em>Turning AI-Assisted Work into Sustainable Open Source Contribution</em>
-              </h1>
-              <p className="hero-copy">
-                We examine how GSoC's human-centered mentoring infrastructure responds to AI-assisted participation, 
-                drawing on prior literature and interviews to trace emerging challenges, 
-                mentoring responses across the GSoC lifecycle.
-              </p>
-            </div>
-
-            <div className="research-stages">
-              <span className="section-kicker research-status-label">01 · Research status</span>
-              <h2>From interviews to a traceable code structure</h2>
-              <div className="coding-map" aria-label="Major research stages">
-                <div className="coding-step">
-                  <span>01</span>
-                  <strong>15 interviews</strong>
-                  <p>Semi-structured conversations with 15 sampled GSoC mentors and organization administrators</p>
-                </div>
-                <div className="coding-step">
-                  <span>02</span>
-                  <strong>Preliminary open coding</strong>
-                  <p>Interview material organized into five empirical codebooks</p>
-                </div>
-                <div className="coding-step">
-                  <span>03</span>
-                  <strong>Literature scaffold</strong>
-                  <p>An independent codebook defines the full GSoC mentoring pipeline based on previous literature</p>
-                </div>
-                <div className="coding-step">
-                  <span>04</span>
-                  <strong>Interactive synthesis</strong>
-                  <p>The dashboard turns the code structure into interactive, traceable views</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <DemographicsSection />
-        <AiOrientationSection />
-      </div>
-
-      <nav className="intro-dots" aria-label="Intro sub-pages">
-        {INTRO_SLIDES.map((slide, index) => (
-          <button
-            key={slide.id}
-            type="button"
-            aria-label={`Show ${slide.label}`}
-            aria-controls={slide.id}
-            aria-current={activeSlide === index ? 'step' : undefined}
-            onClick={() => goToSlide(index)}
-          >
-            <span className="sr-only">{slide.label}</span>
-          </button>
-        ))}
-      </nav>
-    </main>
-  );
-}
-
-function Placeholder({ tab }) {
-  return (
-    <main
-      id={`${tabId(tab)}-panel`}
-      className="page placeholder"
-      role="tabpanel"
-      aria-labelledby={`${tabId(tab)}-tab`}
-    >
-      <span className="section-kicker">Next research view</span>
-      <h1>{tab}</h1>
-      <p>This tab is reserved for the next implementation stage.</p>
-    </main>
-  );
-}
+const currentView = () => {
+  const id =
+    typeof window === 'undefined'
+      ? ''
+      : window.location.hash.replace(/^#\/?/, '');
+  return TABS.some((tab) => tab.id === id) ? id : 'cover';
+};
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('Context');
-  const [commentOpen, setCommentOpen] = useState(false);
+  const [view, setView] = useState(currentView);
+  const [appendixOpen, setAppendixOpen] = useState(false);
   const tabRefs = useRef([]);
-  const commentButtonRef = useRef(null);
+  const appendixButton = useRef(null);
 
-  const closeComment = () => {
-    setCommentOpen(false);
-    requestAnimationFrame(() => commentButtonRef.current?.focus());
-  };
+  useEffect(() => {
+    const syncView = () => {
+      setView(currentView());
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('hashchange', syncView);
+    return () => window.removeEventListener('hashchange', syncView);
+  }, []);
 
-  const activateTabFromKeyboard = (event, index) => {
-    let nextIndex;
-    if (event.key === 'ArrowRight') nextIndex = (index + 1) % TABS.length;
-    if (event.key === 'ArrowLeft') nextIndex = (index - 1 + TABS.length) % TABS.length;
-    if (event.key === 'Home') nextIndex = 0;
-    if (event.key === 'End') nextIndex = TABS.length - 1;
-    if (nextIndex === undefined) return;
-
+  const navigateTabs = (event, index) => {
+    let next;
+    if (event.key === 'ArrowRight') next = (index + 1) % TABS.length;
+    if (event.key === 'ArrowLeft')
+      next = (index - 1 + TABS.length) % TABS.length;
+    if (event.key === 'Home') next = 0;
+    if (event.key === 'End') next = TABS.length - 1;
+    if (next === undefined) return;
     event.preventDefault();
-    setActiveTab(TABS[nextIndex]);
-    tabRefs.current[nextIndex]?.focus();
+    window.location.hash = `/${TABS[next].id}`;
+    tabRefs.current[next]?.focus();
+  };
+  const closeAppendix = () => {
+    setAppendixOpen(false);
+    requestAnimationFrame(() => appendixButton.current?.focus());
   };
 
   return (
     <>
+      <a
+        className="skip-link"
+        href="#main-content"
+        onClick={(event) => {
+          event.preventDefault();
+          document.getElementById('main-content')?.focus();
+        }}
+      >
+        Skip to content
+      </a>
       <header className="site-header">
         <a
           className="brand"
-          href="#main-content"
-          aria-label="GSoC AI-to-OSS home"
-          onClick={() => setActiveTab('Context')}
+          href="#/"
+          aria-label="GSoC & GenAI home"
+          onClick={() => window.scrollTo(0, 0)}
         >
-          <span>GSoC AI-to-OSS</span>
+          <span className="brand-cycle" aria-hidden="true">
+            ↻
+          </span>
+          <span>GSoC-AI-OSS</span>
         </a>
-        <nav className="tabs" aria-label="Dashboard sections" role="tablist">
-          {TABS.map((tab, index) => {
-            const id = tabId(tab);
-            return (
-              <button
-                id={`${id}-tab`}
-                key={tab}
-                type="button"
-                role="tab"
-                aria-selected={activeTab === tab}
-                aria-controls={`${id}-panel`}
-                tabIndex={activeTab === tab ? 0 : -1}
-                onClick={() => setActiveTab(tab)}
-                onKeyDown={(event) => activateTabFromKeyboard(event, index)}
-                ref={(node) => {
-                  tabRefs.current[index] = node;
-                }}
-              >
-                {tab}
-              </button>
-            );
-          })}
+        <nav className="tabs" role="tablist" aria-label="Research views">
+          {TABS.map((tab, index) => (
+            <button
+              type="button"
+              role="tab"
+              id={`${tab.id}-tab`}
+              aria-selected={view === tab.id}
+              aria-controls={`${tab.id}-panel`}
+              tabIndex={
+                view === tab.id || (view === 'cover' && index === 0) ? 0 : -1
+              }
+              key={tab.id}
+              ref={(node) => {
+                tabRefs.current[index] = node;
+              }}
+              onClick={() => {
+                window.location.hash = `/${tab.id}`;
+              }}
+              onKeyDown={(event) => navigateTabs(event, index)}
+            >
+              {tab.label}
+            </button>
+          ))}
         </nav>
         <button
-          ref={commentButtonRef}
+          className="appendix-button"
           type="button"
-          className="comment-button"
+          ref={appendixButton}
           aria-haspopup="dialog"
-          aria-expanded={commentOpen}
-          onClick={() => setCommentOpen(true)}
+          aria-expanded={appendixOpen}
+          onClick={() => setAppendixOpen(true)}
         >
-          ✎ Feedback
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+            <path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z" />
+            <path d="M14 3v5h5M8 12h8M8 16h8" />
+          </svg>
+          Appendix
         </button>
       </header>
-      <div id="main-content">
-        {activeTab === 'Context' && <Intro />}
-        {activeTab === 'Challenges' && <ChallengesSection />}
-        {activeTab === 'Strategies' && <StrategiesSection />}
-        {!TABS.includes(activeTab) && <Placeholder tab={activeTab} />}
+      <div id="main-content" tabIndex={-1}>
+        {view === 'cover' && <CoverPage />}
+        {view === 'impacts' && <GenAIImpactsSection />}
+        {view === 'strategies' && <StrategiesSection />}
+        {view === 'aim' && <AIMSection />}
       </div>
-      {commentOpen && <CommentModal onClose={closeComment} />}
+      {appendixOpen && <AppendixModal onClose={closeAppendix} />}
     </>
   );
 }

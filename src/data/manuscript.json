@@ -1,0 +1,1298 @@
+{
+  "sources": {
+    "effects": "references/supplemental/tables/effects_definitions.tex",
+    "impacts": "references/supplemental/tables/sustainability_impacts_definitions.tex",
+    "strategies": "references/manuscript/tables/rq2_strategies.tex",
+    "strategyEvidence": "references/supplemental/tables/strategies_definitions.tex",
+    "framework": "references/manuscript/tables/framework_table.tex",
+    "relationships": "references/manuscript/figures/rq1-latest.svg",
+    "pipeline": "references/manuscript/sections/2_GSoC.tex"
+  },
+  "groups": [
+    {
+      "id": "entry",
+      "name": "Entry and early preparation",
+      "range": "S0–S3",
+      "stageIds": [
+        "S0",
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "color": "#4E6598",
+      "tint": "#F0F3FA"
+    },
+    {
+      "id": "mentoring",
+      "name": "Mentoring, review, and evaluation",
+      "range": "S4–S6",
+      "stageIds": [
+        "S4",
+        "S5",
+        "S6"
+      ],
+      "color": "#685C91",
+      "tint": "#F0EBF8"
+    },
+    {
+      "id": "retention",
+      "name": "Retention and role transition",
+      "range": "S7",
+      "stageIds": [
+        "S7"
+      ],
+      "color": "#94566B",
+      "tint": "#F9EDF2"
+    },
+    {
+      "id": "governance",
+      "name": "Cross-stage governance",
+      "range": "S0–S7",
+      "stageIds": [
+        "X"
+      ],
+      "color": "#895447",
+      "tint": "#FEF5EF"
+    }
+  ],
+  "stages": [
+    {
+      "id": "S0",
+      "name": "Pre-engagement",
+      "definition": "Prospective newcomers find a project of interest, contact its community, and sometimes make early contributions.",
+      "referenceIds": [
+        "silva2017long",
+        "silva2020google"
+      ],
+      "groupId": "entry",
+      "effectIds": [
+        "CH1",
+        "CH2"
+      ]
+    },
+    {
+      "id": "S1",
+      "name": "Proposal preparation",
+      "definition": "Applicants turn their interest into a feasible project plan through proposal preparation.",
+      "referenceIds": [
+        "trainer2014community",
+        "silva2020theory"
+      ],
+      "groupId": "entry",
+      "effectIds": [
+        "CH3"
+      ]
+    },
+    {
+      "id": "S2",
+      "name": "Applicant review and selection",
+      "definition": "Mentors use proposals to assess applicants’ readiness and project fit, and select contributors within the organization’s mentoring capacity.",
+      "referenceIds": [
+        "silva2020theory",
+        "trainer2014community",
+        "tan2023understanding"
+      ],
+      "groupId": "entry",
+      "effectIds": [
+        "CH4",
+        "CH5"
+      ]
+    },
+    {
+      "id": "S3",
+      "name": "Bonding and initial onboarding",
+      "definition": "Selected contributors learn project tools, workflows, and community norms as working relationships begin to form.",
+      "referenceIds": [
+        "balali2018",
+        "steinmacher2019",
+        "tan2023understanding"
+      ],
+      "groupId": "entry",
+      "effectIds": [
+        "OP1"
+      ]
+    },
+    {
+      "id": "S4",
+      "name": "Contributing and mentoring",
+      "definition": "Contributors move into substantive project work, building skills through mentors’ guidance and feedback.",
+      "referenceIds": [
+        "silva2020theory",
+        "popoola2025empirical",
+        "feng2024guiding",
+        "tan2023understanding"
+      ],
+      "groupId": "mentoring",
+      "effectIds": [
+        "OP2",
+        "CH6",
+        "CH7",
+        "CH8",
+        "CH9"
+      ]
+    },
+    {
+      "id": "S5",
+      "name": "Contribution review",
+      "definition": "Review and revision inform decisions about acceptance or integration. Issue, pull-request, and commit interactions support an ongoing cycle between contributing and review.",
+      "referenceIds": [
+        "silva2020theory",
+        "popoola2025empirical",
+        "raoofian2025openment"
+      ],
+      "groupId": "mentoring",
+      "effectIds": [
+        "CH10",
+        "CH11",
+        "CH12",
+        "CH13",
+        "CH14",
+        "OP3"
+      ]
+    },
+    {
+      "id": "S6",
+      "name": "Evaluation and completion",
+      "definition": "Milestones and midterm and final pass/fail decisions assess contributors’ progress and participation alongside the ongoing contribution-review cycle.",
+      "referenceIds": [
+        "silva2020google",
+        "tan2023understanding"
+      ],
+      "groupId": "mentoring",
+      "effectIds": [
+        "CH15"
+      ]
+    },
+    {
+      "id": "S7",
+      "name": "Retention and role transition",
+      "definition": "After graduation, contributors may continue participating in their communities, sometimes returning as mentors. This transition can renew the mentoring cycle.",
+      "referenceIds": [
+        "silva2020google",
+        "trainer2014community",
+        "tan2023understanding"
+      ],
+      "groupId": "retention",
+      "effectIds": [
+        "CH16"
+      ]
+    },
+    {
+      "id": "X",
+      "name": "Governance",
+      "definition": "Rules, accountability, coordination, and mentor capacity support activities across the pipeline. Governance is a cross-stage layer in the RQ1 figure, rather than an additional chronological stage.",
+      "referenceIds": [
+        "gsoc_roles",
+        "gsoc_ai_guidance2026"
+      ],
+      "groupId": "governance",
+      "effectIds": [
+        "CH17",
+        "CH18",
+        "CH19",
+        "CH20"
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "id": "CH1",
+      "name": "Application and contribution overload",
+      "kind": "challenge",
+      "stageId": "S0",
+      "groupId": "entry",
+      "excerpts": [
+        {
+          "text": "there is a very huge wave that comes [3 or 4 months] before GSOC... like a single contributor is making 5 PRs... so it gets very overwhelming for reviewers.",
+          "participant": "P1"
+        }
+      ]
+    },
+    {
+      "id": "CH2",
+      "name": "Good-first-issues lose capability signal",
+      "kind": "challenge",
+      "stageId": "S0",
+      "groupId": "entry",
+      "excerpts": [
+        {
+          "text": "They just AI it up, complete it, and say yeah, I understood everything. Even though they probably didn't.",
+          "participant": "P15"
+        }
+      ]
+    },
+    {
+      "id": "CH3",
+      "name": "Reduced effort in proposal preparation",
+      "kind": "challenge",
+      "stageId": "S1",
+      "groupId": "entry",
+      "excerpts": [
+        {
+          "text": "A lot of AI-generated proposals [contained] 'here is the proposal you asked for'... They didn't even bother to check.",
+          "participant": "P5"
+        }
+      ]
+    },
+    {
+      "id": "CH4",
+      "name": "Applicant capability uncertainty",
+      "kind": "challenge",
+      "stageId": "S2",
+      "groupId": "entry",
+      "excerpts": [
+        {
+          "text": "[The organization] accepted a contributor... [then] found out that this person does not know how to use Git... [or] run shell commands. But their proposal looked correct...",
+          "participant": "P4"
+        },
+        {
+          "text": "AI is meaning that those tasks [of different difficulty levels] are less of a differentiator and we need to meet these people in person more often, which takes more time",
+          "participant": "P8"
+        }
+      ]
+    },
+    {
+      "id": "CH5",
+      "name": "Suspected application fraud",
+      "kind": "challenge",
+      "stageId": "S2",
+      "groupId": "entry",
+      "excerpts": [
+        {
+          "text": "Easy access to AI has made it easier for applicants to abuse the application process",
+          "participant": "P6"
+        }
+      ]
+    },
+    {
+      "id": "CH6",
+      "name": "Silent mentees",
+      "kind": "challenge",
+      "stageId": "S4",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "Before [AI], people would ask many more questions while progressing to a solution... review went much better because you had an understanding of what the person was thinking. Now you have to be more guarded.",
+          "participant": "P14"
+        },
+        {
+          "text": "It has become very easy for [newcomers] to raise PRs and fix the bugs... But we asked them, why did you make this change? They gave us an AI-generated response.",
+          "participant": "P1"
+        }
+      ]
+    },
+    {
+      "id": "CH7",
+      "name": "GenAI dependency and deskilling concerns",
+      "kind": "challenge",
+      "stageId": "S4",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "[A mentee] told me that I won't be able to create more PRs until my AI limit renews.",
+          "participant": "P1"
+        }
+      ]
+    },
+    {
+      "id": "CH8",
+      "name": "Loss of productive struggle",
+      "kind": "challenge",
+      "stageId": "S4",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "Earlier, [a contributor] would come to me with a problem, and I didn't know the solution either, so we both would deep dive... There was serious mental effort... [that] helped me grow along with my contributor.",
+          "participant": "P7"
+        }
+      ]
+    },
+    {
+      "id": "CH9",
+      "name": "Shift from mentoring to policing",
+      "kind": "challenge",
+      "stageId": "S4",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "I had to pay more attention to reminding people what the program rules were, aside from what our project-specific guidelines are.",
+          "participant": "P6"
+        }
+      ]
+    },
+    {
+      "id": "CH10",
+      "name": "Contribution volume outpaces review capacity",
+      "kind": "challenge",
+      "stageId": "S5",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "If it's easier to write a submission, then it's harder to review a submission... even the mentors are humans. They can't review everything.",
+          "participant": "P15"
+        },
+        {
+          "text": "The only significant change has been the amount of effort we're putting into reviewing PRs.",
+          "participant": "P4"
+        },
+        {
+          "text": "The code PRs are so long that it's 5,000 lines of code. And they expect us to review the complete PR within 2 days.",
+          "participant": "P1"
+        },
+        {
+          "text": "If [an] AI disclosure [is made]... we run an extra set of tests... [review takes] maybe 20, 30% more.",
+          "participant": "P4"
+        }
+      ]
+    },
+    {
+      "id": "CH11",
+      "name": "Trust erosion and verification limits",
+      "kind": "challenge",
+      "stageId": "S5",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "I can no longer trust that a human has actually checked what they are doing",
+          "participant": "P13"
+        }
+      ]
+    },
+    {
+      "id": "CH12",
+      "name": "Maintenance debt",
+      "kind": "challenge",
+      "stageId": "S5",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "We're having lots of incremental and small bits and modules [that were] very costly to maintain",
+          "participant": "P8"
+        }
+      ]
+    },
+    {
+      "id": "CH13",
+      "name": "Code reliability and security risks",
+      "kind": "challenge",
+      "stageId": "S5",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "When we give AI a prompt and it gets something working and we just push it, it can be disastrous... you never know what AI missed; it could be a security threat.",
+          "participant": "P2"
+        }
+      ]
+    },
+    {
+      "id": "CH14",
+      "name": "Unreliable GenAI-assisted review",
+      "kind": "challenge",
+      "stageId": "S5",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "The AI review pointed out syntax-related issues [such as] unused functions or cleanups... but not necessarily in terms of the business logic or the mathematical [logic] because they can get complex.",
+          "participant": "P3"
+        }
+      ]
+    },
+    {
+      "id": "CH15",
+      "name": "Unclear evaluation for GenAI-policy violations",
+      "kind": "challenge",
+      "stageId": "S6",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "Every other week I see a thread about whether I should fail this contributor because they did not follow my LLM guidelines",
+          "participant": "P12"
+        }
+      ]
+    },
+    {
+      "id": "CH16",
+      "name": "Weaker project attachment and retention",
+      "kind": "challenge",
+      "stageId": "S7",
+      "groupId": "retention",
+      "excerpts": [
+        {
+          "text": "I am worried [about] how much [contributors] are learning and [whether they will] stick to the project and the community",
+          "participant": "P13"
+        },
+        {
+          "text": "Folks drop off because they get automated replies or generic responses",
+          "participant": "P11"
+        }
+      ]
+    },
+    {
+      "id": "CH17",
+      "name": "Licensing and intellectual property risks",
+      "kind": "challenge",
+      "stageId": "X",
+      "groupId": "governance",
+      "excerpts": [
+        {
+          "text": "LLMs are trained on data that is not attributable... we might be violating license agreements with other open source projects.",
+          "participant": "P7"
+        }
+      ]
+    },
+    {
+      "id": "CH18",
+      "name": "Policy fragmentation",
+      "kind": "challenge",
+      "stageId": "X",
+      "groupId": "governance",
+      "excerpts": [
+        {
+          "text": "Some [projects] have an explicit policy saying we do not accept AI contributions. Most have an AI disclosure policy... [others say] it's okay if you use AI as long as... the quality is high enough that it doesn't look AI-generated.",
+          "participant": "P4"
+        }
+      ]
+    },
+    {
+      "id": "CH19",
+      "name": "Privacy and data-control risks",
+      "kind": "challenge",
+      "stageId": "X",
+      "groupId": "governance",
+      "excerpts": [
+        {
+          "text": "People are moving to self-hosted [forges] because they may not want AI trained on their code",
+          "participant": "P14"
+        }
+      ]
+    },
+    {
+      "id": "CH20",
+      "name": "Mentor verification fatigue and withdrawal",
+      "kind": "challenge",
+      "stageId": "X",
+      "groupId": "governance",
+      "excerpts": [
+        {
+          "text": "It's a drain on their time... [Organizations] want new people to join and grow, not... prompt a tool [and transfer review work].",
+          "participant": "P14"
+        },
+        {
+          "text": "[AI disclosure] causes extra work for mentors... we have to stay up to date [on] whether they're following the rules and look for cues [but] that's necessary.",
+          "participant": "P12"
+        },
+        {
+          "text": "I've been a lot more worried on the impact it has on mentors. It does create fatigue... implication in terms of workload.",
+          "participant": "P10"
+        },
+        {
+          "text": "The overall amount of effort had gone up exponentially to something we can't keep up with... We have not participated in GSoC 2026. I don't think we will be participating again... It is just not in our bandwidth.",
+          "participant": "P7"
+        }
+      ]
+    },
+    {
+      "id": "OP1",
+      "name": "GenAI-reduced onboarding friction",
+      "kind": "opportunity",
+      "stageId": "S3",
+      "groupId": "entry",
+      "excerpts": [
+        {
+          "text": "The contributor was facing issues while setting up the project... AI was a huge help for me as a mentor because I was able to quickly debug and answer their questions",
+          "participant": "P2"
+        }
+      ]
+    },
+    {
+      "id": "OP2",
+      "name": "GenAI as a mentoring multiplier",
+      "kind": "opportunity",
+      "stageId": "S4",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "If I had mentored three or four years ago, I would have struggled to manage the time",
+          "participant": "P11"
+        }
+      ]
+    },
+    {
+      "id": "OP3",
+      "name": "GenAI pre-review of contributions",
+      "kind": "opportunity",
+      "stageId": "S5",
+      "groupId": "mentoring",
+      "excerpts": [
+        {
+          "text": "GitHub Copilot first reviews [a pull request]... and they add some comments... common [issues] are detected automatically, and the contributor can immediately get feedback... without waiting for a human.",
+          "participant": "P5"
+        }
+      ]
+    }
+  ],
+  "impacts": [
+    {
+      "id": "IM1",
+      "name": "Talent recruitment and entry",
+      "figureName": "Talent recruitment and entry",
+      "definition": "GSoC helps OSS organizations identify and recruit motivated, capable newcomers.",
+      "excerpts": [
+        {
+          "text": "We got most of the contributors from [GSoC]... this has been one of those hot spots [for newcomers].",
+          "participant": "P2"
+        }
+      ],
+      "implications": [
+        {
+          "kind": "adverse",
+          "text": "GenAI makes it harder to identify capable, committed newcomers."
+        },
+        {
+          "kind": "adverse",
+          "text": "GenAI makes screening take more effort."
+        }
+      ]
+    },
+    {
+      "id": "IM2",
+      "name": "Developing trustworthy community members",
+      "figureName": "Developing trustworthy community members",
+      "definition": "GSoC develops contributors trusted with responsibility through demonstrated understanding and commitment.",
+      "excerpts": [
+        {
+          "text": "We are judging the students even before they apply... [based on] six months contributi[on] for us... even if [they] does an AI-generated application, we know [they are] capable.",
+          "participant": "P3"
+        }
+      ],
+      "implications": [
+        {
+          "kind": "adverse",
+          "text": "GenAI weakens artifacts as evidence of competence."
+        },
+        {
+          "kind": "adverse",
+          "text": "GenAI demands greater mentor attention to building trust."
+        },
+        {
+          "kind": "beneficial",
+          "text": "GenAI increases the importance of developing trusted contributors."
+        }
+      ]
+    },
+    {
+      "id": "IM3",
+      "name": "Skills development and career signal",
+      "figureName": "Skills development and career signal",
+      "definition": "GSoC develops technical skills, judgment, and professional competence and signals career readiness.",
+      "excerpts": [
+        {
+          "text": "GSoC has been pretty monumental... helped me secure Linux Foundation opportunities, grants... and the technical competence to see them through.",
+          "participant": "P12"
+        }
+      ],
+      "implications": [
+        {
+          "kind": "adverse",
+          "text": "GenAI dependence may weaken skills, judgment, and career credibility."
+        },
+        {
+          "kind": "beneficial",
+          "text": "GenAI assistance can support learning."
+        }
+      ]
+    },
+    {
+      "id": "IM4",
+      "name": "Maintainability of funded contributions",
+      "figureName": "Maintainability of funded contributions",
+      "definition": "GSoC funds verified, maintainable improvements to under-resourced OSS projects.",
+      "excerpts": [
+        {
+          "text": "GSoC has attracted many contributors we would not normally have gotten... helped us solve longstanding issues nobody was in the mood of working on.",
+          "participant": "P13"
+        }
+      ],
+      "implications": [
+        {
+          "kind": "adverse",
+          "text": "Unreliable GenAI output and maintenance debt threaten lasting value of GSoC-funded work."
+        },
+        {
+          "kind": "beneficial",
+          "text": "GenAI can accelerate contribution delivery."
+        }
+      ]
+    },
+    {
+      "id": "IM5",
+      "name": "Institutionalization of governance practices",
+      "figureName": "Institutionalization of governance practices",
+      "definition": "GSoC establishes lasting organizational routines for OSS mentoring and governance.",
+      "excerpts": [
+        {
+          "text": "All the decisions we make, we write it down... we won't repeat the same thing again and again every year",
+          "participant": "P1"
+        }
+      ],
+      "implications": [
+        {
+          "kind": "adverse",
+          "text": "OSS policy fragmentation and GenAI-driven enforcement demands may strain governance."
+        },
+        {
+          "kind": "beneficial",
+          "text": "GenAI assistance can improve organizational routines."
+        }
+      ]
+    },
+    {
+      "id": "IM6",
+      "name": "Community growth, diversity and vitality",
+      "figureName": "Community growth, diversity and vitality",
+      "definition": "GSoC builds a diverse, lasting contributor community through sustained newcomer engagement.",
+      "excerpts": [
+        {
+          "text": "GSoC gives people who are new to open source a chance to contribute and hopefully keep contributing... the aim is mostly keeping the organization alive and thriving.",
+          "participant": "P14"
+        }
+      ],
+      "implications": [
+        {
+          "kind": "adverse",
+          "text": "GenAI-driven distrust and additional workload may hinder welcoming, diverse and engaged OSS participation."
+        }
+      ]
+    },
+    {
+      "id": "IM7",
+      "name": "Contributor-to-steward renewal",
+      "figureName": "Contributor-to-mentor renewal",
+      "definition": "GSoC renews OSS communities by developing contributors into committed maintainers and future mentors.",
+      "excerpts": [
+        {
+          "text": "Almost 70% of [2026 mentors] had been our previous students... we are growing mentors who can guide the next generation of contributors.",
+          "participant": "P3"
+        }
+      ],
+      "implications": [
+        {
+          "kind": "adverse",
+          "text": "GenAI-weakened project attachment may disrupt the renewal pathway."
+        },
+        {
+          "kind": "adverse",
+          "text": "GenAI-driven mentor withdrawal threatens support for future capacity."
+        }
+      ]
+    },
+    {
+      "id": "IM8",
+      "name": "Mentor motivation and retention",
+      "figureName": "Mentor motivation and retention",
+      "definition": "GSoC sustains mentor participation through personal and community benefits and manageable workloads.",
+      "excerpts": [
+        {
+          "text": "GSoC has had a huge impact on my career... [and] gave me a chance to mentor... I've always been on the receiving end of [GSoC]... helping someone else was a great experience for me.",
+          "participant": "P15"
+        }
+      ],
+      "implications": [
+        {
+          "kind": "adverse",
+          "text": "GenAI-driven verification burdens and reduced satisfaction may weaken continued participation."
+        },
+        {
+          "kind": "beneficial",
+          "text": "GenAI assistance reduces effort required for certain mentoring tasks."
+        }
+      ]
+    }
+  ],
+  "pathways": [
+    {
+      "id": "screening",
+      "name": "Entry screening",
+      "color": "#4E6598",
+      "effectIds": [
+        "CH1",
+        "CH2",
+        "CH3",
+        "CH4",
+        "CH5"
+      ],
+      "impactIds": [
+        "IM1",
+        "IM6"
+      ]
+    },
+    {
+      "id": "development",
+      "name": "Learning, contribution, and review",
+      "color": "#8A8CBF",
+      "effectIds": [
+        "OP1",
+        "CH6",
+        "CH7",
+        "CH8",
+        "CH9",
+        "CH10",
+        "CH11",
+        "CH12",
+        "CH13",
+        "CH14",
+        "CH15",
+        "OP3"
+      ],
+      "impactIds": [
+        "IM2",
+        "IM3",
+        "IM4"
+      ]
+    },
+    {
+      "id": "renewal",
+      "name": "Mentoring support and renewal",
+      "color": "#D3A0B0",
+      "effectIds": [
+        "OP2",
+        "CH16"
+      ],
+      "impactIds": [
+        "IM7"
+      ]
+    },
+    {
+      "id": "governance",
+      "name": "Governance and mentor capacity",
+      "color": "#EFA484",
+      "effectIds": [
+        "CH17",
+        "CH18",
+        "CH19",
+        "CH20"
+      ],
+      "impactIds": [
+        "IM5",
+        "IM6",
+        "IM8"
+      ]
+    }
+  ],
+  "strategyGroups": [
+    {
+      "id": "trust",
+      "name": "Establishing trust in applicants",
+      "description": "Build evidence of readiness beyond polished proposals and entry contributions.",
+      "color": "#4E6598"
+    },
+    {
+      "id": "accountability",
+      "name": "Governing GenAI use and maintaining accountability",
+      "description": "Choose a GenAI boundary while keeping understanding, checking, and responsibility with people.",
+      "color": "#685C91"
+    },
+    {
+      "id": "program",
+      "name": "Sharing guidance and verification across the program",
+      "description": "Share support across organizations while retaining local autonomy.",
+      "color": "#895447"
+    }
+  ],
+  "strategies": [
+    {
+      "id": "ST1",
+      "name": "Selecting applicants by prior contribution trajectory",
+      "definition": "Judge applicants by months of visible work before they apply (e.g., merged PRs, follow-through on issues, and responses to review feedback) beyond proposal quality.",
+      "groupId": "trust",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "We are judging the students even before they apply... [based on] six months contributi[on] for us... even if [they] does an AI-generated application, we know [they are] capable.",
+          "participant": "P3"
+        },
+        {
+          "text": "One thing we looked out for this year was a consistent history of high quality contributions prior to GSoC... all of [the selected candidates] had very good PRs already merged... interactions genuine enough to make us trust... they were reviewing their own code.",
+          "participant": "P4"
+        }
+      ]
+    },
+    {
+      "id": "ST2",
+      "name": "Live interviews to verify applicants' unaided ability",
+      "definition": "Test applicants in real time through screen-share, live coding, scenario questions, or verbal explanation to confirm that they, not GenAI, can do the work.",
+      "groupId": "trust",
+      "status": "Reported and planned",
+      "excerpts": [
+        {
+          "text": "We do not go by the applications. We try to take face-to-face interviews, video interviews with screen sharing on... scenario-based questions... [and] make them write the code in front of us in the editor",
+          "participant": "P3"
+        },
+        {
+          "text": "Next years... we will try to conduct interviews before selecting... are they really strong enough without AI?",
+          "participant": "P1"
+        }
+      ]
+    },
+    {
+      "id": "ST3",
+      "name": "Entry tasks that require project-specific understanding",
+      "definition": "Redesign, stagger, or curate starter tasks so they depend on the project's own processes and cannot be solved by a bare prompt.",
+      "groupId": "trust",
+      "status": "Proposed response",
+      "excerpts": [
+        {
+          "text": "[We need tasks requiring] more cognitive thought and understanding of our processes... so that just a prompt with the task will not be able to produce the output",
+          "participant": "P8"
+        }
+      ]
+    },
+    {
+      "id": "ST4",
+      "name": "Rewarding honest, rule-following GenAI use in selection",
+      "definition": "Lower the priority of applicants with undisclosed or rule-breaking GenAI use while offering revision opportunities to borderline cases.",
+      "groupId": "trust",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "[Mentors] did try not to select folks who were using AI, not because of a refusal to accept any AI code, but... to compensate for the abundance of applicants... using AI without paying attention to rules.",
+          "participant": "P6"
+        },
+        {
+          "text": "Candidates... looked eligible... but wherever we had some hint [that] they might be using LLMs and were not honest... we put them on a lower priority list.",
+          "participant": "P12"
+        },
+        {
+          "text": "Some of [AI-generated proposals] came back and rewrote it. And I was like, okay, this is fine.",
+          "participant": "P9"
+        },
+        {
+          "text": "We took the effort of manually going through each proposal [in a filtering session]... marked AI slop proposals as not fit... stack-ranked all the non-slop proposals [and] gave a chance to improve.",
+          "participant": "P11"
+        }
+      ]
+    },
+    {
+      "id": "ST5",
+      "name": "Banning GenAI for specific outputs with explicit exceptions",
+      "definition": "Restrict or ban GenAI assistance in specified outputs (e.g., proposals) or activities (e.g., onboarding) while explicitly allowing bounded uses (e.g., language help).",
+      "groupId": "accountability",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "I used AI for documenting the project... AI is good for documentation... I trust AI on this.",
+          "participant": "P5"
+        },
+        {
+          "text": "We specifically asked in our project description: please do not submit any code using AI.",
+          "participant": "P5"
+        },
+        {
+          "text": "I have a strict ban on artificial intelligence use",
+          "participant": "P7"
+        },
+        {
+          "text": "You may not use AI or LLMs in any way",
+          "participant": "P9"
+        }
+      ]
+    },
+    {
+      "id": "ST6",
+      "name": "Allowing GenAI conditionally: “assistant, not owner”",
+      "definition": "Permit GenAI assistance within local rules when contributors understand, check, and take ownership of the output.",
+      "groupId": "accountability",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "We do follow a practice that always recommend to use AI as long as you know what you are working on and how it is working",
+          "participant": "P2"
+        },
+        {
+          "text": "[AI] is a tool... [mentees may] check grammar, bugs, and style... We allow [that], and that's fine",
+          "participant": "P12"
+        },
+        {
+          "text": "You are using AI as your assistant. AI is not your owner",
+          "participant": "P1"
+        },
+        {
+          "text": "You control the AI; you don't let the AI control you",
+          "participant": "P2"
+        }
+      ]
+    },
+    {
+      "id": "ST7",
+      "name": "Judging quality, not authorship",
+      "definition": "Judge whether contributions work and meet quality expectations instead of treating who wrote them as decisive.",
+      "groupId": "accountability",
+      "status": "Reported and proposed criterion",
+      "excerpts": [
+        {
+          "text": "Whether it has been generated by AI, whether it has been human-written... if things are working fine, then people are happy with it.",
+          "participant": "P3"
+        },
+        {
+          "text": "Code quality is more important than flagging someone for using AI.",
+          "participant": "P15"
+        }
+      ]
+    },
+    {
+      "id": "ST8",
+      "name": "Using GenAI for mentoring support",
+      "definition": "Use GenAI to assist routine mentoring tasks, such as onboarding, submission triage, summaries, progress tracking, or first-pass review.",
+      "groupId": "accountability",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "We do have GitHub Copilot [and] use that on occasion to review larger changes... It is much better than us at catching things [like] security, subtle bugs, edge cases.",
+          "participant": "P4"
+        },
+        {
+          "text": "One was I quickly got AI to review the whole PR code base... the second thing, I myself reviewed the PR",
+          "participant": "P2"
+        }
+      ]
+    },
+    {
+      "id": "ST9",
+      "name": "Teaching contributors to use GenAI responsibly",
+      "definition": "Teach contributors, through explicit instruction or by modeling practice, to read, test, and take responsibility for GenAI-assisted work while retaining human decisions.",
+      "groupId": "accountability",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "We gave [contributors] written instructions on what we are expecting with the use of AI, and we encourage them to use it... [but] they shouldn't be completely dependent upon it.",
+          "participant": "P2"
+        },
+        {
+          "text": "You can use my expertise to help you to understand how to check things, but I am not being your checker... My role is to mentor you to develop your skills.",
+          "participant": "P8"
+        },
+        {
+          "text": "If it breaks, you need to know how to identify and fix the issue",
+          "participant": "P15"
+        }
+      ]
+    },
+    {
+      "id": "ST10",
+      "name": "Keeping final decisions with human reviewers",
+      "definition": "Keep responsibility for reviewing and accepting submitted contributions with mentors instead of delegating verification to GenAI.",
+      "groupId": "accountability",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "Even after AI said it was good to go, then we have to manually review it.",
+          "participant": "P5"
+        }
+      ]
+    },
+    {
+      "id": "ST11",
+      "name": "Treating GenAI-suspicion cues as prompts for closer review",
+      "definition": "Use suspicious patterns of generated code or provenance checks to decide what to examine more closely, not to reject automatically, as attribution remains unclear.",
+      "groupId": "accountability",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "It is next to impossible to confidently attribute something [as] AI-generated... we need to look for... heuristics. We can't really depend on hard and fast rules. But when we do find definitive proof... we swiftly ban users from our repos.",
+          "participant": "P7"
+        }
+      ]
+    },
+    {
+      "id": "ST12",
+      "name": "Asking contributors to explain their code in review",
+      "definition": "Ask contributors to explain their decisions and demonstrate their work; inability to explain is what disqualifies a contribution.",
+      "groupId": "accountability",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "I'll ask little things like, ‘Why did you choose to do it this way?' If they can't answer, then... [it is] a sign [of AI use]. But I don't accuse them immediately... It's through a discussion, ‘How did you check it?', that you can have a learning relationship.",
+          "participant": "P8"
+        },
+        {
+          "text": "If [the contributor uses] AI properly, understands the logic, and makes you understand it, it will be almost impossible to tell whether AI [was] used.",
+          "participant": "P3"
+        },
+        {
+          "text": "We sometimes ask them to clarify their prompt. If they use AI right, we probably won't see it; if they use it to do their job instead of themselves for them, we will. We don't have a philosophical rejection of AI.",
+          "participant": "P10"
+        }
+      ]
+    },
+    {
+      "id": "ST13",
+      "name": "Requiring contributors to disclose GenAI use",
+      "definition": "Ask contributors to disclose whether and how they used GenAI so mentors can adjust review checks targetedly.",
+      "groupId": "accountability",
+      "status": null,
+      "excerpts": [
+        {
+          "text": "It would be better if [the organization] put [AI disclosure] as a strict guideline so mentors don't have to do... guessing work... mentees [should] explicitly list whether and how they use LLMs.",
+          "participant": "P12"
+        }
+      ]
+    },
+    {
+      "id": "ST14",
+      "name": "Coordinating GenAI guidance across the program",
+      "definition": "Share guidance, resources, disclosure mechanisms, and lessons learned across participating organizations, while each organization retains autonomy over its own GenAI rules.",
+      "groupId": "program",
+      "status": "Program-level proposal",
+      "excerpts": [
+        {
+          "text": "[GSoC could] come up with a guideline [for AI usage]... but each and every organization is differently structured. They follow their own rules along with the GSoC rules... generalized practices could be spread along.",
+          "participant": "P2"
+        },
+        {
+          "text": "At the program level... require a strict form where the mentee discloses in what capacity they're using AI... [so that] eases the burden from each community individually enforcing those rules",
+          "participant": "P12"
+        },
+        {
+          "text": "[At the program level,] having an AI... scan proposals... and flag it if they think it's... LLM-generated. Not to say that we would immediately disregard that person, but just as an external flag so that we don't have to... unpick everything... we suspect this might be LLM-generated, and then you can look through with that lens.",
+          "participant": "P8"
+        }
+      ]
+    }
+  ],
+  "stances": [
+    {
+      "id": "prohibitionist",
+      "name": "Prohibitionist",
+      "color": "#92C5DE",
+      "tint": "#E4F0F7",
+      "actions": {
+        "boundary": [
+          "Prohibit GenAI in specified outputs and stages.",
+          "List permitted exceptions, such as accessibility or translation.",
+          "Accept unpolished work rather than allowing unlisted GenAI polishing."
+        ],
+        "entry": [
+          "Require work covered by the ban to be done without GenAI.",
+          "Ask applicants to demonstrate their skills directly if their readiness is unclear.",
+          "Apply published consequences for policy violations and allow revisions where permitted."
+        ],
+        "mentoring": [
+          "Teach contributors to break down problems, use project documentation, and develop their own solutions for work covered by the ban.",
+          "Ask contributors to walk through their implementation and how they tested it, and use gaps in understanding to guide further mentoring.",
+          "Have contributors make requested revisions themselves with GenAI allowed only for listed exceptions."
+        ],
+        "governance": [
+          "Review disputed cases to separate confirmed violations from uncertain attribution.",
+          "Check whether the rules or the process for fixing or disputing a violation were unclear, and whether enforcement took time away from mentoring support.",
+          "Update the examples, exceptions, and evidence expectations upon review."
+        ]
+      }
+    },
+    {
+      "id": "skeptic",
+      "name": "Skeptic",
+      "color": "#D1E5F0",
+      "tint": "#F4F8FB",
+      "actions": {
+        "boundary": [
+          "Restrict GenAI by default, allowing only a short list of low-risk uses (e.g., code explanations).",
+          "Require contributors to develop the substance of their work.",
+          "Require approval and output checks for other uses."
+        ],
+        "entry": [
+          "Ask applicants to disclose any permitted GenAI use and how they checked its output.",
+          "Probe their own reasoning with follow-up questions, and confirm that any use beyond the list was approved.",
+          "Look closely at questionable submissions through discussion before deciding."
+        ],
+        "mentoring": [
+          "Teach contributors to develop core solutions themselves with GenAI use only for permitted low-risk assistance.",
+          "Show contributors how to check GenAI suggestions against documentation, code behavior, or tests before relying on it.",
+          "Ask contributors to explain how bounded GenAI use shaped their reasoning, and target extra review or tests at the affected parts."
+        ],
+        "governance": [
+          "For each permitted use, check whether contributors follow the rules and can stand behind the output.",
+          "Keep, narrow, or expand the permitted list, expanding only when the results are consistently good.",
+          "Document how additions are approved and checked, and keep only the disclosure that helps review."
+        ]
+      }
+    },
+    {
+      "id": "accommodator",
+      "name": "Accommodator",
+      "color": "#F7F7F7",
+      "tint": "#FDFDFD",
+      "actions": {
+        "boundary": [
+          "Permit GenAI for supporting tasks (e.g., documentation or testing) rather than core work.",
+          "List exclusions for each output or stage.",
+          "Require contributors to review, adapt, and check output and to keep their reasoning and decisions."
+        ],
+        "entry": [
+          "Allow GenAI for supporting tasks in the application, but not for core proposal or entry tasks.",
+          "Ask applicants to explain their independently developed their ideas or task solutions.",
+          "Ask applicants to explain how they reviewed, adapted, and checked generated outputs."
+        ],
+        "mentoring": [
+          "Teach contributors to develop the core work themselves and use GenAI for supporting tasks.",
+          "Ask contributors to inspect GenAI output for wrong assumptions, missing cases, and inconsistencies before mentor review.",
+          "Ask contributors to explain core decisions and check that supporting material alongside the major changes reflects what the code does."
+        ],
+        "governance": [
+          "Check supporting tasks for recurring inaccuracies or mismatches with the core implementation.",
+          "Identify where GenAI help crossed into core work, obscured decisions, or shifted corrections onto mentors.",
+          "Update the exclusions for each output or stage, and the checking instructions for supporting tasks."
+        ]
+      }
+    },
+    {
+      "id": "pragmatist",
+      "name": "Pragmatist",
+      "color": "#FDDBC7",
+      "tint": "#FEF6F1",
+      "actions": {
+        "boundary": [
+          "Permit GenAI across development, including implementation; state only necessary project limits.",
+          "Require contributors to understand and check outputs.",
+          "Require contributors to make decisions and answer review questions themselves."
+        ],
+        "entry": [
+          "Accept GenAI-assisted work and assess whether it works and meets project requirements.",
+          "Ask applicants to explain their choices, demonstrate their checks, and respond to feedback themselves."
+        ],
+        "mentoring": [
+          "Teach contributors to define problems, break down tasks, give GenAI useful context, and evaluate assisted or generated solutions.",
+          "Guide contributors to adapt generated code, test it within the project, and resolve failures before submission.",
+          "Review contributions against project requirements, and have contributors diagnose and fix work that fails, regardless of how it was produced."
+        ],
+        "governance": [
+          "Review GenAI-assisted work for whether contributors could explain, fix, and maintain it.",
+          "Note where mentors had to reconstruct the reasoning or fix the work themselves.",
+          "Revise the project limits, contributor responsibilities, and mentoring guidance where gaps appeared."
+        ]
+      }
+    },
+    {
+      "id": "advocate",
+      "name": "Advocate",
+      "color": "#F4A582",
+      "tint": "#FCE8E0",
+      "actions": {
+        "boundary": [
+          "Integrate GenAI into daily development within security, privacy, and licensing rules.",
+          "Expect contributors to use GenAI as a working tool.",
+          "Hold contributors responsible for diagnosing and fixing failures in what they submit."
+        ],
+        "entry": [
+          "Ask applicants to demonstrate how they use GenAI on a project-specific task, including how they provide context and evaluate suggestions.",
+          "Ask them to demonstrate how they would diagnose and correct failures in the generated output."
+        ],
+        "mentoring": [
+          "Model how to give GenAI project context, inspect its outputs, and decide which to use, change, or reject.",
+          "Bring GenAI-assisted attempts into routine mentor discussions, with contributors presenting their checks, decisions, and open questions.",
+          "Use planned checkpoints to confirm that contributors still understand their work and can diagnose and fix failures as GenAI use grows."
+        ],
+        "governance": [
+          "Review where routine GenAI use supported learning and where contributors struggled to catch or fix faulty output.",
+          "Update approved tools and their access limits, mentoring routines, and checkpoints to close those gaps.",
+          "Widen project scope or automation only if mentor can still verify the work and contributors keep learning."
+        ]
+      }
+    }
+  ],
+  "capacity": [
+    {
+      "name": "GenAI boundary",
+      "actions": [
+        "Check that mentors have enough time and expertise to apply the chosen stance.",
+        "Assign mentors to learning support and final review, and Org Admins to policy and workload coordination.",
+        "Pause new GenAI permissions when capacity is limited."
+      ]
+    },
+    {
+      "name": "Entry and early preparation",
+      "actions": [
+        "Match contributor numbers and project scope to available mentoring capacity.",
+        "Publish entry requirements, check them before detailed review, and stagger starter tasks when volume is high.",
+        "Use additional screening when applicants' readiness is hard to trace."
+      ]
+    },
+    {
+      "name": "Mentoring, review, and evaluation",
+      "actions": [
+        "Budget mentor time for the work your stance adds.",
+        "Reuse reviewed guides and automated checks for routine work; use GenAI support only where the stance permits.",
+        "Have contributors check their work and prepare explanations before review."
+      ]
+    },
+    {
+      "name": "Governance",
+      "actions": [
+        "Check review backlogs, missed mentoring discussions, and mentor feedback at agreed intervals.",
+        "Cap open submissions per contributor or narrow tasks when review falls behind.",
+        "If overload persists, adjust estimated contributor numbers next cycle."
+      ]
+    }
+  ],
+  "references": {
+    "balali2018": {
+      "title": "Newcomers' Barriers. . . Is That All? An Analysis of Mentors' and Newcomers' Barriers in OSS Projects",
+      "label": "Balali et al. (2018)",
+      "url": "https://doi.org/10.1007/s10606-018-9310-8"
+    },
+    "feng2024guiding": {
+      "title": "Guiding the way: A systematic literature review on mentoring practices in open source software projects",
+      "label": "Feng et al. (2024)",
+      "url": null
+    },
+    "gsoc_ai_guidance2026": {
+      "title": "Guidance for GSoC Contributors using AI tooling in GSoC 2026",
+      "label": "Google Summer of Code (2026)",
+      "url": "https://developers.google.com/open-source/gsoc/resources/ai_guidance"
+    },
+    "gsoc_roles": {
+      "title": "Roles and Responsibilities",
+      "label": "Google Summer of Code",
+      "url": "https://developers.google.com/open-source/gsoc/help/responsibilities"
+    },
+    "popoola2025empirical": {
+      "title": "Empirical Analysis of Pull Requests for Google Summer of Code",
+      "label": "Popoola (2025)",
+      "url": null
+    },
+    "raoofian2025openment": {
+      "title": "OpenMent: A Dataset of Mentor-Mentee Interactions in Google Summer of Code",
+      "label": "Raoofian et al. (2025)",
+      "url": null
+    },
+    "silva2017long": {
+      "title": "How long and how much: What to expect from summer of code participants?",
+      "label": "Silva et al. (2017)",
+      "url": null
+    },
+    "silva2020google": {
+      "title": "Google summer of code: Student motivations and contributions",
+      "label": "Silva et al. (2020)",
+      "url": null
+    },
+    "silva2020theory": {
+      "title": "A theory of the engagement in open source projects via summer of code programs",
+      "label": "Silva et al. (2020)",
+      "url": null
+    },
+    "steinmacher2019": {
+      "title": "Overcoming Social Barriers When Contributing to Open Source Software Projects",
+      "label": "Steinmacher et al. (2019)",
+      "url": "https://doi.org/10.1007/s10606-018-9335-z"
+    },
+    "tan2023understanding": {
+      "title": "Understanding mentors’ engagement in OSS communities via google summer of code",
+      "label": "Tan et al. (2023)",
+      "url": null
+    },
+    "trainer2014community": {
+      "title": "Community code engagements: summer of code & hackathons for community building in scientific software",
+      "label": "Trainer et al. (2014)",
+      "url": null
+    }
+  }
+}

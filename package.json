@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.mjs",
+    "data:sync": "python3 scripts/sync-manuscript-data.py",
+    "data:check": "python3 scripts/sync-manuscript-data.py --check"
   },
   "dependencies": {
     "d3": "^7.9.0",

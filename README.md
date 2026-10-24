@@ -1,8 +1,5 @@
 # GSoC as AI-to-OSS Infrastructure
 
-A lightweight web-based dashboard for our preliminary open coding work in the research project "GSoC as AI-to-OSS Infrastructure:
-*Turning AI-Assisted Work into Sustainable Open Source Contribution*".
-
 ## Deployment Instructions
 
 Set up and start a local development environment:
@@ -24,3 +21,4 @@ Deploy the output on your local host:
 ```bash
 npx vite
 ```
+

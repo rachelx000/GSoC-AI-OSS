@@ -1,384 +1,153 @@
-import { useMemo, useState } from 'react';
-import {
-  respondentBands,
-  respondentColor,
-  respondentTextColor,
-} from '../data/challengeColors';
-import { strategyDimensions } from '../data/strategies';
-import StrategyFrameworkSection, { FrameworkOverlayToggle } from './StrategyFrameworkSection';
-
-const SAMPLE_SIZE = 15;
-const SOURCE_ORDER = [
-  'ST-S2.1',
-  'ST-S2.2',
-  'ST-S2.3',
-  'ST-S2.4',
-  'ST-S4.3',
-  'ST-S5.2',
-  'ST-S5.3',
-  'ST-S5.6',
-  'ST-S6.1',
-  'ST-G.1',
-  'ST-G.2',
-  'ST-G.3',
-  'ST-G.5',
-  'ST-G.6',
-  'ST-G.7',
-];
-const SOURCE_INDEX = new Map(SOURCE_ORDER.map((id, index) => [id, index]));
-const DIMENSION_COLORS = {
-  ST1: '#bcd4e6',
-  ST2: '#c5dedd',
-  ST3: '#fde2e4',
-  ST4: '#fad2e1',
-  ST5: '#d6e2e9',
-  ST6: '#eddcd2',
-};
-
-const allStrategies = strategyDimensions.flatMap((dimension) => dimension.strategies.map(
-  (strategy) => ({
-    ...strategy,
-    dimension,
-    sourceIndex: SOURCE_INDEX.get(strategy.id),
-  }),
-));
-
-function matchesBand(strategy, activeBand) {
-  return !activeBand
-    || (strategy.respondentCount >= activeBand.min && strategy.respondentCount <= activeBand.max);
-}
-
-function rankStrategies(strategies) {
-  return [...strategies].sort((first, second) => (
-    second.respondentCount - first.respondentCount || first.sourceIndex - second.sourceIndex
-  ));
-}
-
-function CoverageFilter({ activeBand, onChange, visibleCount }) {
-  return (
-    <aside className="strategy-filter" aria-labelledby="strategy-filter-title">
-      <div className="strategy-filter-heading">
-        <h2 id="strategy-filter-title">
-          Number of respondents <span>(n = {SAMPLE_SIZE})</span>
-        </h2>
-      </div>
-
-      <div className="strategy-filter-row">
-        <p className="strategy-filter-status" aria-live="polite">
-          {visibleCount} shown
-        </p>
-
-        <div className="strategy-filter-options"
-          aria-label="Filter strategies by respondent count"
-        >
-          <button
-            type="button"
-            className="strategy-filter-button strategy-filter-all"
-            aria-pressed={!activeBand}
-            onClick={() => onChange(null)}
-          >
-            All
-          </button>
-
-          {respondentBands.map((band) => {
-            const selected = activeBand?.label === band.label;
-
-            return (
-              <button
-                type="button"
-                className="strategy-filter-button"
-                style={{ '--band-color': band.color, '--band-ink': band.ink }}
-                aria-label={`${band.label} respondents`}
-                aria-pressed={selected}
-                key={band.label}
-                onClick={() => onChange(selected ? null : band)}
-              >
-                <span>{band.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    </aside>
-  );
-}
-
-function ViewSwitcher({ activeView, onChange }) {
-  return (
-    <div className="strategy-view-switch" aria-label="Strategy organization">
-      <button
-        type="button"
-        aria-pressed={activeView === 'dimension'}
-        onClick={() => onChange('dimension')}
-      >
-        By Dimension
-      </button>
-      <button
-        type="button"
-        aria-pressed={activeView === 'all'}
-        onClick={() => onChange('all')}
-      >
-        All Strategies
-      </button>
-    </div>
-  );
-}
-
-function StrategySourceTabs({ activeSource, onChange }) {
-  const selectWithKeyboard = (event) => {
-    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-    event.preventDefault();
-    const nextSource = event.key === 'ArrowLeft' || event.key === 'Home'
-      ? 'interviews'
-      : 'framework';
-    onChange(nextSource);
-    document.getElementById(`strategy-${nextSource}-tab`)?.focus();
-  };
-
-  return (
-    <div className="strategy-source-tabs" role="tablist" aria-label="Strategy source">
-      <button
-        id="strategy-interviews-tab"
-        type="button"
-        role="tab"
-        aria-selected={activeSource === 'interviews'}
-        aria-controls="strategy-interviews-view"
-        tabIndex={activeSource === 'interviews' ? 0 : -1}
-        onClick={() => onChange('interviews')}
-        onKeyDown={selectWithKeyboard}
-      >
-        Interview-derived strategies
-      </button>
-      <button
-        id="strategy-framework-tab"
-        type="button"
-        role="tab"
-        aria-selected={activeSource === 'framework'}
-        aria-controls="strategy-framework-view"
-        tabIndex={activeSource === 'framework' ? 0 : -1}
-        onClick={() => onChange('framework')}
-        onKeyDown={selectWithKeyboard}
-      >
-        Proposed framework
-      </button>
-    </div>
-  );
-}
-
-function StrategyEvidence({ strategy, hidden }) {
-  return (
-    <div
-      className="strategy-expanded-content"
-      id={`strategy-details-${strategy.id}`}
-      hidden={hidden}
-    >
-      <section className="strategy-definition" aria-labelledby={`strategy-definition-${strategy.id}`}>
-        <h4 id={`strategy-definition-${strategy.id}`}>Strategy definition</h4>
-        <p>{strategy.definition}</p>
-      </section>
-
-      <section className="strategy-open-codes" aria-labelledby={`strategy-codes-${strategy.id}`}>
-        <div className="strategy-evidence-heading">
-          <h4 id={`strategy-codes-${strategy.id}`}>Representative open codes</h4>
-        </div>
-        <div className="strategy-code-list">
-          {strategy.representativeCodes.map((item, index) => (
-            <article className="strategy-code" key={`${strategy.id}-${item.code}-${index}`}>
-              <div className="strategy-code-heading">
-                <strong>{item.code}</strong>
-                <span>{item.source}</span>
-              </div>
-              <details>
-                <summary>Verbatim excerpt</summary>
-                <blockquote>{item.quote}</blockquote>
-              </details>
-            </article>
-          ))}
-        </div>
-      </section>
-    </div>
-  );
-}
-
-function StrategyRow({ strategy, expanded, onToggle, showDimension = false }) {
-  const coverageColor = respondentColor(strategy.respondentCount);
-  const coverageInk = respondentTextColor(strategy.respondentCount);
-
-  return (
-    <article
-      className="strategy-row"
-      data-expanded={expanded ? 'true' : 'false'}
-      style={{
-        '--coverage-color': coverageColor,
-        '--coverage-ink': coverageInk,
-        '--dimension-color': DIMENSION_COLORS[strategy.dimension.id],
-      }}
-    >
-      <button
-        type="button"
-        className="strategy-row-trigger"
-        aria-expanded={expanded}
-        aria-controls={`strategy-details-${strategy.id}`}
-        onClick={onToggle}
-      >
-        <span className="strategy-row-title">
-          <span className="strategy-code-label">{strategy.id}</span>
-          <strong>{strategy.name}</strong>
-          {showDimension && (
-            <span className="strategy-dimension-tag">{strategy.dimension.name}</span>
-          )}
-        </span>
-        <span
-          className="strategy-coverage-track"
-          role="img"
-          aria-label={`${strategy.respondentCount} of ${SAMPLE_SIZE} interviewees`}
-          style={{ '--coverage-width': `${(strategy.respondentCount / SAMPLE_SIZE) * 100}%` }}
-        >
-          <span className="strategy-coverage-fill" aria-hidden="true" />
-          <span className="strategy-coverage-count" aria-hidden="true">
-            <strong>{strategy.respondentCount}</strong>
-            <span>&nbsp;/ {SAMPLE_SIZE}</span>
-          </span>
-        </span>
-        <span className="strategy-expand-icon" aria-hidden="true">⌄</span>
-      </button>
-      <StrategyEvidence strategy={strategy} hidden={!expanded} />
-    </article>
-  );
-}
-
-function StrategyDimension({ dimension, strategies, expandedId, onToggle }) {
-  return (
-    <section
-      className="strategy-dimension"
-      style={{ '--dimension-color': DIMENSION_COLORS[dimension.id] }}
-      aria-labelledby={`strategy-dimension-${dimension.id}`}
-    >
-      <header className="strategy-dimension-heading">
-        <h2 id={`strategy-dimension-${dimension.id}`}>{dimension.name}</h2>
-        <p>{dimension.definition}</p>
-      </header>
-      <div className="strategy-list">
-        {strategies.map((strategy) => (
-          <StrategyRow
-            strategy={strategy}
-            expanded={expandedId === strategy.id}
-            key={strategy.id}
-            onToggle={() => onToggle(strategy.id)}
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
+import { useState } from 'react';
+import { strategyGroups, strategies } from '../data/research';
+import { Excerpts, SourceNote } from './ResearchEvidence';
 
 export default function StrategiesSection() {
-  const [activeSource, setActiveSource] = useState('interviews');
-  const [activeBand, setActiveBand] = useState(null);
-  const [activeView, setActiveView] = useState('all');
-  const [expandedId, setExpandedId] = useState(null);
-  const [frameworkOverlayVisible, setFrameworkOverlayVisible] = useState(false);
-
-  const rankedStrategies = useMemo(() => rankStrategies(
-    allStrategies.filter((strategy) => matchesBand(strategy, activeBand)),
-  ), [activeBand]);
-
-  const filteredDimensions = useMemo(() => strategyDimensions
-    .map((dimension) => ({
-      ...dimension,
-      strategies: rankStrategies(allStrategies.filter((strategy) => (
-        strategy.dimension.id === dimension.id && matchesBand(strategy, activeBand)
-      ))),
-    }))
-    .filter((dimension) => dimension.strategies.length > 0), [activeBand]);
-
-  const toggleStrategy = (strategyId) => {
-    setExpandedId((current) => (current === strategyId ? null : strategyId));
-  };
+  const [groupId, setGroupId] = useState('all');
+  const [query, setQuery] = useState('');
+  const search = query.toLowerCase().trim();
+  const visibleStrategies = strategies.filter(
+    (strategy) =>
+      (groupId === 'all' || strategy.groupId === groupId) &&
+      [
+        strategy.id,
+        strategy.name,
+        strategy.definition,
+        ...strategy.excerpts.map((excerpt) => excerpt.text),
+      ].some((text) => text.toLowerCase().includes(search)),
+  );
+  const visibleGroups = strategyGroups.filter((group) =>
+    visibleStrategies.some((strategy) => strategy.groupId === group.id),
+  );
 
   return (
     <main
       id="strategies-panel"
-      className="strategies-page"
+      className="research-page"
       role="tabpanel"
       aria-labelledby="strategies-tab"
     >
-      <div
-        className={`strategy-source-control-row${activeSource === 'framework' ? ' has-overlay' : ''}`}
-      >
-        {activeSource === 'framework' && (
-          <FrameworkOverlayToggle
-            visible={frameworkOverlayVisible}
-            onToggle={() => setFrameworkOverlayVisible((visible) => !visible)}
-          />
-        )}
-        <StrategySourceTabs activeSource={activeSource} onChange={setActiveSource} />
-      </div>
-
-      {activeSource === 'interviews' ? (
-        <div
-          id="strategy-interviews-view"
-          className="strategies-frame"
-          role="tabpanel"
-          aria-labelledby="strategy-interviews-tab"
-        >
-          <header className="strategies-overview">
-            <div className="strategies-intro">
-              <h1>How GSoC mentors respond to AI-era challenges</h1>
-              <p>
-                A list of interview-derived strategies by different dimensions.
-                Bars show how many of 15 interviewees contributed evidence to each strategy.
-                Expand rows to inspect the strategy's definition & example codes.
-              </p>
-            </div>
-          </header>
-
-          <div className="strategies-workspace">
-            <div className="strategies-control-row">
-              <ViewSwitcher activeView={activeView} onChange={setActiveView} />
-              <CoverageFilter
-                activeBand={activeBand}
-                onChange={setActiveBand}
-                visibleCount={rankedStrategies.length}
-              />
-            </div>
-
-            <section className="strategies-content" aria-label="Strategy taxonomy">
-              <div className="strategies-content-scroll" key={activeView}>
-                {activeView === 'all' ? (
-                  <section className="strategy-all-panel" aria-label="All strategies ranked by coverage">
-                    <div className="strategy-ranked-list">
-                      {rankedStrategies.map((strategy) => (
-                        <StrategyRow
-                          strategy={strategy}
-                          expanded={expandedId === strategy.id}
-                          key={strategy.id}
-                          onToggle={() => toggleStrategy(strategy.id)}
-                          showDimension
+      <header className="page-heading">
+        <div>
+          <span className="eyebrow">
+            RQ2 · Mentoring and governance responses
+          </span>
+          <h1>GenAI Strategies</h1>
+          <p>
+            Where an organization draws its GenAI boundary determines who
+            carries the verification work.
+          </p>
+        </div>
+        <p className="page-aside">
+          Reported practices and proposed responses, organized by the
+          manuscript’s three themes.
+        </p>
+      </header>
+      <div className="strategy-layout">
+        <aside className="strategy-sidebar">
+          <label className="search-field">
+            <span>Search strategies & excerpts</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Try “disclosure” or ST12"
+            />
+          </label>
+          <nav className="strategy-group-nav" aria-label="Strategy groups">
+            <button
+              type="button"
+              aria-pressed={groupId === 'all'}
+              onClick={() => setGroupId('all')}
+            >
+              All groups <span aria-hidden="true">↗</span>
+            </button>
+            {strategyGroups.map((group) => (
+              <button
+                type="button"
+                key={group.id}
+                aria-pressed={groupId === group.id}
+                onClick={() => setGroupId(group.id)}
+                style={{ '--group-color': group.color }}
+              >
+                <i aria-hidden="true" />
+                {group.name}
+                <span aria-hidden="true">→</span>
+              </button>
+            ))}
+          </nav>
+        </aside>
+        <div className="strategy-groups" aria-live="polite">
+          {visibleGroups.map((group) => (
+            <section
+              className="strategy-group"
+              key={group.id}
+              style={{ '--group-color': group.color }}
+              aria-labelledby={`strategy-group-${group.id}`}
+            >
+              <header>
+                <span className="eyebrow">
+                  {group.id === 'trust'
+                    ? 'Establish trust'
+                    : group.id === 'accountability'
+                      ? 'Maintain accountability'
+                      : 'Share responsibility'}
+                </span>
+                <h2 id={`strategy-group-${group.id}`}>{group.name}</h2>
+                <p>{group.description}</p>
+              </header>
+              <div className="strategy-records">
+                {visibleStrategies
+                  .filter((strategy) => strategy.groupId === group.id)
+                  .map((strategy) => (
+                    <details className="strategy-record" key={strategy.id}>
+                      <summary>
+                        <span className="code-pill">{strategy.id}</span>
+                        <strong>{strategy.name}</strong>
+                        {strategy.status && (
+                          <span className="practice-status">
+                            {strategy.status}
+                          </span>
+                        )}
+                        <span className="disclosure-chevron" aria-hidden="true">
+                          +
+                        </span>
+                      </summary>
+                      <div className="strategy-record-detail">
+                        <p className="detail-label">
+                          Strategy definition · Manuscript RQ2
+                        </p>
+                        <p className="strategy-definition-copy">
+                          {strategy.definition}
+                        </p>
+                        <Excerpts
+                          items={strategy.excerpts}
+                          label={`${strategy.id} interview excerpts`}
                         />
-                      ))}
-                    </div>
-                  </section>
-                ) : (
-                  <div className="strategy-dimension-grid">
-                    {filteredDimensions.map((dimension) => (
-                      <StrategyDimension
-                        dimension={dimension}
-                        strategies={dimension.strategies}
-                        expandedId={expandedId}
-                        key={dimension.id}
-                        onToggle={toggleStrategy}
-                      />
-                    ))}
-                  </div>
-                )}
+                      </div>
+                    </details>
+                  ))}
               </div>
             </section>
-          </div>
+          ))}
+          {!visibleGroups.length && (
+            <div className="empty-search">
+              <h2>No matching strategy</h2>
+              <p>Try another term or select All groups.</p>
+              <button
+                className="secondary-button"
+                type="button"
+                onClick={() => {
+                  setQuery('');
+                  setGroupId('all');
+                }}
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
         </div>
-      ) : (
-        <StrategyFrameworkSection overlayVisible={frameworkOverlayVisible} />
-      )}
+      </div>
     </main>
   );
 }
