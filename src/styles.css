@@ -21,12 +21,12 @@
 }
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 92px;
+  scroll-padding-top: 72px;
 }
 body {
   margin: 0;
   min-width: 320px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.6;
 }
 button,
@@ -104,7 +104,7 @@ summary {
   z-index: 20;
   display: flex;
   align-items: center;
-  min-height: 78px;
+  min-height: 56px;
   padding: 0 clamp(20px, 3.5vw, 64px);
   gap: clamp(20px, 5vw, 88px);
   border-bottom: 1px solid var(--line);
@@ -122,22 +122,10 @@ summary {
   letter-spacing: -0.035em;
   text-decoration: none;
 }
-.brand-cycle {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  background: #e9edf7;
-  border: 1px solid #d1d9eb;
-  border-radius: 50%;
-  color: var(--blue);
-  font-size: 1.875rem;
-  line-height: 1;
-}
 .tabs {
   display: flex;
   align-self: stretch;
-  gap: 28px;
+  gap: 24px;
   flex: 1;
 }
 .tabs button {
@@ -147,7 +135,7 @@ summary {
   background: none;
   color: var(--muted);
   font-weight: 500;
-  font-size: 1.125rem;
+  font-size: 1rem;
   white-space: nowrap;
   min-height: 48px;
 }
@@ -176,8 +164,10 @@ summary {
   border: 1px solid #d4dbe9;
   border-radius: 8px;
   background: white;
+  color: var(--ink);
   font-size: 1rem;
   font-weight: 600;
+  text-decoration: none;
 }
 .appendix-button:hover {
   background: #eef2fa;
@@ -194,35 +184,54 @@ summary {
 .research-page {
   max-width: 1660px;
   margin: auto;
-  padding: 38px clamp(20px, 3.5vw, 64px) 48px;
+  padding: 18px clamp(20px, 3vw, 48px) 24px;
+}
+.impacts-page {
+  /* Keep the optional fit-to-screen diagrams proportional to viewport height. */
+  --overview-height: max(360px, calc(100svh - 400px));
 }
 .page-heading {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 48px;
-  margin-bottom: 25px;
+  gap: 28px;
+  margin-bottom: 14px;
 }
 .page-heading h1 {
-  margin: 6px 0 9px;
-  font-size: clamp(2.25rem, 3.4vw, 3.125rem);
+  margin: 0 0 6px;
+  font-size: clamp(1.875rem, 2.5vw, 2.375rem);
   font-weight: 650;
   letter-spacing: -0.05em;
   line-height: 1.08;
 }
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 6px;
+}
+.page-title img {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.page-title h1 {
+  margin: 0;
+}
 .page-heading > div > p {
   max-width: 720px;
   color: var(--muted);
-  font-size: 1.125rem;
-  line-height: 1.55;
+  font-size: 1rem;
+  line-height: 1.45;
 }
 .page-aside {
   flex: 0 1 300px;
   max-width: 330px;
   color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.6;
-  padding-left: 18px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding-left: 14px;
   border-left: 2px solid #d1d7e6;
 }
 .source-note {
@@ -400,19 +409,17 @@ summary {
   background: white;
   color: inherit;
   text-decoration: none;
-  transition:
-    border-color 150ms,
-    transform 150ms;
+  transition: transform 150ms;
+}
+.explore-card:hover,
+.explore-card:focus-visible {
+  transform: translateY(-3px);
 }
 .explore-card:nth-child(2) {
   border-top-color: var(--purple);
 }
 .explore-aim {
   border-top-color: var(--rose);
-}
-.explore-card:hover {
-  border-color: #8a8cbf;
-  transform: translateY(-2px);
 }
 .explore-card h2 {
   display: flex;
@@ -424,9 +431,18 @@ summary {
   font-weight: 600;
   letter-spacing: -0.03em;
 }
-.explore-card h2 > span:last-child {
-  color: var(--blue);
-  font-size: 1.375rem;
+.explore-card-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  object-fit: contain;
+  opacity: 0.95;
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+.explore-card:hover .explore-card-icon,
+.explore-card:focus-visible .explore-card-icon {
+  transform: scale(1.3);
 }
 .explore-card p {
   font-size: 1.125rem;
@@ -436,16 +452,6 @@ summary {
 .explore-card strong {
   color: var(--ink);
   font-weight: 600;
-}
-.explore-aim h2 > span:first-child {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.explore-aim img {
-  width: 35px;
-  height: 35px;
-  object-fit: contain;
 }
 
 @media (min-width: 851px) and (max-height: 760px) {
@@ -468,7 +474,7 @@ summary {
   }
 }
 
-/* Global figures and the single-group evidence workspace. */
+/* Overview figures and the expandable evidence workspace. */
 .impact-workspace {
   background: white;
   border: 1px solid var(--line);
@@ -478,20 +484,20 @@ summary {
 }
 .impact-toolbar {
   position: sticky;
-  top: 78px;
+  top: 56px;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  padding: 15px 22px;
+  gap: 12px;
+  padding: 6px 14px;
   border-bottom: 1px solid #e7eaf1;
   background: white;
 }
 .view-switch {
   display: inline-flex;
   gap: 3px;
-  padding: 3px;
+  padding: 2px;
   border: 1px solid #dce1ed;
   background: #f7f8fc;
   border-radius: 9px;
@@ -500,14 +506,15 @@ summary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 6px 10px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 6px;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 500;
-  min-height: 44px;
+  line-height: 1.4;
+  min-height: 36px;
 }
 .view-switch button[aria-pressed="true"] {
   background: white;
@@ -517,21 +524,43 @@ summary {
 }
 .toolbar-hint {
   color: #657084;
-  font-size: 1rem;
+  font-size: 0.875rem;
+}
+.map-sizing {
+  display: flex;
+  gap: 4px;
+}
+.map-sizing button {
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+.map-sizing button[aria-pressed="true"] {
+  border-color: #d8dfed;
+  background: #eef2fa;
+  color: var(--blue);
+  font-weight: 600;
 }
 .group-navigation {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding: 13px 20px;
-  gap: 9px;
+  grid-template-columns: minmax(0, 1fr) max-content minmax(0, 0.9fr) minmax(0, 0.85fr);
+  padding: 8px 12px;
+  gap: 8px;
   border-bottom: 1px solid #e7eaf1;
+  font-size: 0.875rem;
 }
 .group-navigation button {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 7px;
   min-width: 0;
-  padding: 10px 11px;
+  min-height: 44px;
+  padding: 6px 8px;
   border: 1px solid #e1e5ef;
   border-radius: 8px;
   background: #fff;
@@ -543,34 +572,41 @@ summary {
   border-color: var(--group-color);
 }
 .group-navigation button > i {
-  width: 6px;
-  height: 29px;
+  width: 4px;
+  height: 24px;
   border-radius: 3px;
   background: var(--group-color);
   flex-shrink: 0;
 }
 .group-navigation button > span {
-  display: grid;
-  gap: 2px;
-  font-size: 0.875rem;
+  font-size: inherit;
   line-height: 1.35;
 }
+.group-navigation button[data-group="mentoring"] > span {
+  white-space: nowrap;
+}
 .group-navigation strong {
+  flex-shrink: 0;
   font-weight: 700;
   color: var(--group-color);
-  font-size: 1rem;
+  font-size: inherit;
 }
 .cycle-figure {
-  max-width: 1200px;
   margin: auto;
-  padding: 10px 28px 20px;
+  padding: 6px 14px 12px;
+}
+.cycle-scroll {
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 .pipeline-cycle {
   display: block;
   width: 100%;
   height: auto;
-  min-width: 900px;
+  /* At 780px wide, the 20-unit stage labels remain at least 15px. */
+  min-width: 780px;
+  max-width: 1040px;
+  margin: auto;
   overflow: visible;
 }
 .pipeline-cycle text {
@@ -607,7 +643,7 @@ summary {
 }
 .cycle-direction {
   fill: none;
-  stroke-width: 2.2;
+  stroke-width: 2.4;
   pointer-events: none;
 }
 .cycle-title {
@@ -622,36 +658,46 @@ summary {
   font-style: italic;
 }
 .cycle-note {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: 600;
+  paint-order: stroke;
+  stroke: white;
+  stroke-width: 5px;
+  stroke-linejoin: round;
 }
 .cycle-figure figcaption,
 .expanded-figure figcaption {
   color: #657084;
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.875rem;
+  line-height: 1.45;
 }
 .cycle-figure figcaption {
-  max-width: 750px;
-  margin: -2px auto 0;
+  max-width: 900px;
+  margin: 4px auto 0;
   text-align: center;
 }
 .expanded-figure {
-  padding: 18px 20px 20px;
+  padding: 10px 12px 12px;
 }
 .expanded-map-scroll {
-  overflow-x: auto;
+  overflow: auto;
+  max-height: var(--overview-height);
   scrollbar-width: thin;
 }
 .expanded-impact-map {
   display: block;
   width: 100%;
-  min-width: 1600px;
   height: auto;
 }
+.expanded-map-scroll[data-scale="fit"] .expanded-impact-map {
+  max-height: var(--overview-height);
+}
+.expanded-map-scroll[data-scale="readable"] .expanded-impact-map {
+  min-width: 1600px;
+}
 .expanded-figure figcaption {
-  margin-top: 13px;
-  max-width: 1000px;
+  margin-top: 8px;
+  max-width: 1100px;
 }
 .map-target {
   fill: transparent;
@@ -732,22 +778,22 @@ summary {
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  padding: 24px 25px 20px;
+  padding: 14px 18px;
 }
 .focus-heading .eyebrow {
   color: var(--group-color);
 }
 .focus-heading h2 {
   margin-top: 5px;
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   line-height: 1.2;
   letter-spacing: -0.035em;
 }
 .focus-heading > p {
   max-width: 290px;
   color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 .focused-map {
   display: grid;
@@ -755,15 +801,15 @@ summary {
       340px,
       1.3fr
     );
-  gap: 20px;
-  padding: 0 25px 25px;
+  gap: 14px;
+  padding: 0 18px 18px;
   align-items: start;
 }
 .column-heading {
-  min-height: 63px;
-  padding-bottom: 13px;
+  min-height: 54px;
+  padding-bottom: 9px;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 .column-heading .eyebrow {
   color: var(--muted);
@@ -774,7 +820,7 @@ summary {
   justify-content: space-between;
   gap: 8px;
   margin-top: 5px;
-  font-size: 1.25rem;
+  font-size: 1.0625rem;
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -790,7 +836,7 @@ summary {
 }
 .stage-node {
   position: relative;
-  padding: 15px;
+  padding: 11px;
   border: 1px solid #d9dfe9;
   border-left: 3px solid var(--group-color);
   border-radius: 9px;
@@ -807,7 +853,7 @@ summary {
 }
 .stage-node-title h4 {
   padding-top: 3px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
 }
@@ -849,7 +895,7 @@ summary {
   margin-top: 12px;
   border-top: 1px solid #23344918;
   padding-top: 9px;
-  font-size: 1.125rem;
+  font-size: 0.9375rem;
 }
 .stage-definition summary {
   cursor: pointer;
@@ -925,15 +971,15 @@ summary {
   grid-template-columns: auto 1fr 12px;
   gap: 9px;
   width: 100%;
-  padding: 12px;
+  padding: 9px 10px;
   border: 0;
   text-align: left;
   background: none;
 }
 .node-heading > strong {
   padding-top: 3px;
-  font-size: 1.125rem;
-  line-height: 1.45;
+  font-size: 1rem;
+  line-height: 1.4;
   font-weight: 600;
 }
 .node-heading:hover {
@@ -971,9 +1017,9 @@ summary {
 }
 .excerpt blockquote {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: 1rem;
   color: #405681;
-  line-height: 1.75;
+  line-height: 1.6;
   overflow-wrap: anywhere;
 }
 .excerpt figcaption {
@@ -998,12 +1044,12 @@ summary {
   padding-bottom: 9px;
 }
 .impact-node .node-heading > strong {
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 .function-definition {
   margin-bottom: 12px;
-  font-size: 1.125rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 .source-alias {
   margin: -3px 0 10px;
@@ -1022,7 +1068,7 @@ summary {
   display: flex;
   align-items: flex-start;
   gap: 7px;
-  font-size: 1.125rem;
+  font-size: 0.9375rem;
   color: var(--rose);
   line-height: 1.5;
 }
@@ -1068,26 +1114,26 @@ summary {
 /* RQ2 keeps definitions and source excerpts inside a small native disclosure. */
 .strategy-layout {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
+  grid-template-columns: 240px minmax(0, 1fr);
   align-items: start;
-  gap: 34px;
+  gap: 22px;
 }
 .strategy-sidebar {
   position: sticky;
-  top: 102px;
+  top: 74px;
 }
 .search-field {
   display: grid;
   gap: 8px;
-  margin-bottom: 20px;
-  font-size: 1rem;
+  margin-bottom: 14px;
+  font-size: 0.9375rem;
   color: var(--muted);
   font-weight: 500;
 }
 .search-field input {
   min-width: 0;
   width: 100%;
-  padding: 12px;
+  padding: 9px 10px;
   border: 1px solid #cfd7e6;
   border-radius: 8px;
   background: white;
@@ -1106,13 +1152,14 @@ summary {
   align-items: center;
   gap: 9px;
   width: 100%;
-  padding: 15px 12px;
+  min-height: 44px;
+  padding: 10px;
   border: 1px solid #dce1ec;
   border-radius: 9px;
   background: white;
   text-align: left;
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.9375rem;
+  line-height: 1.45;
 }
 .strategy-group-nav button > span {
   margin-left: auto;
@@ -1138,11 +1185,11 @@ summary {
 }
 .strategy-groups {
   display: grid;
-  gap: 32px;
+  gap: 22px;
   min-width: 0;
 }
 .strategy-group > header {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   padding-left: 14px;
   border-left: 3px solid var(--group-color);
 }
@@ -1153,15 +1200,15 @@ summary {
 .strategy-group h2 {
   max-width: 850px;
   margin: 5px 0 6px;
-  font-size: 1.625rem;
+  font-size: 1.375rem;
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.25;
 }
 .strategy-group > header > p {
   color: var(--muted);
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.45;
 }
 .strategy-records {
   display: grid;
@@ -1179,8 +1226,8 @@ summary {
 .strategy-record > summary {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 15px 17px;
+  gap: 10px;
+  padding: 10px 12px;
   cursor: pointer;
   list-style: none;
 }
@@ -1193,9 +1240,9 @@ summary {
 .strategy-record > summary > strong {
   flex: 1;
   padding-top: 3px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
-  line-height: 1.55;
+  line-height: 1.4;
 }
 .practice-status {
   align-self: center;
@@ -1220,9 +1267,9 @@ summary {
 }
 .strategy-definition-copy {
   max-width: 870px;
-  margin-bottom: 18px;
-  font-size: 1.125rem;
-  line-height: 1.75;
+  margin-bottom: 14px;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 .strategy-record .excerpts {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1245,31 +1292,17 @@ summary {
 }
 
 /* AIM follows the manuscript's blue-to-peach stance spectrum and capacity band. */
-.aim-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 4px 0 8px;
-}
-.aim-title img {
-  width: 46px;
-  height: 46px;
-  object-fit: contain;
-}
-.aim-title h1 {
-  margin: 0;
-}
 .aim-definition {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 22px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 .aim-definition section {
   display: flex;
   align-items: flex-start;
-  gap: 13px;
-  padding: 17px 19px;
+  gap: 10px;
+  padding: 12px 14px;
   border: 1px solid #dce1ed;
   border-radius: 10px;
   background: white;
@@ -1290,15 +1323,15 @@ summary {
 }
 .aim-definition h2 {
   padding-top: 1px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.4;
   font-weight: 650;
 }
 .aim-definition p {
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.55;
+  font-size: 0.9375rem;
+  line-height: 1.45;
 }
 .aim-stance-workspace {
   overflow: clip;
@@ -1307,7 +1340,9 @@ summary {
   background: white;
 }
 .stance-scale {
-  padding: 22px 25px 17px;
+  --stance-thumb-width: 22px;
+  --stance-label-inset: calc(var(--stance-thumb-width) / 2 + 1px);
+  padding: 14px 18px 12px;
   border-bottom: 1px solid #e2e6ef;
 }
 .scale-caption {
@@ -1315,7 +1350,7 @@ summary {
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   color: var(--muted);
   font-size: 0.875rem;
 }
@@ -1347,7 +1382,8 @@ summary {
 .stance-range::-webkit-slider-thumb {
   appearance: none;
   -webkit-appearance: none;
-  width: 22px;
+  box-sizing: border-box;
+  width: var(--stance-thumb-width);
   height: 30px;
   border: 2px solid var(--ink);
   border-radius: 5px;
@@ -1355,17 +1391,19 @@ summary {
   box-shadow: 0 1px 4px #23344922;
 }
 .stance-range::-moz-range-thumb {
-  width: 19px;
-  height: 27px;
+  box-sizing: border-box;
+  width: var(--stance-thumb-width);
+  height: 30px;
   border: 2px solid var(--ink);
   border-radius: 5px;
   background: #ffffffdd;
 }
 .stance-labels {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 5px;
-  margin-top: 14px;
+  grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+  gap: 0;
+  margin-top: 10px;
+  margin-inline: var(--stance-label-inset);
 }
 .stance-labels button {
   display: flex;
@@ -1373,18 +1411,31 @@ summary {
   align-items: center;
   gap: 7px;
   min-width: 0;
-  padding: 7px;
+  min-height: 36px;
+  padding: 5px 7px;
   border: 1px solid transparent;
   border-radius: 6px;
   background: none;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 0.9375rem;
 }
 .stance-labels button:first-child {
   justify-content: flex-start;
 }
 .stance-labels button:last-child {
   justify-content: flex-end;
+}
+.stance-labels button span {
+  white-space: nowrap;
+}
+/* Balance the color dot so the text itself is centered on the slider stop. */
+.stance-labels button::after {
+  content: "";
+  flex: 0 0 9px;
+}
+.stance-labels button:first-child::after,
+.stance-labels button:last-child::after {
+  display: none;
 }
 .stance-labels i {
   width: 9px;
@@ -1394,21 +1445,19 @@ summary {
   border-radius: 50%;
 }
 .stance-labels button[aria-pressed="true"] {
-  border-color: #b9c4d7;
-  background: #f7f8fc;
   color: var(--ink);
   font-weight: 700;
 }
 .scale-help {
-  margin-top: 9px;
+  margin-top: 6px;
   color: #657084;
   text-align: center;
   font-size: 0.875rem;
   line-height: 1.5;
 }
 .stance-profile {
-  margin: 22px 25px;
-  padding: 20px 23px;
+  margin: 14px 18px;
+  padding: 14px 16px;
   border: 1px solid #d6ddeb;
   border-top: 4px solid var(--stance-color);
   border-radius: 10px;
@@ -1422,7 +1471,7 @@ summary {
 }
 .stance-profile h2 {
   margin-top: 4px;
-  font-size: 2rem;
+  font-size: 1.625rem;
   line-height: 1.2;
   letter-spacing: -0.035em;
   font-weight: 600;
@@ -1436,21 +1485,21 @@ summary {
 }
 .aim-actions {
   display: grid;
-  gap: 9px;
-  margin: 14px 0 0;
+  gap: 6px;
+  margin: 10px 0 0;
   padding-left: 16px;
 }
 .aim-actions li {
   padding-left: 2px;
-  font-size: 1.125rem;
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 .aim-actions li::marker {
   color: var(--blue);
 }
 .stance-profile > .aim-actions {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 25px;
+  gap: 18px;
 }
 .conceptual-note {
   margin-top: 15px;
@@ -1461,7 +1510,7 @@ summary {
   color: #785346;
 }
 .integration-section {
-  padding: 0 25px 25px;
+  padding: 0 18px 18px;
 }
 .aim-section-heading {
   display: flex;
@@ -1470,25 +1519,25 @@ summary {
 }
 .aim-section-heading h2 {
   padding-top: 1px;
-  font-size: 1.375rem;
+  font-size: 1.25rem;
   line-height: 1.3;
   font-weight: 600;
   letter-spacing: -0.025em;
 }
 .aim-section-heading p {
   margin-top: 5px;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   color: var(--muted);
   line-height: 1.6;
 }
 .integration-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 17px;
+  gap: 10px;
+  margin-top: 12px;
 }
 .integration-card {
-  padding: 19px;
+  padding: 14px;
   border: 1px solid #dce1eb;
   border-radius: 9px;
   background: var(--stance-tint);
@@ -1499,13 +1548,13 @@ summary {
 }
 .integration-card h3 {
   margin-top: 6px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.35;
   font-weight: 600;
 }
 .capacity-section {
-  padding: 23px 25px;
-  margin-top: 21px;
+  padding: 16px 18px;
+  margin-top: 14px;
   border: 1px solid #d5cde5;
   border-radius: 13px;
   background: #f0ebf8;
@@ -1518,24 +1567,24 @@ summary {
 .capacity-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 12px;
 }
 .capacity-grid > section {
-  padding: 17px;
+  padding: 12px;
   background: #faf8fd;
   border: 1px solid #e2dbed;
   border-radius: 9px;
 }
 .capacity-grid h3 {
-  min-height: 38px;
+  min-height: 36px;
   color: #514874;
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.45;
   font-weight: 600;
 }
 .capacity-grid .aim-actions li {
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 .aim-limit {
   max-width: 1000px;
@@ -1543,79 +1592,6 @@ summary {
   color: #657084;
   font-size: 1rem;
   line-height: 1.7;
-}
-
-.appendix-dialog {
-  width: min(1200px, calc(100vw - 32px));
-  max-width: none;
-  height: min(960px, calc(100dvh - 32px));
-  max-height: none;
-  padding: 0;
-  border: 1px solid #cfd7e6;
-  border-radius: 14px;
-  background: white;
-  color: var(--ink);
-  box-shadow: 0 25px 100px #2334493d;
-}
-.appendix-dialog::backdrop {
-  background: #23344973;
-  backdrop-filter: blur(3px);
-}
-.appendix-modal {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.appendix-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-shrink: 0;
-  padding: 17px 22px;
-  border-bottom: 1px solid var(--line);
-}
-.appendix-modal-header h2 {
-  font-size: 1.25rem;
-}
-.appendix-modal-close {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: #f7f8fc;
-  font-size: 1rem;
-}
-.appendix-pdf-frame {
-  flex: 1;
-  width: 100%;
-  min-height: 0;
-  border: 0;
-}
-.appendix-modal-footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  gap: 8px;
-  padding: 14px;
-  border-top: 1px solid var(--line);
-  font-size: 1rem;
-  color: var(--muted);
-}
-.appendix-download {
-  padding: 7px 12px;
-  border: 1px solid #d4dbe9;
-  border-radius: 8px;
-  background: #eef2fa;
-  font-weight: 600;
-  text-decoration: none;
-}
-.appendix-download:hover {
-  background: #e2e9f7;
 }
 
 @media (min-width: 1600px) {
@@ -1627,7 +1603,7 @@ summary {
   .implications li {
     font-size: 1.125rem;
   }
-  .group-navigation button > span {
+  .group-navigation {
     font-size: 1rem;
   }
 }
@@ -1664,7 +1640,7 @@ summary {
     padding: 10px;
   }
   .node-heading > strong {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
   .stage-column {
     grid-column: 1 / -1;
@@ -1680,7 +1656,7 @@ summary {
   }
   .group-navigation {
     gap: 7px;
-    padding: 12px 15px;
+    padding: 8px 10px;
   }
   .strategy-layout {
     grid-template-columns: 240px minmax(0, 1fr);
@@ -1700,53 +1676,115 @@ summary {
   }
 }
 @media (max-width: 850px) {
+  .stance-control {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    row-gap: 6px;
+    margin-inline: var(--stance-label-inset);
+  }
+  .stance-control .stance-range {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-self: center;
+    width: calc(100% + var(--stance-thumb-width) + 2px);
+    margin-inline: calc(0px - var(--stance-label-inset));
+  }
+  .stance-labels {
+    display: contents;
+  }
+  .stance-labels button,
+  .stance-labels button:first-child,
+  .stance-labels button:last-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 43px;
+    justify-content: center;
+    justify-items: center;
+    align-self: stretch;
+    align-content: start;
+    gap: 5px;
+    padding: 6px 3px;
+  }
+  .stance-labels button::after {
+    display: none;
+  }
+  .stance-labels button span {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+  .stance-labels button:first-child {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    justify-items: start;
+  }
+  .stance-labels button:first-child span {
+    text-align: left;
+  }
+  .stance-labels button:nth-child(2) {
+    grid-column: 1 / 4;
+    grid-row: 3;
+  }
+  .stance-labels button:nth-child(3) {
+    grid-column: 3 / 5;
+    grid-row: 1;
+  }
+  .stance-labels button:nth-child(4) {
+    grid-column: 4 / 7;
+    grid-row: 3;
+  }
+  .stance-labels button:last-child {
+    grid-column: 5 / 7;
+    grid-row: 1;
+    justify-items: end;
+  }
+  .stance-labels button:last-child span {
+    text-align: right;
+  }
   .impact-toolbar {
-    top: 104px;
+    top: 96px;
   }
   .site-header {
-    min-height: 104px;
+    min-height: 96px;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 0 20px;
-    padding-top: 12px;
+    padding-top: 8px;
   }
   .brand {
     font-size: 1.5rem;
   }
-  .brand-cycle {
-    width: 29px;
-    height: 29px;
-    font-size: 1.75rem;
-  }
   .tabs {
     flex: 0 0 100%;
     order: 3;
-    min-height: 48px;
+    min-height: 44px;
     justify-content: space-around;
     gap: 14px;
   }
   .tabs button {
     padding: 0 12px;
-    font-size: 1.125rem;
+    min-height: 44px;
+    font-size: 1rem;
   }
   .appendix-button {
     font-size: 1rem;
     padding: 7px 10px;
   }
   .research-page {
-    padding-top: 26px;
+    padding-top: 18px;
   }
   .page-heading {
     display: block;
   }
   .page-aside {
     max-width: 650px;
-    margin-top: 12px;
+    margin-top: 8px;
     padding-left: 11px;
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
   .cover-page {
-    min-height: calc(100svh - 104px);
+    min-height: calc(100svh - 96px);
     padding-block: 28px;
   }
   .cover-hero {
@@ -1782,19 +1820,19 @@ summary {
     font-size: 1.375rem;
   }
   .group-navigation {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr) max-content;
   }
   .group-navigation button > span {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
   .impact-toolbar {
-    padding: 12px 15px;
+    padding: 6px 10px;
   }
   .toolbar-hint {
     display: none;
   }
   .cycle-figure {
-    padding: 12px 9px 18px;
+    padding: 6px 10px 12px;
   }
   .focused-map {
     grid-template-columns: 1fr 1.2fr;
@@ -1820,7 +1858,7 @@ summary {
     margin-top: 10px;
   }
   .strategy-sidebar {
-    top: 127px;
+    top: 112px;
   }
   .strategy-layout {
     grid-template-columns: 1fr;
@@ -1828,6 +1866,9 @@ summary {
   }
   .strategy-sidebar {
     position: static;
+  }
+  .strategy-group-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .strategy-record > summary {
     flex-wrap: wrap;
@@ -1867,7 +1908,7 @@ summary {
     grid-template-columns: 1fr;
   }
   .integration-card {
-    padding: 18px;
+    padding: 14px;
   }
   .integration-card .aim-actions {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1876,7 +1917,7 @@ summary {
 }
 @media (max-width: 600px) {
   html {
-    scroll-padding-top: 120px;
+    scroll-padding-top: 112px;
   }
   .site-header {
     padding-inline: 16px;
@@ -1898,16 +1939,16 @@ summary {
     font-size: 0.875rem;
   }
   .research-page {
-    padding: 22px 14px 30px;
+    padding: 16px 14px 20px;
   }
   .page-heading {
-    margin-bottom: 19px;
+    margin-bottom: 14px;
   }
   .page-heading h1 {
-    font-size: 2.375rem;
+    font-size: 2rem;
   }
   .page-heading > div > p {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
   .cover-page {
     padding: 26px 20px;
@@ -1943,6 +1984,10 @@ summary {
     gap: 9px;
     flex-wrap: wrap;
   }
+  .map-sizing {
+    width: 100%;
+    justify-content: flex-end;
+  }
   .view-switch {
     width: 100%;
   }
@@ -1950,38 +1995,47 @@ summary {
     flex: 1;
     justify-content: center;
     padding-inline: 6px;
-    font-size: 1rem;
+    font-size: 0.9375rem;
   }
   .group-navigation {
+    grid-template-columns: 1fr;
     padding: 10px;
     gap: 8px;
   }
   .group-navigation button {
-    padding: 9px 8px;
-    gap: 6px;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 4px minmax(0, 1fr);
+    padding: 7px 8px;
+    gap: 2px 7px;
+    align-content: start;
+  }
+  .group-navigation button > span,
+  .group-navigation strong {
+    grid-column: 2;
   }
   .group-navigation button > span {
     font-size: 0.875rem;
   }
+  .group-navigation button[data-group="mentoring"] > span {
+    white-space: normal;
+  }
   .group-navigation button > i {
     width: 4px;
+    grid-row: 1 / 3;
+    height: 100%;
     margin-top: 2px;
   }
   .group-navigation strong {
     font-size: 0.875rem;
   }
-  .cycle-figure {
-    overflow-x: auto;
-  }
   .cycle-figure figcaption {
     min-width: 0;
-    margin-top: 12px;
+    margin-top: 6px;
     font-size: 0.875rem;
     padding: 0 7px;
   }
   .expanded-figure {
-    padding: 13px 10px;
+    padding: 10px;
   }
   .impact-picker {
     grid-template-columns: 1fr;
@@ -1993,10 +2047,10 @@ summary {
     font-size: 1.5rem;
   }
   .focus-heading {
-    padding: 20px 15px 17px;
+    padding: 14px;
   }
   .focus-heading h2 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
   .focused-map {
     grid-template-columns: 1fr;
@@ -2010,18 +2064,20 @@ summary {
     align-items: center;
   }
   .stage-node-title h4 {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
   .node-heading > strong,
   .impact-node .node-heading > strong {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
-  .excerpt blockquote,
+  .excerpt blockquote {
+    font-size: 1rem;
+  }
   .implications li {
-    font-size: 1.125rem;
+    font-size: 0.9375rem;
   }
   .stage-definition {
-    font-size: 1.125rem;
+    font-size: 0.9375rem;
   }
   .source-note {
     font-size: 0.875rem;
@@ -2037,8 +2093,8 @@ summary {
     grid-template-columns: 1fr;
   }
   .strategy-group-nav button {
-    padding: 11px 13px;
-    font-size: 1rem;
+    padding: 10px 12px;
+    font-size: 0.9375rem;
   }
   .sidebar-note {
     margin-top: 12px;
@@ -2047,10 +2103,10 @@ summary {
     margin-bottom: 13px;
   }
   .strategy-group h2 {
-    font-size: 1.5rem;
+    font-size: 1.375rem;
   }
   .strategy-record > summary {
-    padding: 14px 12px;
+    padding: 10px 12px;
   }
   .aim-definition {
     grid-template-columns: 1fr;
@@ -2063,10 +2119,10 @@ summary {
     margin: 0;
   }
   .aim-definition h2 {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
   .stance-scale {
-    padding: 19px 13px 15px;
+    padding: 14px 13px 12px;
   }
   .scale-caption {
     display: grid;
@@ -2085,28 +2141,13 @@ summary {
   .scale-caption > span:last-child {
     text-align: right;
   }
-  .stance-labels {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 5px;
-  }
-  .stance-labels button,
-  .stance-labels button:first-child,
-  .stance-labels button:last-child {
-    display: grid;
-    min-height: 43px;
-    justify-content: center;
-    justify-items: center;
-    gap: 5px;
-    padding: 6px 3px;
-    font-size: 1rem;
-  }
   .scale-help {
     margin-top: 12px;
     font-size: 0.875rem;
   }
   .stance-profile {
-    margin: 16px 13px;
-    padding: 17px;
+    margin: 12px 13px;
+    padding: 14px;
   }
   .stance-profile > header {
     display: block;
@@ -2116,7 +2157,7 @@ summary {
     margin-top: 10px;
   }
   .stance-profile h2 {
-    font-size: 1.875rem;
+    font-size: 1.625rem;
   }
   .integration-section {
     padding: 0 13px 17px;
@@ -2129,19 +2170,23 @@ summary {
     font-size: 1.25rem;
   }
   .capacity-section {
-    padding: 19px 15px;
+    padding: 14px;
   }
   .capacity-grid {
     grid-template-columns: 1fr;
     gap: 10px;
   }
   .capacity-grid .aim-actions li {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .explore-card:hover,
+  .explore-card:focus-visible {
+    transform: none;
   }
   *,
   *::before,

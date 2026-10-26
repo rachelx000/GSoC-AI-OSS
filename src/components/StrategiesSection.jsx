@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { strategyGroups, strategies } from '../data/research';
 import { Excerpts, SourceNote } from './ResearchEvidence';
+import strategyIcon from '../assets/strategy.svg';
 
 export default function StrategiesSection() {
   const [groupId, setGroupId] = useState('all');
@@ -29,10 +30,10 @@ export default function StrategiesSection() {
     >
       <header className="page-heading">
         <div>
-          <span className="eyebrow">
-            RQ2 · Mentoring and governance responses
-          </span>
-          <h1>GenAI Strategies</h1>
+          <div className="page-title">
+            <img src={strategyIcon} alt="" />
+            <h1>GenAI Strategies</h1>
+          </div>
           <p>
             Where an organization draws its GenAI boundary determines who
             carries the verification work.

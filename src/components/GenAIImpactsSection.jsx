@@ -10,7 +10,7 @@ import {
 import PipelineCycle from './PipelineCycle';
 import ExpandedImpactMap from './ExpandedImpactMap';
 import FocusedImpactMap from './FocusedImpactMap';
-import { SourceNote } from './ResearchEvidence';
+import impactIcon from '../assets/impact.svg';
 
 const findings = [
   {
@@ -35,6 +35,7 @@ const findings = [
 
 export default function GenAIImpactsSection() {
   const [view, setView] = useState('cycle');
+  const [mapScale, setMapScale] = useState('fit');
   const [groupId, setGroupId] = useState(null);
   const [selection, setSelection] = useState(null);
   const [pickerId, setPickerId] = useState(null);
@@ -80,10 +81,10 @@ export default function GenAIImpactsSection() {
     >
       <header className="page-heading">
         <div>
-          <span className="eyebrow">
-            RQ1 · GenAI across the mentoring pipeline
-          </span>
-          <h1>GenAI Impacts</h1>
+          <div className="page-title">
+            <img src={impactIcon} alt="" />
+            <h1>GenAI Impacts</h1>
+          </div>
           <p>
             Cheaper production changes what work reveals about a newcomer and
             who has to do the checking.
@@ -115,20 +116,20 @@ export default function GenAIImpactsSection() {
         aria-label="Interactive GenAI impacts"
       >
         <div className="impact-toolbar">
-          <div className="view-switch" aria-label="Pipeline visualization">
+          <div className="view-switch" role="group" aria-label="Pipeline visualization">
             <button
               type="button"
               aria-pressed={!groupId && view === 'cycle'}
               onClick={() => showOverview('cycle')}
             >
-              <span aria-hidden="true">⟳</span> Cycle view
+              Cycle view
             </button>
             <button
               type="button"
               aria-pressed={!groupId && view === 'expanded'}
               onClick={() => showOverview('expanded')}
             >
-              <span aria-hidden="true">⤢</span> Expand impact map
+              Expand impact map
             </button>
           </div>
           {groupId ? (
@@ -139,6 +140,23 @@ export default function GenAIImpactsSection() {
             >
               ← All stage groups
             </button>
+          ) : view === 'expanded' ? (
+            <div className="map-sizing" role="group" aria-label="Impact map size">
+              <button
+                type="button"
+                aria-pressed={mapScale === 'fit'}
+                onClick={() => setMapScale('fit')}
+              >
+                Fit to screen
+              </button>
+              <button
+                type="button"
+                aria-pressed={mapScale === 'readable'}
+                onClick={() => setMapScale('readable')}
+              >
+                Readable size
+              </button>
+            </div>
           ) : (
             <span className="toolbar-hint">
               Select a stage or a group to inspect its evidence.
@@ -150,6 +168,7 @@ export default function GenAIImpactsSection() {
           {groups.map((group) => (
             <button
               key={group.id}
+              data-group={group.id}
               type="button"
               aria-pressed={groupId === group.id}
               onClick={() => focusGroup(group.id)}
@@ -159,10 +178,8 @@ export default function GenAIImpactsSection() {
               }}
             >
               <i aria-hidden="true" />
-              <span>
-                <strong>{group.range}</strong>
-                {group.name}
-              </span>
+              <strong>{group.range}</strong>
+              <span>{group.name}</span>
             </button>
           ))}
         </nav>
@@ -242,6 +259,7 @@ export default function GenAIImpactsSection() {
           />
         ) : (
           <ExpandedImpactMap
+            scale={mapScale}
             onStageSelect={selectStage}
             onEffectSelect={selectEffect}
             onImpactSelect={selectImpact}
@@ -249,6 +267,7 @@ export default function GenAIImpactsSection() {
           />
         )}
       </section>
+
     </main>
   );
 }

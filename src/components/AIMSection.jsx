@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import aimIcon from '../assets/aim-icon.png';
+import aimIcon from '../assets/AIM.svg';
 import { stances, capacity } from '../data/research';
 
 const INTEGRATION = [
@@ -61,9 +61,8 @@ export default function AIMSection() {
     >
       <header className="page-heading">
         <div>
-          <span className="eyebrow">Conceptual decision framework</span>
-          <div className="aim-title">
-            <img src={aimIcon} alt="AIM target icon from the manuscript" />
+          <div className="page-title">
+            <img src={aimIcon} alt="" />
             <h1>AIM</h1>
           </div>
           <p>Choose GenAI responses your mentors can sustain.</p>
@@ -108,29 +107,31 @@ export default function AIMSection() {
             <strong>A · Acceptable GenAI use</strong>
             <span>More permissive</span>
           </div>
-          <input
-            className="stance-range"
-            type="range"
-            min="0"
-            max="4"
-            step="1"
-            value={activeIndex}
-            aria-label="Acceptable GenAI use stance"
-            aria-valuetext={stance.name}
-            onChange={(event) => setActiveIndex(Number(event.target.value))}
-          />
-          <div className="stance-labels">
-            {stances.map((item, index) => (
-              <button
-                type="button"
-                key={item.id}
-                aria-pressed={activeIndex === index}
-                onClick={() => setActiveIndex(index)}
-              >
-                <i style={{ background: item.color }} aria-hidden="true" />
-                {item.name}
-              </button>
-            ))}
+          <div className="stance-control">
+            <input
+              className="stance-range"
+              type="range"
+              min="0"
+              max="4"
+              step="1"
+              value={activeIndex}
+              aria-label="Acceptable GenAI use stance"
+              aria-valuetext={stance.name}
+              onChange={(event) => setActiveIndex(Number(event.target.value))}
+            />
+            <div className="stance-labels">
+              {stances.map((item, index) => (
+                <button
+                  type="button"
+                  key={item.id}
+                  aria-pressed={activeIndex === index}
+                  onClick={() => setActiveIndex(index)}
+                >
+                  <i style={{ background: item.color }} aria-hidden="true" />
+                  <span>{item.name}</span>
+                </button>
+              ))}
+            </div>
           </div>
           <p className="scale-help">
             Drag, scroll over the colorbar, use arrow keys, or select a stance.

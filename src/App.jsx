@@ -3,7 +3,7 @@ import CoverPage from './components/CoverPage';
 import GenAIImpactsSection from './components/GenAIImpactsSection';
 import StrategiesSection from './components/StrategiesSection';
 import AIMSection from './components/AIMSection';
-import AppendixModal from './components/AppendixModal';
+import appendixUrl from './assets/GSoC_appendix.pdf?url';
 
 const TABS = [
   { id: 'impacts', label: 'GenAI Impacts' },
@@ -20,9 +20,7 @@ const currentView = () => {
 
 export default function App() {
   const [view, setView] = useState(currentView);
-  const [appendixOpen, setAppendixOpen] = useState(false);
   const tabRefs = useRef([]);
-  const appendixButton = useRef(null);
 
   useEffect(() => {
     const syncView = () => {
@@ -45,10 +43,6 @@ export default function App() {
     window.location.hash = `/${TABS[next].id}`;
     tabRefs.current[next]?.focus();
   };
-  const closeAppendix = () => {
-    setAppendixOpen(false);
-    requestAnimationFrame(() => appendixButton.current?.focus());
-  };
 
   return (
     <>
@@ -66,12 +60,9 @@ export default function App() {
         <a
           className="brand"
           href="#/"
-          aria-label="GSoC & GenAI home"
+          aria-label="home"
           onClick={() => window.scrollTo(0, 0)}
         >
-          <span className="brand-cycle" aria-hidden="true">
-            ↻
-          </span>
           <span>GSoC-AI-OSS</span>
         </a>
         <nav className="tabs" role="tablist" aria-label="Research views">
@@ -98,20 +89,19 @@ export default function App() {
             </button>
           ))}
         </nav>
-        <button
+        <a
           className="appendix-button"
-          type="button"
-          ref={appendixButton}
-          aria-haspopup="dialog"
-          aria-expanded={appendixOpen}
-          onClick={() => setAppendixOpen(true)}
+          href={appendixUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Appendix (PDF, opens in a new tab)"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
             <path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z" />
             <path d="M14 3v5h5M8 12h8M8 16h8" />
           </svg>
           Appendix
-        </button>
+        </a>
       </header>
       <div id="main-content" tabIndex={-1}>
         {view === 'cover' && <CoverPage />}
@@ -119,7 +109,6 @@ export default function App() {
         {view === 'strategies' && <StrategiesSection />}
         {view === 'aim' && <AIMSection />}
       </div>
-      {appendixOpen && <AppendixModal onClose={closeAppendix} />}
     </>
   );
 }

@@ -1,4 +1,6 @@
-import aimIcon from '../assets/aim-icon.png';
+import aimIcon from '../assets/AIM.svg';
+import impactIcon from '../assets/impact.svg';
+import strategyIcon from '../assets/strategy.svg';
 
 export default function CoverPage() {
   return (
@@ -37,7 +39,7 @@ export default function CoverPage() {
       <section className="cover-explore" aria-label="Explore the manuscript">
         <a className="explore-card" href="#/impacts">
           <h2>
-            Impacts <span aria-hidden="true">↗</span>
+            Impacts <img className="explore-card-icon" src={impactIcon} alt="" />
           </h2>
           <p>
             Explore GenAI-related challenges, opportunities, and their
@@ -46,7 +48,7 @@ export default function CoverPage() {
         </a>
         <a className="explore-card" href="#/strategies">
           <h2>
-            Strategies <span aria-hidden="true">↗</span>
+            Strategies <img className="explore-card-icon" src={strategyIcon} alt="" />
           </h2>
           <p>
             Examine reported practices and proposals for establishing trust
@@ -55,10 +57,7 @@ export default function CoverPage() {
         </a>
         <a className="explore-card explore-aim" href="#/aim">
           <h2>
-            <span>
-              <img src={aimIcon} alt="" /> AIM
-            </span>
-            <span aria-hidden="true">↗</span>
+            AIM <img className="explore-card-icon" src={aimIcon} alt="" />
           </h2>
           <p>
             Explore a conceptual framework connecting <strong>Acceptable GenAI use</strong>,{' '}

@@ -76,6 +76,7 @@ function Target({ x, y, width, height, label, onSelect }) {
 }
 
 export default function ExpandedImpactMap({
+  scale = 'fit',
   onStageSelect,
   onEffectSelect,
   onImpactSelect,
@@ -85,9 +86,14 @@ export default function ExpandedImpactMap({
     <figure className="expanded-figure">
       <div
         className="expanded-map-scroll"
-        tabIndex={0}
+        data-scale={scale}
+        tabIndex={scale === 'readable' ? 0 : undefined}
         role="region"
-        aria-label="Expanded manuscript figure. Scroll horizontally on small screens."
+        aria-label={
+          scale === 'readable'
+            ? 'Expanded manuscript figure at readable size. Scroll to explore.'
+            : 'Expanded manuscript figure fitted to the screen.'
+        }
       >
         <svg
           viewBox="0 0 1887 1028"
@@ -147,11 +153,6 @@ export default function ExpandedImpactMap({
           ))}
         </svg>
       </div>
-      <figcaption>
-        The manuscript’s RQ1 figure. Select S, CH, OP, or IM to inspect a single
-        stage group and its linked evidence. Colored pathways join groups of
-        effects; they do not represent measured effect sizes.
-      </figcaption>
     </figure>
   );
 }
