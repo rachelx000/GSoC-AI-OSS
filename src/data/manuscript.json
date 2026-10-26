@@ -5,8 +5,9 @@
     "strategies": "references/manuscript/tables/rq2_strategies.tex",
     "strategyEvidence": "references/supplemental/tables/strategies_definitions.tex",
     "framework": "references/manuscript/tables/framework_table.tex",
-    "relationships": "references/manuscript/figures/rq1-latest.svg",
-    "pipeline": "references/manuscript/sections/2_GSoC.tex"
+    "relationships": "references/figures/rq1-latest.svg",
+    "pipeline": "references/manuscript/sections/2_GSoC.tex",
+    "relationshipMapping": "Researcher clarification: main impact groups, additional group links, and cross-stage OP1/OP2 connections."
   },
   "groups": [
     {
@@ -712,26 +713,34 @@
   "pathways": [
     {
       "id": "screening",
-      "name": "Entry screening",
+      "name": "Entry and early preparation",
       "color": "#4E6598",
+      "sourceType": "group",
+      "linkType": "main",
+      "groupId": "entry",
       "effectIds": [
         "CH1",
         "CH2",
         "CH3",
         "CH4",
-        "CH5"
+        "CH5",
+        "OP1"
       ],
       "impactIds": [
         "IM1",
-        "IM6"
-      ]
+        "IM2",
+        "IM3"
+      ],
+      "impactTheme": "Assessing and developing newcomers"
     },
     {
       "id": "development",
-      "name": "Learning, contribution, and review",
+      "name": "Mentoring, review, and evaluation",
       "color": "#8A8CBF",
+      "sourceType": "group",
+      "linkType": "main",
+      "groupId": "mentoring",
       "effectIds": [
-        "OP1",
         "CH6",
         "CH7",
         "CH8",
@@ -742,30 +751,40 @@
         "CH13",
         "CH14",
         "CH15",
+        "OP1",
+        "OP2",
         "OP3"
       ],
       "impactIds": [
-        "IM2",
-        "IM3",
-        "IM4"
-      ]
+        "IM4",
+        "IM5"
+      ],
+      "impactTheme": "Verification, contribution value, and governance"
     },
     {
       "id": "renewal",
-      "name": "Mentoring support and renewal",
+      "name": "Retention and role transition",
       "color": "#D3A0B0",
+      "sourceType": "group",
+      "linkType": "main",
+      "groupId": "retention",
       "effectIds": [
-        "OP2",
         "CH16"
       ],
       "impactIds": [
-        "IM7"
-      ]
+        "IM6",
+        "IM7",
+        "IM8"
+      ],
+      "impactTheme": "Community and mentoring renewal"
     },
     {
       "id": "governance",
-      "name": "Governance and mentor capacity",
+      "name": "Cross-stage governance",
       "color": "#EFA484",
+      "sourceType": "group",
+      "linkType": "main",
+      "groupId": "governance",
       "effectIds": [
         "CH17",
         "CH18",
@@ -775,6 +794,85 @@
       "impactIds": [
         "IM5",
         "IM6",
+        "IM8"
+      ]
+    },
+    {
+      "id": "entry-community",
+      "name": "Entry and community growth",
+      "color": "#4E6598",
+      "sourceType": "group",
+      "linkType": "additional",
+      "groupId": "entry",
+      "effectIds": [
+        "CH1",
+        "CH2",
+        "CH3",
+        "CH4",
+        "CH5",
+        "OP1"
+      ],
+      "impactIds": [
+        "IM6"
+      ]
+    },
+    {
+      "id": "mentoring-trust",
+      "name": "Mentoring, trust, and learning",
+      "color": "#8A8CBF",
+      "sourceType": "group",
+      "linkType": "additional",
+      "groupId": "mentoring",
+      "effectIds": [
+        "CH6",
+        "CH7",
+        "CH8",
+        "CH9",
+        "CH10",
+        "CH11",
+        "CH12",
+        "CH13",
+        "CH14",
+        "CH15",
+        "OP1",
+        "OP2",
+        "OP3"
+      ],
+      "impactIds": [
+        "IM2",
+        "IM3"
+      ]
+    },
+    {
+      "id": "onboarding",
+      "name": "Onboarding joins mentoring",
+      "color": "#8A8CBF",
+      "sourceType": "effect",
+      "linkType": "additional",
+      "linkedGroupId": "mentoring",
+      "effectIds": [
+        "OP1"
+      ],
+      "impactIds": [
+        "IM2",
+        "IM3",
+        "IM4",
+        "IM5"
+      ]
+    },
+    {
+      "id": "mentoring-support",
+      "name": "Mentoring support joins renewal",
+      "color": "#D3A0B0",
+      "sourceType": "effect",
+      "linkType": "additional",
+      "linkedGroupId": "retention",
+      "effectIds": [
+        "OP2"
+      ],
+      "impactIds": [
+        "IM6",
+        "IM7",
         "IM8"
       ]
     }
@@ -822,7 +920,7 @@
       "name": "Live interviews to verify applicants' unaided ability",
       "definition": "Test applicants in real time through screen-share, live coding, scenario questions, or verbal explanation to confirm that they, not GenAI, can do the work.",
       "groupId": "trust",
-      "status": "Reported and planned",
+      "status": null,
       "excerpts": [
         {
           "text": "We do not go by the applications. We try to take face-to-face interviews, video interviews with screen sharing on... scenario-based questions... [and] make them write the code in front of us in the editor",
@@ -839,7 +937,7 @@
       "name": "Entry tasks that require project-specific understanding",
       "definition": "Redesign, stagger, or curate starter tasks so they depend on the project's own processes and cannot be solved by a bare prompt.",
       "groupId": "trust",
-      "status": "Proposed response",
+      "status": null,
       "excerpts": [
         {
           "text": "[We need tasks requiring] more cognitive thought and understanding of our processes... so that just a prompt with the task will not be able to produce the output",
@@ -927,7 +1025,7 @@
       "name": "Judging quality, not authorship",
       "definition": "Judge whether contributions work and meet quality expectations instead of treating who wrote them as decisive.",
       "groupId": "accountability",
-      "status": "Reported and proposed criterion",
+      "status": null,
       "excerpts": [
         {
           "text": "Whether it has been generated by AI, whether it has been human-written... if things are working fine, then people are happy with it.",
@@ -1042,7 +1140,7 @@
       "name": "Coordinating GenAI guidance across the program",
       "definition": "Share guidance, resources, disclosure mechanisms, and lessons learned across participating organizations, while each organization retains autonomy over its own GenAI rules.",
       "groupId": "program",
-      "status": "Program-level proposal",
+      "status": "Program-level",
       "excerpts": [
         {
           "text": "[GSoC could] come up with a guideline [for AI usage]... but each and every organization is differently structured. They follow their own rules along with the GSoC rules... generalized practices could be spread along.",
@@ -1242,7 +1340,7 @@
     "feng2024guiding": {
       "title": "Guiding the way: A systematic literature review on mentoring practices in open source software projects",
       "label": "Feng et al. (2024)",
-      "url": null
+      "url": "https://doi.org/10.1016/j.infsof.2024.107470"
     },
     "gsoc_ai_guidance2026": {
       "title": "Guidance for GSoC Contributors using AI tooling in GSoC 2026",
@@ -1257,27 +1355,27 @@
     "popoola2025empirical": {
       "title": "Empirical Analysis of Pull Requests for Google Summer of Code",
       "label": "Popoola (2025)",
-      "url": null
+      "url": "https://doi.org/10.1145/3769694.377115"
     },
     "raoofian2025openment": {
       "title": "OpenMent: A Dataset of Mentor-Mentee Interactions in Google Summer of Code",
       "label": "Raoofian et al. (2025)",
-      "url": null
+      "url": "https://doi.org/10.1109/MSR66628.2025.00096"
     },
     "silva2017long": {
       "title": "How long and how much: What to expect from summer of code participants?",
       "label": "Silva et al. (2017)",
-      "url": null
+      "url": "https://doi.org/10.1109/ICSME.2017.81"
     },
     "silva2020google": {
       "title": "Google summer of code: Student motivations and contributions",
       "label": "Silva et al. (2020)",
-      "url": null
+      "url": "https://doi.org/10.1016/j.jss.2019.110487"
     },
     "silva2020theory": {
       "title": "A theory of the engagement in open source projects via summer of code programs",
       "label": "Silva et al. (2020)",
-      "url": null
+      "url": "https://doi.org/10.1145/3368089.3409724"
     },
     "steinmacher2019": {
       "title": "Overcoming Social Barriers When Contributing to Open Source Software Projects",
@@ -1285,14 +1383,14 @@
       "url": "https://doi.org/10.1007/s10606-018-9335-z"
     },
     "tan2023understanding": {
-      "title": "Understanding mentors’ engagement in OSS communities via google summer of code",
+      "title": "Understanding mentors' engagement in OSS communities via google summer of code",
       "label": "Tan et al. (2023)",
-      "url": null
+      "url": " https://doi.org/10.1109/TSE.2023.3242415"
     },
     "trainer2014community": {
       "title": "Community code engagements: summer of code & hackathons for community building in scientific software",
       "label": "Trainer et al. (2014)",
-      "url": null
+      "url": "https://doi.org/10.1145/2660398.2660420"
     }
   }
 }

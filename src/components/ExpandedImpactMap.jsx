@@ -1,77 +1,99 @@
-import figure from '../assets/rq1.svg';
-import { groups, stages, effects, impacts, byId } from '../data/research';
-import { activateWithKeyboard } from './PipelineCycle';
+import { groups, stages, effects, impacts, pathways, byId } from '../data/research';
+import './ExpandedImpactMap.css';
 
-const STAGE_Y = {
-  S0: 63,
-  S1: 118,
-  S2: 172,
-  S3: 227,
-  S4: 377,
-  S5: 561,
-  S6: 682,
-  S7: 769,
-  X: 933,
-};
-const EFFECT_Y = {
-  CH1: 52,
-  CH2: 83,
-  CH3: 119,
-  CH4: 161,
-  CH5: 191,
-  OP1: 228,
-  OP2: 314,
-  CH6: 356,
-  CH7: 386,
-  CH8: 415,
-  CH9: 444,
-  CH10: 485,
-  CH11: 515,
-  CH12: 545,
-  CH13: 574,
-  CH14: 604,
-  OP3: 641,
-  CH15: 683,
-  CH16: 771,
-  CH17: 894,
-  CH18: 923,
-  CH19: 952,
-  CH20: 981,
-};
-const IMPACT_BOXES = {
-  IM1: [51, 103],
-  IM2: [163, 131],
-  IM3: [303, 103],
-  IM4: [429, 115],
-  IM5: [553, 115],
-  IM6: [691, 89],
-  IM7: [789, 103],
-  IM8: [901, 115],
-};
-const GROUP_BOXES = {
-  entry: [40, 240],
-  mentoring: [298, 439],
-  retention: [758, 60],
-  governance: [879, 147],
-};
+const mainPaths = pathways.filter((path) => path.linkType === 'main');
+const bridges = pathways.filter((path) => path.sourceType === 'effect');
 
-function Target({ x, y, width, height, label, onSelect }) {
+function ImpactButtons({ ids, onSelect, compact = false }) {
   return (
-    <rect
-      className="map-target"
-      x={x}
-      y={y}
-      width={width}
-      height={height}
-      rx="8"
-      role="button"
-      tabIndex={0}
-      aria-label={label}
-      onClick={onSelect}
-      onKeyDown={(event) => activateWithKeyboard(event, onSelect)}
-    >
-      <title>{label}</title>
-    </rect>
+    <span className={compact ? 'overview-impact-chips' : 'overview-impact-tiles'}>
+      {ids.map((id) => {
+        const impact = byId(impacts, id);
+        return (
+          <button
+            type="button"
+            key={id}
+            aria-label={`${id}: ${impact.figureName}. Choose a linked stage group.`}
+            title={impact.figureName}
+            onClick={() => onSelect(id)}
+          >
+            <span>{id}</span>
+            {!compact && <strong>{impact.figureName}</strong>}
+          </button>
+        );
+      })}
+    </span>
+  );
+}
+
+function StageEffectMap({ group, path, onStageSelect, onEffectSelect, onGroupSelect }) {
+  const effectIds = new Set(path.effectIds);
+  const linkedStages = stages.filter((stage) => stage.effectIds.some((id) => effectIds.has(id)));
+  const localStages = linkedStages.filter((stage) => stage.groupId === group.id);
+  const sharedStages = linkedStages.filter((stage) => stage.groupId !== group.id);
+
+  return (
+    <div className="overview-stage-effect-map">
+      <div className="overview-stage-effect-headings">
+        <div className="overview-stage-group">
+          <button type="button" className="overview-group-button" onClick={() => onGroupSelect(group.id)}>
+            <span>{group.id === 'governance' ? 'X · Cross-stage' : group.range}</span>
+            <strong>{group.name}</strong>
+          </button>
+        </div>
+        <div className="overview-effect-group">
+          <span className="overview-group-caption subheader">Collective effect group</span>
+        </div>
+      </div>
+      <div className="overview-stage-effect-rows">
+        {[...localStages, ...sharedStages].map((stage) => {
+          const shared = stage.groupId !== group.id;
+          const sourceGroup = byId(groups, stage.groupId);
+          const stageEffects = stage.effectIds.filter((id) => effectIds.has(id));
+          return (
+            <div className="overview-stage-effect-row" key={stage.id} data-stage={stage.id} data-shared={shared}>
+              <div className="overview-stage-cell">
+                <button
+                  type="button"
+                  className="overview-stage-tile"
+                  data-shared={shared}
+                  aria-label={`${stage.id}: ${stage.name}. Linked to ${stageEffects.join(', ')}. Focus ${sourceGroup.range}.`}
+                  onClick={() => onStageSelect(stage.id)}
+                >
+                  <span className="overview-code">{stage.id}</span>
+                  <span className="overview-node-name">
+                    {stage.name}
+                    {shared && <small className="overview-stage-origin">Shared from {sourceGroup.range}</small>}
+                  </span>
+                </button>
+              </div>
+              <span className="overview-stage-link" aria-hidden="true" />
+              <div className="overview-effect-buttons" role="group" aria-label={`Effects linked to ${stage.id}`}>
+                {stageEffects.map((id) => {
+                  const effect = byId(effects, id);
+                  return (
+                    <div className="overview-effect-branch" data-from={stage.id} data-to={id} key={id}>
+                      <button
+                        type="button"
+                        data-kind={effect.kind}
+                        data-shared={shared}
+                        aria-label={`${id}: ${effect.name}. Inspect interview excerpts in ${group.range}.`}
+                        title={`${effect.name} · ${stage.id}`}
+                        onClick={() => onEffectSelect(id, group.id)}
+                      >
+                        <span className="overview-code">{id}</span>
+                        <span className="overview-node-name">{effect.name}</span>
+                        {shared && <small className="overview-source-stage">From {effect.stageId}</small>}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
@@ -83,76 +105,106 @@ export default function ExpandedImpactMap({
   onGroupSelect,
 }) {
   return (
-    <figure className="expanded-figure">
-      <div
-        className="expanded-map-scroll"
-        data-scale={scale}
-        tabIndex={scale === 'readable' ? 0 : undefined}
-        role="region"
-        aria-label={
-          scale === 'readable'
-            ? 'Expanded manuscript figure at readable size. Scroll to explore.'
-            : 'Expanded manuscript figure fitted to the screen.'
-        }
-      >
-        <svg
-          viewBox="0 0 1887 1028"
-          className="expanded-impact-map"
-          role="group"
-          aria-label="Manuscript RQ1 map: stages, GenAI challenges and opportunities, and implications for GSoC sustainability."
-        >
-          <image href={figure} width="1887" height="1028" aria-hidden="true" />
-          {groups.map((group) => (
-            <Target
-              key={group.id}
-              x={0}
-              y={GROUP_BOXES[group.id][0]}
-              width={80}
-              height={GROUP_BOXES[group.id][1]}
-              label={`Focus ${group.range}: ${group.name}`}
-              onSelect={() => onGroupSelect(group.id)}
-            />
-          ))}
-          {stages.map((stage) => (
-            <Target
-              key={stage.id}
-              x={90}
-              y={STAGE_Y[stage.id]}
-              width={340}
-              height={39}
-              label={`${stage.id}: ${stage.name}. Focus ${byId(groups, stage.groupId).range}.`}
-              onSelect={() => onStageSelect(stage.id)}
-            />
-          ))}
-          {effects.map((effect) => (
-            <Target
-              key={effect.id}
-              x={476}
-              y={EFFECT_Y[effect.id]}
-              width={478}
-              height={
-                effect.id.startsWith('OP') ||
-                ['CH3', 'CH15', 'CH16'].includes(effect.id)
-                  ? 36
-                  : 29
-              }
-              label={`${effect.id}: ${effect.name}. Inspect interview excerpts.`}
-              onSelect={() => onEffectSelect(effect.id)}
-            />
-          ))}
-          {impacts.map((impact) => (
-            <Target
-              key={impact.id}
-              x={1194}
-              y={IMPACT_BOXES[impact.id][0]}
-              width={679}
-              height={IMPACT_BOXES[impact.id][1]}
-              label={`${impact.id}: ${impact.figureName}. Choose a linked stage group.`}
-              onSelect={() => onImpactSelect(impact.id)}
-            />
-          ))}
-        </svg>
+    <figure className="impact-overview">
+      <div className="overview-key">
+        <h2>Main linkages</h2>
+        <p>Three broad impact groups, with governance across the cycle.</p>
       </div>
+      <div
+        className="impact-overview-scroll"
+        data-scale={scale}
+        tabIndex={0}
+        role="region"
+        aria-label="Expanded impact map. Scroll to explore the main and additional linkages."
+      >
+        <div className="impact-overview-map">
+          <div className="overview-column-headings subheader" aria-hidden="true">
+            <span>Mentoring stages</span>
+            <span />
+            <span>Challenges & opportunities</span>
+            <span />
+            <span>Main sustainability impacts</span>
+          </div>
+          {mainPaths.map((path, index) => {
+            const group = byId(groups, path.groupId);
+            const additionalPaths = pathways.filter((item) =>
+              item.linkType === 'additional' && item.sourceType === 'group' && item.groupId === group.id,
+            );
+            const incoming = bridges.filter((item) => item.linkedGroupId === group.id);
+            const outgoing = bridges.filter((item) =>
+              item.effectIds.some((id) => byId(effects, id).groupId === group.id),
+            );
+            return (
+              <section
+                className="overview-main-link"
+                data-group={group.id}
+                data-pathway={path.id}
+                data-link-type="main"
+                key={path.id}
+                aria-label={`Main linkage ${group.id === 'governance' ? 'X' : group.range}`}
+                style={{ '--overview-color': group.color, '--overview-tint': group.tint }}
+              >
+                <div className="overview-main-chain">
+                  <StageEffectMap
+                    group={group}
+                    path={path}
+                    onStageSelect={onStageSelect}
+                    onEffectSelect={onEffectSelect}
+                    onGroupSelect={onGroupSelect}
+                  />
+                  <span className="overview-main-arrow" aria-label="connects to">→</span>
+                  <div className="overview-impact-group">
+                    <header className="overview-impact-heading">
+                      <span className="overview-group-caption subheader">
+                        {index < 3 ? `Impact group ${index + 1}` : 'Cross-stage impacts'}
+                      </span>
+                      {path.impactTheme && <h3>{path.impactTheme}</h3>}
+                    </header>
+                    <ImpactButtons ids={path.impactIds} onSelect={onImpactSelect} />
+                  </div>
+                </div>
+                {(additionalPaths.length > 0 || incoming.length > 0 || outgoing.length > 0) && (
+                  <div className="overview-additional-links">
+                    {additionalPaths.map((additional) => (
+                      <div className="overview-additional-line" data-link-type="additional" key={additional.id}>
+                        <span className="overview-additional-label">Additional group link</span>
+                        <strong>{group.range}</strong>
+                        <span aria-label="also connects to">⇢</span>
+                        <ImpactButtons ids={additional.impactIds} onSelect={onImpactSelect} compact />
+                      </div>
+                    ))}
+                    {incoming.map((bridge) => bridge.effectIds.map((id) => {
+                      const effect = byId(effects, id);
+                      return (
+                        <div className="overview-additional-line" data-link-type="additional" key={`incoming-${id}`}>
+                          <span className="overview-additional-label">Shared opportunity</span>
+                          <button type="button" onClick={() => onEffectSelect(id, group.id)}>{id} · {effect.stageId}</button>
+                          <span>joins this group</span>
+                        </div>
+                      );
+                    }))}
+                    {outgoing.map((bridge) => (
+                      <div className="overview-additional-line" data-link-type="additional" key={`outgoing-${bridge.id}`}>
+                        <span className="overview-additional-label">Shared opportunity</span>
+                        <strong>{bridge.effectIds.join(', ')}</strong>
+                        <span>also joins</span>
+                        <button type="button" onClick={() => onGroupSelect(bridge.linkedGroupId)}>
+                          {byId(groups, bridge.linkedGroupId).range}
+                        </button>
+                        <span aria-label="connects to">⇢</span>
+                        <ImpactButtons ids={bridge.impactIds} onSelect={onImpactSelect} compact />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </section>
+            );
+          })}
+        </div>
+      </div>
+      <figcaption className="overview-caption">
+        Select a stage, code, or impact to explore its links and interview evidence.
+      </figcaption>
     </figure>
   );
 }

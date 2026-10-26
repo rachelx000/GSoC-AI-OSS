@@ -65,11 +65,11 @@ export default function AIMSection() {
             <img src={aimIcon} alt="" />
             <h1>AIM</h1>
           </div>
-          <p>Choose GenAI responses your mentors can sustain.</p>
+          <p>Choose GenAI responses that protect learning and mentor capacity.</p>
         </div>
         <p className="page-aside">
-          AIM connects a project’s use boundary, the mentoring practices that
-          carry it, and the capacity to do that work.
+          Our proposed decision framework connects GenAI rules, mentoring
+          practice, and the capacity to sustain them.
         </p>
       </header>
       <div className="aim-definition" aria-label="What AIM means">
@@ -84,7 +84,7 @@ export default function AIMSection() {
           <span>I</span>
           <div>
             <h2>Integration into the mentoring pipeline</h2>
-            <p>How does that boundary shape mentoring practice?</p>
+            <p>How will mentors teach and check understanding?</p>
           </div>
         </section>
         <section>
@@ -144,7 +144,7 @@ export default function AIMSection() {
         >
           <header>
             <div>
-              <span className="eyebrow">A · Stance definition</span>
+              <span className="eyebrow subheader">A · Stance definition</span>
               <h2 id="stance-title" aria-live="polite">
                 {stance.name}
               </h2>
@@ -154,8 +154,7 @@ export default function AIMSection() {
           <Actions items={stance.actions.boundary} />
           {stance.id === 'advocate' && (
             <p className="conceptual-note">
-              This end of the framework extends beyond the practices reported in
-              the study. It is included to complete the conceptual range.
+              Conceptual extension beyond participants’ reported practices.
             </p>
           )}
         </article>
@@ -170,14 +169,15 @@ export default function AIMSection() {
                 Integration into the mentoring pipeline
               </h2>
               <p>
-                How the {stance.name.toLowerCase()} boundary becomes practice.
+                Put the {stance.name.toLowerCase()} stance into practice, with
+                checks that also support learning.
               </p>
             </div>
           </header>
           <div className="integration-grid">
             {INTEGRATION.map((row) => (
               <section className="integration-card" key={row.id}>
-                <span className="eyebrow">{row.range}</span>
+                <span className="eyebrow subheader">{row.range}</span>
                 <h3>{row.name}</h3>
                 <Actions items={stance.actions[row.id]} />
               </section>
@@ -192,8 +192,8 @@ export default function AIMSection() {
           <div>
             <h2 id="capacity-title">Mentoring capacity</h2>
             <p>
-              Protect the capacity needed to carry out any stance. This band
-              stays in view across the framework.
+              Name who checks the work, budget their time, and protect their
+              ability to return next cycle.
             </p>
           </div>
         </header>

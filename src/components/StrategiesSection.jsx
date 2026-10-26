@@ -1,7 +1,25 @@
 import { useState } from 'react';
 import { strategyGroups, strategies } from '../data/research';
-import { Excerpts, SourceNote } from './ResearchEvidence';
+import { Excerpts } from './ResearchEvidence';
 import strategyIcon from '../assets/strategy.svg';
+
+const RESPONSE_FINDINGS = [
+  {
+    title: 'Authorship rules',
+    copy: 'Mentors must establish whether work was generated, a task participants found difficult or impossible.',
+    tone: 'entry',
+  },
+  {
+    title: 'Understanding rules',
+    copy: 'Contributors explain and demonstrate their work. The same conversation checks compliance and supports learning.',
+    tone: 'mentoring',
+  },
+  {
+    title: 'Shared program support',
+    copy: 'Participants proposed common guidance and disclosure tools, with organizations retaining their own GenAI rules.',
+    tone: 'retention',
+  },
+];
 
 export default function StrategiesSection() {
   const [groupId, setGroupId] = useState('all');
@@ -40,10 +58,24 @@ export default function StrategiesSection() {
           </p>
         </div>
         <p className="page-aside">
-          Reported practices and proposed responses, organized by the
-          manuscript’s three themes.
+          RQ2 · 14 reported and proposed strategies for mentors, organizations,
+          and GSoC.
         </p>
       </header>
+      <section className="impact-findings" aria-label="What GenAI responses require">
+        {RESPONSE_FINDINGS.map((finding, index) => (
+          <article
+            className={`finding-card finding-${finding.tone}`}
+            key={finding.title}
+          >
+            <span className="finding-number">0{index + 1}</span>
+            <div>
+              <h2>{finding.title}</h2>
+              <p>{finding.copy}</p>
+            </div>
+          </article>
+        ))}
+      </section>
       <div className="strategy-layout">
         <aside className="strategy-sidebar">
           <label className="search-field">
@@ -87,12 +119,12 @@ export default function StrategiesSection() {
               aria-labelledby={`strategy-group-${group.id}`}
             >
               <header>
-                <span className="eyebrow">
+                <span className="eyebrow subheader">
                   {group.id === 'trust'
-                    ? 'Establish trust'
+                    ? 'ST1–ST4 · Selection'
                     : group.id === 'accountability'
-                      ? 'Maintain accountability'
-                      : 'Share responsibility'}
+                      ? 'ST5–ST13 · Mentoring & governance'
+                      : 'ST14 · Program support'}
                 </span>
                 <h2 id={`strategy-group-${group.id}`}>{group.name}</h2>
                 <p>{group.description}</p>
@@ -115,8 +147,8 @@ export default function StrategiesSection() {
                         </span>
                       </summary>
                       <div className="strategy-record-detail">
-                        <p className="detail-label">
-                          Strategy definition · Manuscript RQ2
+                        <p className="detail-label subheader">
+                          Strategy · RQ2
                         </p>
                         <p className="strategy-definition-copy">
                           {strategy.definition}

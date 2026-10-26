@@ -1,4 +1,4 @@
-"""Read protected LaTeX sources and refresh the dashboard's static data."""
+"""Check the static snapshot or regenerate it when LaTeX sources are available."""
 
 import json
 import re
@@ -9,6 +9,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANUSCRIPT = ROOT / "references/manuscript"
 SUPPLEMENT = ROOT / "references/supplemental"
+LATEX_INPUTS = [
+    MANUSCRIPT / "references.bib",
+    MANUSCRIPT / "tables/rq2_strategies.tex",
+    MANUSCRIPT / "tables/framework_table.tex",
+    SUPPLEMENT / "tables/effects_definitions.tex",
+    SUPPLEMENT / "tables/sustainability_impacts_definitions.tex",
+    SUPPLEMENT / "tables/strategies_definitions.tex",
+]
 
 
 def uncomment(text):
@@ -203,35 +211,95 @@ EFFECT_STAGE = {
     "X": ["CH17", "CH18", "CH19", "CH20"],
 }
 
-# These are the colored, grouped paths in rq1-latest.svg, not per-excerpt causal links.
+# The researcher clarified these collective groups and cross-stage connections.
+# effectIds lists group membership; it does not create per-code causal edges.
+RELATIONSHIP_MAPPING = (
+    "Researcher clarification: main impact groups, additional group links, "
+    "and cross-stage OP1/OP2 connections."
+)
 PATHWAYS = [
     {
         "id": "screening",
-        "name": "Entry screening",
+        "name": "Entry and early preparation",
         "color": "#4E6598",
-        "effectIds": [f"CH{i}" for i in range(1, 6)],
-        "impactIds": ["IM1", "IM6"],
+        "sourceType": "group",
+        "linkType": "main",
+        "groupId": "entry",
+        "effectIds": ["CH1", "CH2", "CH3", "CH4", "CH5", "OP1"],
+        "impactIds": ["IM1", "IM2", "IM3"],
+        "impactTheme": "Assessing and developing newcomers",
     },
     {
         "id": "development",
-        "name": "Learning, contribution, and review",
+        "name": "Mentoring, review, and evaluation",
         "color": "#8A8CBF",
-        "effectIds": ["OP1", *[f"CH{i}" for i in range(6, 16)], "OP3"],
-        "impactIds": ["IM2", "IM3", "IM4"],
+        "sourceType": "group",
+        "linkType": "main",
+        "groupId": "mentoring",
+        "effectIds": ["CH6", "CH7", "CH8", "CH9", "CH10", "CH11", "CH12", "CH13", "CH14", "CH15", "OP1", "OP2", "OP3"],
+        "impactIds": ["IM4", "IM5"],
+        "impactTheme": "Verification, contribution value, and governance",
     },
     {
         "id": "renewal",
-        "name": "Mentoring support and renewal",
+        "name": "Retention and role transition",
         "color": "#D3A0B0",
-        "effectIds": ["OP2", "CH16"],
-        "impactIds": ["IM7"],
+        "sourceType": "group",
+        "linkType": "main",
+        "groupId": "retention",
+        "effectIds": ["CH16"],
+        "impactIds": ["IM6", "IM7", "IM8"],
+        "impactTheme": "Community and mentoring renewal",
     },
     {
         "id": "governance",
-        "name": "Governance and mentor capacity",
+        "name": "Cross-stage governance",
         "color": "#EFA484",
-        "effectIds": [f"CH{i}" for i in range(17, 21)],
+        "sourceType": "group",
+        "linkType": "main",
+        "groupId": "governance",
+        "effectIds": ["CH17", "CH18", "CH19", "CH20"],
         "impactIds": ["IM5", "IM6", "IM8"],
+    },
+    {
+        "id": "entry-community",
+        "name": "Entry and community growth",
+        "color": "#4E6598",
+        "sourceType": "group",
+        "linkType": "additional",
+        "groupId": "entry",
+        "effectIds": ["CH1", "CH2", "CH3", "CH4", "CH5", "OP1"],
+        "impactIds": ["IM6"],
+    },
+    {
+        "id": "mentoring-trust",
+        "name": "Mentoring, trust, and learning",
+        "color": "#8A8CBF",
+        "sourceType": "group",
+        "linkType": "additional",
+        "groupId": "mentoring",
+        "effectIds": ["CH6", "CH7", "CH8", "CH9", "CH10", "CH11", "CH12", "CH13", "CH14", "CH15", "OP1", "OP2", "OP3"],
+        "impactIds": ["IM2", "IM3"],
+    },
+    {
+        "id": "onboarding",
+        "name": "Onboarding joins mentoring",
+        "color": "#8A8CBF",
+        "sourceType": "effect",
+        "linkType": "additional",
+        "linkedGroupId": "mentoring",
+        "effectIds": ["OP1"],
+        "impactIds": ["IM2", "IM3", "IM4", "IM5"],
+    },
+    {
+        "id": "mentoring-support",
+        "name": "Mentoring support joins renewal",
+        "color": "#D3A0B0",
+        "sourceType": "effect",
+        "linkType": "additional",
+        "linkedGroupId": "retention",
+        "effectIds": ["OP2"],
+        "impactIds": ["IM6", "IM7", "IM8"],
     },
 ]
 
@@ -526,7 +594,8 @@ def build():
             "strategies": "references/manuscript/tables/rq2_strategies.tex",
             "strategyEvidence": "references/supplemental/tables/strategies_definitions.tex",
             "framework": "references/manuscript/tables/framework_table.tex",
-            "relationships": "references/manuscript/figures/rq1-latest.svg",
+            "relationships": "references/figures/rq1-latest.svg",
+            "relationshipMapping": RELATIONSHIP_MAPPING,
             "pipeline": "references/manuscript/sections/2_GSoC.tex",
         },
         "groups": GROUPS,
@@ -542,9 +611,54 @@ def build():
     }
 
 
-if __name__ == "__main__":
-    data = build()
+def check_snapshot(destination):
+    """Check available active references without claiming PDF text was re-extracted."""
+    data = json.loads(destination.read_text())
+    if data["pathways"] != PATHWAYS:
+        raise SystemExit(
+            "Snapshot links differ from the researcher-clarified RQ1 mapping."
+        )
+    if data["sources"].get("relationshipMapping") != RELATIONSHIP_MAPPING:
+        raise SystemExit("Snapshot must retain the researcher clarification provenance.")
+    for name in ("GSoC_main.pdf", "GSoC_appendix.pdf"):
+        pdf = ROOT / "references" / name
+        if not pdf.is_file() or not pdf.read_bytes().startswith(b"%PDF-"):
+            raise SystemExit(
+                f"Missing or invalid active reference: {pdf.relative_to(ROOT)}"
+            )
+    figure = ROOT / "references/figures/rq1-latest.svg"
+    asset = ROOT / "src/assets/rq1.svg"
+    if data["sources"]["relationships"] != str(figure.relative_to(ROOT)):
+        raise SystemExit(
+            "Snapshot relationship provenance must point to the active RQ1 SVG."
+        )
+    if not figure.is_file() or asset.read_bytes() != figure.read_bytes():
+        raise SystemExit(
+            "The app RQ1 SVG differs from references/figures/rq1-latest.svg."
+        )
+    print(
+        "Snapshot links match the researcher clarification; "
+        "the reference SVG and active PDFs are preserved."
+    )
+    return data
+
+
+def main():
     destination = ROOT / "src/data/manuscript.json"
+    if not all(path.is_file() for path in LATEX_INPUTS):
+        if "--check" in sys.argv:
+            check_snapshot(destination)
+            print(
+                "LaTeX extraction sources are unavailable; "
+                "snapshot checks completed."
+            )
+            return
+        raise SystemExit(
+            "Cannot regenerate interview data: LaTeX extraction sources are unavailable. "
+            "The snapshot was not modified. "
+            "Use npm run data:check to check the current snapshot."
+        )
+    data = build()
     serialized = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
     if "--check" in sys.argv:
         if destination.read_text() != serialized:
@@ -560,3 +674,7 @@ if __name__ == "__main__":
     print(
         f"{len(data['effects'])} effects, {len(data['impacts'])} functions, {len(data['strategies'])} strategies, {len(data['stances'])} stances."
     )
+
+
+if __name__ == "__main__":
+    main()

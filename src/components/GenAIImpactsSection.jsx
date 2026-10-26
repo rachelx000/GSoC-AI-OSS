@@ -5,6 +5,7 @@ import {
   effects,
   impacts,
   byId,
+  getGroupScope,
   groupsForImpact,
 } from '../data/research';
 import PipelineCycle from './PipelineCycle';
@@ -15,20 +16,26 @@ import impactIcon from '../assets/impact.svg';
 const findings = [
   {
     id: '01',
-    title: 'The work reveals less about its author.',
-    copy: 'Proposals, entry contributions, and review answers became weaker evidence of what newcomers understand and can do.',
+    groupId: 'entry',
+    impactRange: 'IM1–IM3',
+    title: 'Newcomers are harder to assess and develop.',
+    copy: 'Proposals, contributions, and review answers reveal less about newcomers’ capability and learning.',
     tone: 'entry',
   },
   {
     id: '02',
-    title: 'Mentoring shifts toward verification.',
-    copy: 'Mentors make up the difference by checking code, understanding, and compliance—using time they would otherwise spend teaching.',
+    groupId: 'mentoring',
+    impactRange: 'IM4–IM5',
+    title: 'Mentoring time shifts toward verification.',
+    copy: 'Checking code, understanding, and GenAI compliance draws time away from teaching.',
     tone: 'mentoring',
   },
   {
     id: '03',
-    title: 'That effort puts renewal under pressure.',
-    copy: 'Verification draws on the same time and goodwill GSoC needs to develop future maintainers and mentors.',
+    groupId: 'retention',
+    impactRange: 'IM6–IM8',
+    title: 'Verification work strains renewal.',
+    copy: 'Accumulated demands erode the capacity and motivation needed to develop the next generation of mentors.',
     tone: 'retention',
   },
 ];
@@ -63,13 +70,19 @@ export default function GenAIImpactsSection() {
   };
   const selectStage = (id) =>
     focusGroup(byId(stages, id).groupId, { type: 'stage', id });
-  const selectEffect = (id) =>
-    focusGroup(byId(effects, id).groupId, { type: 'effect', id });
+  const selectEffect = (id, focusedGroupId) =>
+    focusGroup(focusedGroupId || byId(effects, id).groupId, { type: 'effect', id });
   const selectImpact = (id) => {
     const linkedGroups = groupsForImpact(id);
     if (linkedGroups.length === 1)
       focusGroup(linkedGroups[0].id, { type: 'impact', id });
     else setPickerId(id);
+  };
+  const connectionLabel = (groupId, impactId) => {
+    const paths = getGroupScope(groupId).pathways.filter((path) => path.impactIds.includes(impactId));
+    if (paths.some((path) => path.linkType === 'main')) return 'Main linkage';
+    if (paths.some((path) => path.sourceType === 'group')) return 'Additional group linkage';
+    return `Via ${paths.flatMap((path) => path.effectIds).join(', ')}`;
   };
 
   return (
@@ -86,13 +99,12 @@ export default function GenAIImpactsSection() {
             <h1>GenAI Impacts</h1>
           </div>
           <p>
-            Cheaper production changes what work reveals about a newcomer and
-            who has to do the checking.
+            GenAI’s effects compound from selection through review to renewal—and
+            converge on mentor capacity.
           </p>
         </div>
         <p className="page-aside">
-          Trace challenges and opportunities to the sustainability functions
-          they put under pressure or support.
+          RQ1 · How GenAI changes mentoring and GSoC’s ability to renew itself.
         </p>
       </header>
 
@@ -104,6 +116,13 @@ export default function GenAIImpactsSection() {
           >
             <span className="finding-number">{finding.id}</span>
             <div>
+              <button
+                type="button"
+                className="finding-group-link"
+                onClick={() => focusGroup(finding.groupId)}
+              >
+                {finding.impactRange} <span aria-hidden="true">→</span>
+              </button>
               <h2>{finding.title}</h2>
               <p>{finding.copy}</p>
             </div>
@@ -190,15 +209,14 @@ export default function GenAIImpactsSection() {
             aria-labelledby="impact-picker-title"
           >
             <div>
-              <span className="eyebrow">
+              <span className="eyebrow subheader">
                 {pickerId} · {byId(impacts, pickerId).figureName}
               </span>
               <h2 id="impact-picker-title" ref={pickerTitle} tabIndex={-1}>
                 Choose a linked stage group
               </h2>
               <p>
-                This function receives figure pathways from more than one group.
-                Choose one to keep the evidence in context.
+                Select a group to explore its connection to {pickerId}.
               </p>
             </div>
             <div className="picker-options">
@@ -211,7 +229,10 @@ export default function GenAIImpactsSection() {
                   }
                 >
                   <strong>{group.range}</strong>
-                  {group.name}
+                  <span className="picker-option-copy">
+                    <span>{group.name}</span>
+                    <small>{connectionLabel(group.id, pickerId)}</small>
+                  </span>
                   <span aria-hidden="true">→</span>
                 </button>
               ))}
@@ -234,7 +255,7 @@ export default function GenAIImpactsSection() {
               style={{ '--group-color': activeGroup.color }}
             >
               <div>
-                <span className="eyebrow">
+                <span className="eyebrow subheader">
                   Focused stage group · {activeGroup.range}
                 </span>
                 <h2 tabIndex={-1} ref={focusTitle}>
@@ -242,8 +263,7 @@ export default function GenAIImpactsSection() {
                 </h2>
               </div>
               <p>
-                Expand a stage definition, an interview excerpt, or a
-                sustainability function below.
+                Explore the main impact group, additional links, and interview evidence.
               </p>
             </header>
             <FocusedImpactMap

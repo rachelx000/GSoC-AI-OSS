@@ -60,10 +60,10 @@ export default function App() {
         <a
           className="brand"
           href="#/"
-          aria-label="home"
+          aria-label="GSoC AI-to-OSS home"
           onClick={() => window.scrollTo(0, 0)}
         >
-          <span>GSoC-AI-OSS</span>
+          <span>GSoC AI-to-OSS</span>
         </a>
         <nav className="tabs" role="tablist" aria-label="Research views">
           {TABS.map((tab, index) => (
