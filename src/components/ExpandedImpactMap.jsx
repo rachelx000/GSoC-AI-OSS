@@ -98,7 +98,6 @@ function StageEffectMap({ group, path, onStageSelect, onEffectSelect, onGroupSel
 }
 
 export default function ExpandedImpactMap({
-  scale = 'fit',
   onStageSelect,
   onEffectSelect,
   onImpactSelect,
@@ -112,7 +111,6 @@ export default function ExpandedImpactMap({
       </div>
       <div
         className="impact-overview-scroll"
-        data-scale={scale}
         tabIndex={0}
         role="region"
         aria-label="Expanded impact map. Scroll to explore the main and additional linkages."

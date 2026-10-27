@@ -66,11 +66,7 @@ export default function AIMSection() {
             <h1>AIM</h1>
           </div>
           <p>Choose GenAI responses that protect learning and mentor capacity.</p>
-        </div>
-        <p className="page-aside">
-          Our proposed decision framework connects GenAI rules, mentoring
-          practice, and the capacity to sustain them.
-        </p>
+        </div> 
       </header>
       <div className="aim-definition" aria-label="What AIM means">
         <section>

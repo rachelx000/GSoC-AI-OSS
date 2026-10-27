@@ -236,7 +236,7 @@ summary {
   margin: 0;
 }
 .page-heading > div > p {
-  max-width: 720px;
+  max-width: 800px;
   color: var(--muted);
   font-size: 1rem;
   line-height: 1.45;
@@ -577,8 +577,8 @@ summary {
   border-radius: 8px;
   background: white;
   color: var(--blue);
-  font-size: 0.875rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 650;
 }
 .finding-mentoring .finding-number {
   color: var(--purple);
@@ -588,15 +588,9 @@ summary {
 }
 .finding-card h2 {
   margin-bottom: 8px;
-  font-size: 1.375rem;
-  line-height: 1.25;
-  font-weight: 600;
-  letter-spacing: -0.025em;
 }
 .finding-card p {
   max-width: 440px;
-  font-size: 1.125rem;
-  line-height: 1.55;
   color: var(--muted);
 }
 .finding-group-link {
@@ -776,26 +770,6 @@ summary {
 .toolbar-hint {
   color: #657084;
   font-size: 0.875rem;
-}
-.map-sizing {
-  display: flex;
-  gap: 4px;
-}
-.map-sizing button {
-  min-height: 36px;
-  padding: 6px 10px;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  background: none;
-  color: var(--muted);
-  font-size: 0.875rem;
-  line-height: 1.4;
-}
-.map-sizing button[aria-pressed="true"] {
-  border-color: #d8dfed;
-  background: #eef2fa;
-  color: var(--blue);
-  font-weight: 600;
 }
 .group-navigation {
   display: grid;
@@ -1660,13 +1634,20 @@ summary {
 }
 .aim-definition h2 {
   padding-top: 1px;
+}
+.aim-definition h2,
+.finding-card h2 {
   font-size: 1rem;
   line-height: 1.4;
   font-weight: 650;
+  letter-spacing: normal;
 }
 .aim-definition p {
   margin-top: 4px;
   color: var(--muted);
+}
+.aim-definition p,
+.finding-card p {
   font-size: 0.9375rem;
   line-height: 1.45;
 }
@@ -1958,9 +1939,6 @@ summary {
     padding: 18px;
     gap: 12px;
   }
-  .finding-card h2 {
-    font-size: 1.375rem;
-  }
   .page-heading {
     gap: 30px;
   }
@@ -2153,12 +2131,6 @@ summary {
   }
   .finding-number {
     width: 29px;
-  }
-  .finding-card h2 {
-    font-size: 1.25rem;
-  }
-  .finding-card p {
-    font-size: 1.125rem;
   }
   .explore-card {
     padding: 18px;
@@ -2358,12 +2330,6 @@ summary {
     padding: 19px;
     gap: 14px;
   }
-  .finding-card h2 {
-    font-size: 1.375rem;
-  }
-  .finding-card p {
-    font-size: 1.125rem;
-  }
   .cover-explore {
     grid-template-columns: 1fr;
   }
@@ -2376,10 +2342,6 @@ summary {
   .impact-toolbar {
     gap: 9px;
     flex-wrap: wrap;
-  }
-  .map-sizing {
-    width: 100%;
-    justify-content: flex-end;
   }
   .view-switch {
     width: 100%;

@@ -27,9 +27,6 @@
 .impact-overview-map {
   min-width: 980px;
 }
-.impact-overview-scroll[data-scale="readable"] .impact-overview-map {
-  min-width: 1460px;
-}
 .overview-column-headings,
 .overview-main-chain {
   display: grid;

@@ -57,10 +57,6 @@ export default function StrategiesSection() {
             carries the verification work.
           </p>
         </div>
-        <p className="page-aside">
-          RQ2 · 14 reported and proposed strategies for mentors, organizations,
-          and GSoC.
-        </p>
       </header>
       <section className="impact-findings" aria-label="What GenAI responses require">
         {RESPONSE_FINDINGS.map((finding, index) => (

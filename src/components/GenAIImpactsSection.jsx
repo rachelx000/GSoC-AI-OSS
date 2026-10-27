@@ -42,7 +42,6 @@ const findings = [
 
 export default function GenAIImpactsSection() {
   const [view, setView] = useState('cycle');
-  const [mapScale, setMapScale] = useState('fit');
   const [groupId, setGroupId] = useState(null);
   const [selection, setSelection] = useState(null);
   const [pickerId, setPickerId] = useState(null);
@@ -99,13 +98,10 @@ export default function GenAIImpactsSection() {
             <h1>GenAI Impacts</h1>
           </div>
           <p>
-            GenAI’s effects compound from selection through review to renewal—and
+            GenAI's effects compound from selection through review to renewal and
             converge on mentor capacity.
           </p>
         </div>
-        <p className="page-aside">
-          RQ1 · How GenAI changes mentoring and GSoC’s ability to renew itself.
-        </p>
       </header>
 
       <section className="impact-findings" aria-label="High-level manuscript findings">
@@ -159,28 +155,11 @@ export default function GenAIImpactsSection() {
             >
               ← All stage groups
             </button>
-          ) : view === 'expanded' ? (
-            <div className="map-sizing" role="group" aria-label="Impact map size">
-              <button
-                type="button"
-                aria-pressed={mapScale === 'fit'}
-                onClick={() => setMapScale('fit')}
-              >
-                Fit to screen
-              </button>
-              <button
-                type="button"
-                aria-pressed={mapScale === 'readable'}
-                onClick={() => setMapScale('readable')}
-              >
-                Readable size
-              </button>
-            </div>
-          ) : (
+          ) : view === 'cycle' ? (
             <span className="toolbar-hint">
               Select a stage or a group to inspect its evidence.
             </span>
-          )}
+          ) : null}
         </div>
 
         <nav className="group-navigation" aria-label="Focus a stage group">
@@ -279,7 +258,6 @@ export default function GenAIImpactsSection() {
           />
         ) : (
           <ExpandedImpactMap
-            scale={mapScale}
             onStageSelect={selectStage}
             onEffectSelect={selectEffect}
             onImpactSelect={selectImpact}
