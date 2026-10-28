@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { byId, groups, stages, getGroupScope } from '../data/research';
 import { Excerpts, LiteratureReferences } from './ResearchEvidence';
 
@@ -110,9 +110,6 @@ function EffectRecord({ effect, selected, onToggle }) {
       data-selected={selected}
     >
       <DisclosureButton id={effect.id} label={effect.name} selected={selected} onClick={onToggle}>
-        <p className="detail-label subheader">
-          {effect.kind === 'challenge' ? 'Reported challenge or concern' : 'Reported opportunity'} · {effect.stageId}
-        </p>
         <Excerpts items={effect.excerpts} label={`${effect.id} interview excerpts`} />
       </DisclosureButton>
     </article>
@@ -123,7 +120,7 @@ function ImpactRecord({ impact, paths, selected, onToggle }) {
   return (
     <article className="impact-node" id={`impact-${impact.id}`} data-selected={selected}>
       <DisclosureButton id={impact.id} label={impact.figureName} selected={selected} onClick={onToggle}>
-        <p className="detail-label subheader">What GSoC contributes to sustainability</p>
+        <p className="detail-label subheader">What GSoC contributes to OSS sustainability</p>
         <p className="function-definition">{impact.definition}</p>
         <Excerpts items={impact.excerpts} label={`${impact.id} sustainability evidence`} />
       </DisclosureButton>
@@ -153,6 +150,7 @@ function ImpactRecord({ impact, paths, selected, onToggle }) {
 }
 
 export default function FocusedImpactMap({ groupId, selection, onSelect }) {
+  const map = useRef(null);
   const scope = getGroupScope(groupId);
   const mainPath = scope.pathways.find((path) => path.linkType === 'main');
   const primaryIds = new Set(scope.primaryImpacts.map((impact) => impact.id));
@@ -161,8 +159,15 @@ export default function FocusedImpactMap({ groupId, selection, onSelect }) {
   const toggle = (type, id) => onSelect(isSelected(type, id) ? null : { type, id });
 
   useEffect(() => {
-    if (!selection || selection.type === 'stage') return;
-    document.getElementById(`${selection.type}-${selection.id}`)?.scrollIntoView({ block: 'nearest' });
+    if (!selection) return;
+    const container = map.current;
+    const target = document.getElementById(`${selection.type}-${selection.id}`);
+    if (!target || !container) return;
+    const bounds = container.getBoundingClientRect();
+    const node = target.getBoundingClientRect();
+    // Scroll the evidence pane without moving the fitted workspace on the page.
+    if (node.top < bounds.top + 12 || node.bottom > bounds.bottom - 12)
+      container.scrollTop += node.top - bounds.top - 12;
   }, [selection]);
 
   const effectRecord = (effect) => (
@@ -184,16 +189,16 @@ export default function FocusedImpactMap({ groupId, selection, onSelect }) {
   );
 
   return (
-    <div className="focused-map" style={{ '--group-color': scope.group.color, '--group-tint': scope.group.tint }}>
+    <div className="focused-map" ref={map} style={{ '--group-color': scope.group.color, '--group-tint': scope.group.tint }}>
       <FigureConnections scope={scope} selection={selection} onSelect={onSelect} />
       <section className="focus-column stage-column" aria-labelledby="focus-stages-title">
         <header className="column-heading">
-          <span className="eyebrow subheader">Literature-informed pipeline</span>
-          <h3 id="focus-stages-title">Stages <span aria-hidden="true">→</span></h3>
+          <span className="eyebrow subheader">Pipeline</span>
+          <h3 id="focus-stages-title">Stages</h3>
         </header>
         <div className="stage-sequence">
           {scope.stages.map((stage) => (
-            <article className="stage-node" key={stage.id} data-selected={isSelected('stage', stage.id)}>
+            <article className="stage-node" id={`stage-${stage.id}`} key={stage.id} data-selected={isSelected('stage', stage.id)}>
               <div className="stage-node-title">
                 <span className="code-pill">{stage.id}</span>
                 <h4>{stage.name}</h4>
@@ -203,7 +208,7 @@ export default function FocusedImpactMap({ groupId, selection, onSelect }) {
                   <button key={id} type="button" onClick={() => onSelect({ type: 'effect', id })}>{id}</button>
                 ))}
               </div>
-              <details className="stage-definition">
+              <details className="stage-definition" open={isSelected('stage', stage.id)}>
                 <summary>Stage definition & literature</summary>
                 <p>{stage.definition}</p>
                 <LiteratureReferences ids={stage.referenceIds} />
@@ -215,7 +220,7 @@ export default function FocusedImpactMap({ groupId, selection, onSelect }) {
       <section className="focus-column effect-column" aria-labelledby="focus-effects-title">
         <header className="column-heading">
           <span className="eyebrow subheader">Interview findings</span>
-          <h3 id="focus-effects-title">Challenges & opportunities <span aria-hidden="true">→</span></h3>
+          <h3 id="focus-effects-title">Challenges & opportunities</h3>
         </header>
         <div className="effect-list">
           {scope.stages.map((stage) => (

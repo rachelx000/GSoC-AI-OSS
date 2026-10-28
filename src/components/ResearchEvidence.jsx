@@ -5,10 +5,9 @@ export function Excerpts({ items, label = 'Interview excerpts' }) {
     <section className="excerpts" aria-label={label}>
       {items.map((item, index) => (
         <figure className="excerpt" key={`${item.participant}-${index}`}>
-          <blockquote>{item.text}</blockquote>
+          <blockquote>“{item.text}”</blockquote>
           <figcaption>
             {item.participant}
-            <span>Interview excerpt · Supplement</span>
           </figcaption>
         </figure>
       ))}
@@ -27,7 +26,6 @@ export function LiteratureReferences({ ids }) {
             {reference.url ? (
               <a href={reference.url} target="_blank" rel="noreferrer">
                 {reference.title}
-                <span aria-hidden="true"> ↗</span>
               </a>
             ) : (
               <span>{reference.title}</span>

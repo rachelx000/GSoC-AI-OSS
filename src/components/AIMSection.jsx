@@ -140,19 +140,13 @@ export default function AIMSection() {
         >
           <header>
             <div>
-              <span className="eyebrow subheader">A · Stance definition</span>
+              <span className="eyebrow subheader">Stance definition</span>
               <h2 id="stance-title" aria-live="polite">
                 {stance.name}
               </h2>
             </div>
-            <p>Contributors remain accountable for what they submit.</p>
           </header>
           <Actions items={stance.actions.boundary} />
-          {stance.id === 'advocate' && (
-            <p className="conceptual-note">
-              Conceptual extension beyond participants’ reported practices.
-            </p>
-          )}
         </article>
         <section
           className="integration-section"

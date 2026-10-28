@@ -47,7 +47,36 @@ export default function GenAIImpactsSection() {
   const [pickerId, setPickerId] = useState(null);
   const focusTitle = useRef(null);
   const pickerTitle = useRef(null);
+  const workspace = useRef(null);
   const activeGroup = byId(groups, groupId);
+
+  useEffect(() => {
+    const header = document.querySelector('.site-header');
+    const measure = () => {
+      const top = header.getBoundingClientRect().height + 12;
+      const element = workspace.current;
+      if (!element) return;
+      element.style.setProperty('--workspace-top', `${top}px`);
+      element.style.setProperty('--workspace-height', `${Math.max(240, window.innerHeight - top - 12)}px`);
+      if (element.dataset.fit === 'true')
+        window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top - top, behavior: 'instant' });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(header);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
+
+  const revealWorkspace = () => requestAnimationFrame(() => {
+    const element = workspace.current;
+    if (!element) return;
+    const top = parseFloat(getComputedStyle(element).getPropertyValue('--workspace-top'));
+    window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top - top, behavior: 'instant' });
+  });
 
   useEffect(() => {
     if (groupId) focusTitle.current?.focus({ preventScroll: true });
@@ -60,12 +89,14 @@ export default function GenAIImpactsSection() {
     setGroupId(id);
     setSelection(node);
     setPickerId(null);
+    revealWorkspace();
   };
   const showOverview = (nextView = view) => {
     setView(nextView);
     setGroupId(null);
     setSelection(null);
     setPickerId(null);
+    revealWorkspace();
   };
   const selectStage = (id) =>
     focusGroup(byId(stages, id).groupId, { type: 'stage', id });
@@ -110,7 +141,6 @@ export default function GenAIImpactsSection() {
             className={`finding-card finding-${finding.tone}`}
             key={finding.id}
           >
-            <span className="finding-number">{finding.id}</span>
             <div>
               <button
                 type="button"
@@ -128,6 +158,8 @@ export default function GenAIImpactsSection() {
 
       <section
         className="impact-workspace"
+        ref={workspace}
+        data-fit={Boolean(activeGroup || view === 'expanded')}
         aria-label="Interactive GenAI impacts"
       >
         <div className="impact-toolbar">
@@ -246,9 +278,13 @@ export default function GenAIImpactsSection() {
               </p>
             </header>
             <FocusedImpactMap
+              key={groupId}
               groupId={groupId}
               selection={selection}
-              onSelect={setSelection}
+              onSelect={(node) => {
+                setSelection(node);
+                revealWorkspace();
+              }}
             />
           </>
         ) : view === 'cycle' ? (

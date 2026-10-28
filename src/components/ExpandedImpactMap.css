@@ -1,4 +1,8 @@
 .impact-overview {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
   padding: 12px;
 }
 .overview-key {
@@ -20,7 +24,8 @@
 }
 .impact-overview-scroll {
   overflow: auto;
-  max-height: var(--overview-height, 640px);
+  flex: 1;
+  min-height: 0;
   scrollbar-width: thin;
   border-radius: 8px;
 }
@@ -41,7 +46,7 @@
   border-bottom: 1px solid var(--line);
   color: var(--muted);
   background: white;
-  font-size: 0.8125rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 .overview-main-link {
@@ -332,8 +337,5 @@
 @media (max-width: 600px) {
   .impact-overview {
     padding: 10px;
-  }
-  .impact-overview-scroll {
-    max-height: 600px;
   }
 }

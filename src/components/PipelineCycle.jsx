@@ -4,6 +4,8 @@ const CENTER = [520, 320];
 const CARD_WIDTH = 236;
 const CARD_HEIGHT = 76;
 const ARROW_GAP = 6;
+const ARROW_SIZE = 10;
+const ARROW_OVERHANG = 3;
 const ROUTE_RADII = [382, 209];
 const REVIEW_OFFSET = 10;
 const point = (rx, ry, degrees) => {
@@ -44,14 +46,14 @@ const cycleStages = stages
     center: point(...ROUTE_RADII, -90 + index * 45),
   }));
 
-function cardExitAngle(stage, insideAngle, outsideAngle, radii) {
+function cardExitAngle(stage, insideAngle, outsideAngle, radii, gap = ARROW_GAP) {
   // Find where the ellipse exits a card padded for the stroke and arrowhead.
   for (let step = 0; step < 32; step += 1) {
     const angle = (insideAngle + outsideAngle) / 2;
     const [x, y] = point(...radii, angle);
     const inside =
-      Math.abs(x - stage.center[0]) <= CARD_WIDTH / 2 + ARROW_GAP &&
-      Math.abs(y - stage.center[1]) <= CARD_HEIGHT / 2 + ARROW_GAP;
+      Math.abs(x - stage.center[0]) <= CARD_WIDTH / 2 + gap &&
+      Math.abs(y - stage.center[1]) <= CARD_HEIGHT / 2 + gap;
     if (inside) insideAngle = angle;
     else outsideAngle = angle;
   }
@@ -62,7 +64,8 @@ function connectCards(from, to, offset = 0, clockwise = true) {
   const radii = ROUTE_RADII.map((radius) => radius + offset);
   const endAngle = from.angle + (clockwise ? 45 : -45);
   const start = cardExitAngle(from, from.angle, endAngle, radii);
-  const end = cardExitAngle(to, endAngle, from.angle, radii);
+  // Stop the shaft inside the arrowhead, keeping its tip clear of the next card.
+  const end = cardExitAngle(to, endAngle, from.angle, radii, ARROW_GAP + ARROW_OVERHANG);
   return `M${point(...radii, start)} A${radii} 0 0 ${clockwise ? 1 : 0} ${point(...radii, end)}`;
 }
 
@@ -129,10 +132,10 @@ export default function PipelineCycle({ onStageSelect, onGroupSelect }) {
                 key={group.id}
                 id={`cycle-arrow-${group.id}`}
                 viewBox="0 0 10 10"
-                markerWidth="10"
-                markerHeight="10"
+                markerWidth={ARROW_SIZE}
+                markerHeight={ARROW_SIZE}
                 markerUnits="userSpaceOnUse"
-                refX="10"
+                refX={ARROW_SIZE - ARROW_OVERHANG}
                 refY="5"
                 orient="auto"
               >

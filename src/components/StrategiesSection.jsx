@@ -5,29 +5,25 @@ import strategyIcon from '../assets/strategy.svg';
 
 const RESPONSE_FINDINGS = [
   {
-    title: 'Authorship rules',
-    copy: 'Mentors must establish whether work was generated, a task participants found difficult or impossible.',
+    title: 'Organizations established trust in applicants through new forms of evidence.',
     tone: 'entry',
   },
   {
-    title: 'Understanding rules',
-    copy: 'Contributors explain and demonstrate their work. The same conversation checks compliance and supports learning.',
+    title: 'Responses ranged from restricting GenAI to accepting it, and all kept contributors accountable.',
     tone: 'mentoring',
   },
   {
-    title: 'Shared program support',
-    copy: 'Participants proposed common guidance and disclosure tools, with organizations retaining their own GenAI rules.',
+    title: 'Responsibility remained local, and participants asked the program to share it.',
     tone: 'retention',
   },
 ];
 
 export default function StrategiesSection() {
-  const [groupId, setGroupId] = useState('all');
   const [query, setQuery] = useState('');
+  const [openGroups, setOpenGroups] = useState(() => new Set([strategyGroups[0].id]));
   const search = query.toLowerCase().trim();
   const visibleStrategies = strategies.filter(
     (strategy) =>
-      (groupId === 'all' || strategy.groupId === groupId) &&
       [
         strategy.id,
         strategy.name,
@@ -38,6 +34,17 @@ export default function StrategiesSection() {
   const visibleGroups = strategyGroups.filter((group) =>
     visibleStrategies.some((strategy) => strategy.groupId === group.id),
   );
+  const searchStrategies = (value) => {
+    setQuery(value);
+    if (value.trim()) setOpenGroups(new Set(strategyGroups.map((group) => group.id)));
+  };
+  const toggleGroup = (id, open) => setOpenGroups((current) => {
+    if (current.has(id) === open) return current;
+    const next = new Set(current);
+    if (open) next.add(id);
+    else next.delete(id);
+    return next;
+  });
 
   return (
     <main
@@ -53,123 +60,94 @@ export default function StrategiesSection() {
             <h1>GenAI Strategies</h1>
           </div>
           <p>
-            Where an organization draws its GenAI boundary determines who
-            carries the verification work.
+            Reported strategies about how to assess applicants, govern GenAI use, and
+            keep contributors accountable, as well as the proposed program support.
           </p>
         </div>
       </header>
-      <section className="impact-findings" aria-label="What GenAI responses require">
+      <section className="impact-findings strategy-findings" aria-label="What GenAI responses require">
         {RESPONSE_FINDINGS.map((finding, index) => (
           <article
             className={`finding-card finding-${finding.tone}`}
             key={finding.title}
           >
             <span className="finding-number">0{index + 1}</span>
-            <div>
-              <h2>{finding.title}</h2>
-              <p>{finding.copy}</p>
-            </div>
+            <h3>{finding.title}</h3>
           </article>
         ))}
       </section>
-      <div className="strategy-layout">
-        <aside className="strategy-sidebar">
-          <label className="search-field">
-            <span>Search strategies & excerpts</span>
-            <input
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Try “disclosure” or ST12"
-            />
-          </label>
-          <nav className="strategy-group-nav" aria-label="Strategy groups">
-            <button
-              type="button"
-              aria-pressed={groupId === 'all'}
-              onClick={() => setGroupId('all')}
-            >
-              All groups <span aria-hidden="true">↗</span>
-            </button>
-            {strategyGroups.map((group) => (
-              <button
-                type="button"
-                key={group.id}
-                aria-pressed={groupId === group.id}
-                onClick={() => setGroupId(group.id)}
-                style={{ '--group-color': group.color }}
-              >
-                <i aria-hidden="true" />
-                {group.name}
-                <span aria-hidden="true">→</span>
-              </button>
-            ))}
-          </nav>
-        </aside>
+      <div className="strategy-workspace">
+        <label className="search-field strategy-search">
+          <span>Search strategies & excerpts</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => searchStrategies(event.target.value)}
+            placeholder="Try “disclosure” or ST12"
+          />
+        </label>
         <div className="strategy-groups" aria-live="polite">
-          {visibleGroups.map((group) => (
-            <section
-              className="strategy-group"
-              key={group.id}
-              style={{ '--group-color': group.color }}
-              aria-labelledby={`strategy-group-${group.id}`}
-            >
-              <header>
-                <span className="eyebrow subheader">
-                  {group.id === 'trust'
-                    ? 'ST1–ST4 · Selection'
-                    : group.id === 'accountability'
-                      ? 'ST5–ST13 · Mentoring & governance'
-                      : 'ST14 · Program support'}
-                </span>
-                <h2 id={`strategy-group-${group.id}`}>{group.name}</h2>
-                <p>{group.description}</p>
-              </header>
-              <div className="strategy-records">
-                {visibleStrategies
-                  .filter((strategy) => strategy.groupId === group.id)
-                  .map((strategy) => (
-                    <details className="strategy-record" key={strategy.id}>
-                      <summary>
-                        <span className="code-pill">{strategy.id}</span>
-                        <strong>{strategy.name}</strong>
-                        {strategy.status && (
-                          <span className="practice-status">
-                            {strategy.status}
+          {visibleGroups.map((group) => {
+            const codes = strategies.filter((strategy) => strategy.groupId === group.id).map((strategy) => strategy.id);
+            return (
+              <details
+                className="strategy-group"
+                key={group.id}
+                style={{ '--group-color': group.color }}
+                aria-labelledby={`strategy-group-${group.id}`}
+                open={openGroups.has(group.id)}
+                onToggle={(event) => {
+                  if (event.target === event.currentTarget) toggleGroup(group.id, event.currentTarget.open);
+                }}
+              >
+                <summary className="strategy-group-summary">
+                  <div className="strategy-group-copy">
+                    <h2 id={`strategy-group-${group.id}`}>{group.name}</h2>
+                    <p>{group.description}</p>
+                  </div>
+                  <span className="strategy-code-range">{codes.length > 1 ? `${codes[0]}–${codes.at(-1)}` : codes[0]}</span>
+                  <span className="strategy-group-chevron" aria-hidden="true">{openGroups.has(group.id) ? '−' : '+'}</span>
+                </summary>
+                <div className="strategy-records">
+                  {visibleStrategies
+                    .filter((strategy) => strategy.groupId === group.id)
+                    .map((strategy) => (
+                      <details className="strategy-record" key={strategy.id}>
+                        <summary>
+                          <span className="code-pill">{strategy.id}</span>
+                          <strong>{strategy.name}</strong>
+                          {strategy.status && (
+                            <span className="practice-status">
+                              {strategy.status}
+                            </span>
+                          )}
+                          <span className="disclosure-chevron" aria-hidden="true">
+                            +
                           </span>
-                        )}
-                        <span className="disclosure-chevron" aria-hidden="true">
-                          +
-                        </span>
-                      </summary>
-                      <div className="strategy-record-detail">
-                        <p className="detail-label subheader">
-                          Strategy · RQ2
-                        </p>
-                        <p className="strategy-definition-copy">
-                          {strategy.definition}
-                        </p>
-                        <Excerpts
-                          items={strategy.excerpts}
-                          label={`${strategy.id} interview excerpts`}
-                        />
-                      </div>
-                    </details>
-                  ))}
-              </div>
-            </section>
-          ))}
+                        </summary>
+                        <div className="strategy-record-detail">
+                          <p className="strategy-definition-copy">
+                            {strategy.definition}
+                          </p>
+                          <Excerpts
+                            items={strategy.excerpts}
+                            label={`${strategy.id} interview excerpts`}
+                          />
+                        </div>
+                      </details>
+                    ))}
+                </div>
+              </details>
+            );
+          })}
           {!visibleGroups.length && (
             <div className="empty-search">
               <h2>No matching strategy</h2>
-              <p>Try another term or select All groups.</p>
+              <p>Try another term or clear the search.</p>
               <button
                 className="secondary-button"
                 type="button"
-                onClick={() => {
-                  setQuery('');
-                  setGroupId('all');
-                }}
+                onClick={() => setQuery('')}
               >
                 Clear filters
               </button>

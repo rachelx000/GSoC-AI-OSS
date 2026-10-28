@@ -23,11 +23,15 @@ export default function CoverPage() {
             verification and putting that renewal at risk.
           </p>
           <aside className="cover-takeaway" aria-label="Guiding question">
-            <span className="eyebrow subheader">Guiding question</span>
             <p>
               How can communities build trust in newcomers while sustaining the
               mentors who develop them?
             </p>
+            <svg className="cover-question-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.4 9a2.6 2.6 0 0 1 5.2 0c0 1.8-2.6 2-2.6 3.8" strokeLinecap="round" />
+              <circle cx="12" cy="16.5" r=".9" fill="currentColor" stroke="none" />
+            </svg>
           </aside>
         </div>
         <section className="cover-questions" aria-label="Research questions">
@@ -106,12 +110,12 @@ export default function CoverPage() {
           </a>
           <a className="explore-card" href="#/strategies">
             <h2 className="content-heading">
-              Who carries the checking?
+              Building trust and governing GenAI
               <img className="explore-card-icon" src={strategyIcon} alt="" />
             </h2>
             <p>
-              See how GenAI boundaries allocate verification work—and how
-              checking understanding can also support learning.
+              Explore strategies to assess applicants, govern GenAI use, and keep contributors accountable, 
+              as well as the proposed program support.
             </p>
             <span className="explore-link">Explore GenAI strategies <span aria-hidden="true">→</span></span>
           </a>

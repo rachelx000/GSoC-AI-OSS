@@ -41,9 +41,6 @@ function StageEffectMap({ group, path, onStageSelect, onEffectSelect, onGroupSel
             <strong>{group.name}</strong>
           </button>
         </div>
-        <div className="overview-effect-group">
-          <span className="overview-group-caption subheader">Collective effect group</span>
-        </div>
       </div>
       <div className="overview-stage-effect-rows">
         {[...localStages, ...sharedStages].map((stage) => {
@@ -105,10 +102,6 @@ export default function ExpandedImpactMap({
 }) {
   return (
     <figure className="impact-overview">
-      <div className="overview-key">
-        <h2>Main linkages</h2>
-        <p>Three broad impact groups, with governance across the cycle.</p>
-      </div>
       <div
         className="impact-overview-scroll"
         tabIndex={0}
@@ -153,9 +146,6 @@ export default function ExpandedImpactMap({
                   <span className="overview-main-arrow" aria-label="connects to">→</span>
                   <div className="overview-impact-group">
                     <header className="overview-impact-heading">
-                      <span className="overview-group-caption subheader">
-                        {index < 3 ? `Impact group ${index + 1}` : 'Cross-stage impacts'}
-                      </span>
                       {path.impactTheme && <h3>{path.impactTheme}</h3>}
                     </header>
                     <ImpactButtons ids={path.impactIds} onSelect={onImpactSelect} />
