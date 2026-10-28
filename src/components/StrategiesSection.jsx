@@ -116,16 +116,16 @@ export default function StrategiesSection() {
                         <summary>
                           <span className="code-pill">{strategy.id}</span>
                           <strong>{strategy.name}</strong>
-                          {strategy.status && (
-                            <span className="practice-status">
-                              {strategy.status}
-                            </span>
-                          )}
                           <span className="disclosure-chevron" aria-hidden="true">
                             +
                           </span>
                         </summary>
                         <div className="strategy-record-detail">
+                          {strategy.status && (
+                            <span className="practice-status">
+                              {strategy.status}
+                            </span>
+                          )}
                           <p className="strategy-definition-copy">
                             {strategy.definition}
                           </p>

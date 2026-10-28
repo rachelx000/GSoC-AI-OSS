@@ -1140,7 +1140,7 @@
       "name": "Coordinating GenAI guidance across the program",
       "definition": "Share guidance, resources, disclosure mechanisms, and lessons learned across participating organizations, while each organization retains autonomy over its own GenAI rules.",
       "groupId": "program",
-      "status": "Program-level",
+      "status": null,
       "excerpts": [
         {
           "text": "[GSoC could] come up with a guideline [for AI usage]... but each and every organization is differently structured. They follow their own rules along with the GSoC rules... generalized practices could be spread along.",

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400;0,17..18,500;0,17..18,600;0,17..18,700;1,17..18,500&family=JetBrains+Mono:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400;0,17..18,500;0,17..18,600;0,17..18,700;1,17..18,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 
 :root {
   font-family: var(--font-body);
@@ -232,9 +232,8 @@ summary {
   margin: 0;
 }
 .page-heading > div > p {
-  max-width: 800px;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.45;
 }
 .page-aside {
@@ -1367,6 +1366,7 @@ summary {
 }
 .excerpt {
   padding: 8px 10px;
+  font-family: var(--font-subheader);
   font-size: 0.875rem;
   line-height: 1.5;
   border-left: 2px solid var(--group-color, #8a8cbf);
@@ -1546,7 +1546,7 @@ summary {
   grid-column: 2;
   grid-row: 1;
   color: var(--group-color);
-  font-size: 0.8125rem;
+  font-size: 1.0rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -1587,7 +1587,8 @@ summary {
   border-color: #a3aec8;
 }
 .strategy-record > summary {
-  display: flex;
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) 1rem;
   align-items: flex-start;
   gap: 10px;
   padding: 10px 12px;
@@ -1601,16 +1602,21 @@ summary {
   background: #f8f9fd;
 }
 .strategy-record > summary > strong {
-  flex: 1;
+  min-width: 0;
   padding-top: 3px;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
 }
+.strategy-record .code-pill {
+  width: 3.25rem;
+  min-width: 3.25rem;
+}
 .practice-status {
-  align-self: center;
+  display: inline-block;
+  margin-bottom: 10px;
   padding: 4px 7px;
-  max-width: 160px;
+  max-width: 100%;
   border: 1px solid #ded8e8;
   border-radius: 5px;
   background: #f4f0fa;
@@ -1637,7 +1643,7 @@ summary {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr));
 }
 .strategy-record .excerpt {
-  background: #f5f7fc;
+  background: var(--group-tint);
 }
 .empty-search {
   padding: 40px;
@@ -2036,9 +2042,6 @@ summary {
     gap: 7px;
     padding: 8px 10px;
   }
-  .practice-status {
-    max-width: 125px;
-  }
   .capacity-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2168,6 +2171,9 @@ summary {
   .cover-questions {
     grid-template-columns: 1fr;
   }
+  .research-question {
+    justify-content: center;
+  }
   .study-phase-grid {
     grid-template-columns: 1fr;
     gap: 8px;
@@ -2227,20 +2233,6 @@ summary {
   .focus-heading > p {
     max-width: 600px;
     margin-top: 10px;
-  }
-  .strategy-record > summary {
-    flex-wrap: wrap;
-    gap: 9px;
-  }
-  .strategy-record > summary > strong {
-    flex-basis: calc(100% - 65px);
-  }
-  .strategy-record .practice-status {
-    max-width: none;
-    margin-left: 43px;
-  }
-  .strategy-record > summary > .disclosure-chevron {
-    margin-left: auto;
   }
   .strategy-record-detail {
     padding-left: 18px;
