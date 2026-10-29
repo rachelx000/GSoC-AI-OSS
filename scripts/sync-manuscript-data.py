@@ -484,7 +484,7 @@ def build():
         {
             "id": "accountability",
             "name": "Governing GenAI use and maintaining accountability",
-            "description": "Choose a GenAI boundary while keeping understanding, checking, and responsibility with people.",
+            "description": "Choose a GenAI boundary while keeping understanding, checking, and responsibility with human.",
             "color": "#685C91",
         },
         {

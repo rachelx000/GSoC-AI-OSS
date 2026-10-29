@@ -2,14 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import aimIcon from '../assets/AIM.svg';
 import { stances, capacity } from '../data/research';
 
-const INTEGRATION = [
-  { id: 'entry', name: 'Entry and early preparation', range: 'S0–S3' },
+const CONTEXTS = [
+  { id: 'boundary', name: 'GenAI boundary', label: 'GenAI boundary', dimension: 'A' },
+  { id: 'entry', name: 'Entry and early preparation', label: 'Entry & prep', range: 'S0–S3', dimension: 'I' },
   {
     id: 'mentoring',
     name: 'Mentoring, review, and evaluation',
+    label: 'Mentoring & review',
     range: 'S4–S6',
+    dimension: 'I',
   },
-  { id: 'governance', name: 'Governance', range: 'Across the cycle' },
+  { id: 'governance', name: 'Governance', label: 'Governance', range: 'Across the cycle', dimension: 'I' },
 ];
 
 function Actions({ items }) {
@@ -22,10 +25,37 @@ function Actions({ items }) {
   );
 }
 
+function DimensionHeading({ id, title, question }) {
+  return (
+    <header className="aim-section-heading">
+      <h2 id={id}>
+        <span className={`aim-initial-${title[0].toLowerCase()}`}>{title[0]}</span>{title.slice(1)}
+      </h2>
+      <p>{question}</p>
+    </header>
+  );
+}
+
 export default function AIMSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [contextIndex, setContextIndex] = useState(0);
   const scale = useRef(null);
+  const contextTabs = useRef([]);
   const stance = stances[activeIndex];
+  const context = CONTEXTS[contextIndex];
+  const capacityGuidance = capacity.find((item) => item.name === context.name);
+
+  const navigateContexts = (event, index) => {
+    let next;
+    if (event.key === 'ArrowRight') next = (index + 1) % CONTEXTS.length;
+    if (event.key === 'ArrowLeft') next = (index - 1 + CONTEXTS.length) % CONTEXTS.length;
+    if (event.key === 'Home') next = 0;
+    if (event.key === 'End') next = CONTEXTS.length - 1;
+    if (next === undefined) return;
+    event.preventDefault();
+    setContextIndex(next);
+    contextTabs.current[next]?.focus();
+  };
 
   useEffect(() => {
     const control = scale.current;
@@ -63,44 +93,27 @@ export default function AIMSection() {
         <div>
           <div className="page-title">
             <img src={aimIcon} alt="" />
-            <h1>AIM</h1>
+            <h1 aria-label="AIM">
+              <span className="aim-initial-a">A</span>
+              <span className="aim-initial-i">I</span>
+              <span className="aim-initial-m">M</span>
+            </h1>
           </div>
           <p>Choose GenAI responses that protect learning and mentor capacity.</p>
-        </div> 
+        </div>
       </header>
-      <div className="aim-definition" aria-label="What AIM means">
-        <section>
-          <span>A</span>
-          <div>
-            <h2>Acceptable GenAI use</h2>
-            <p>What assistance does the project permit?</p>
-          </div>
-        </section>
-        <section>
-          <span>I</span>
-          <div>
-            <h2>Integration into the mentoring pipeline</h2>
-            <p>How will mentors teach and check understanding?</p>
-          </div>
-        </section>
-        <section>
-          <span>M</span>
-          <div>
-            <h2>Mentoring capacity</h2>
-            <p>How much of this work can mentors sustain?</p>
-          </div>
-        </section>
-      </div>
 
       <section
         className="aim-stance-workspace"
         style={{ '--stance-color': stance.color, '--stance-tint': stance.tint }}
-        aria-label="Explore acceptable GenAI use stances"
+        aria-label="AIM mentoring and governance framework"
       >
         <div className="stance-scale" ref={scale}>
           <div className="scale-caption">
             <span>More restrictive</span>
-            <strong>A · Acceptable GenAI use</strong>
+            <h2 className="aim-current-stance" id="stance-title" aria-live="polite">
+              <i aria-hidden="true" />{stance.name}
+            </h2>
             <span>More permissive</span>
           </div>
           <div className="stance-control">
@@ -133,67 +146,64 @@ export default function AIMSection() {
             Drag, scroll over the colorbar, use arrow keys, or select a stance.
           </p>
         </div>
-        <article
-          className="stance-profile"
-          key={stance.id}
-          aria-labelledby="stance-title"
-        >
-          <header>
-            <div>
-              <span className="eyebrow subheader">Stance definition</span>
-              <h2 id="stance-title" aria-live="polite">
-                {stance.name}
-              </h2>
+        <nav className="aim-context-navigation" role="tablist" aria-label="Framework context">
+          {['A', 'I'].map((dimension) => (
+            <div className="aim-context-group" data-dimension={dimension} role="presentation" key={dimension}>
+              <span className="aim-context-dimension" aria-hidden="true">{dimension}</span>
+              {CONTEXTS.map((item, index) => item.dimension === dimension && (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`aim-context-${item.id}`}
+                  key={item.id}
+                  ref={(element) => { contextTabs.current[index] = element; }}
+                  aria-label={`${dimension === 'A' ? 'Acceptable GenAI use' : 'Integration'}: ${item.name}${item.range ? `, ${item.range}` : ''}`}
+                  title={item.name}
+                  aria-selected={contextIndex === index}
+                  aria-controls="aim-context-panel"
+                  tabIndex={contextIndex === index ? 0 : -1}
+                  onClick={() => setContextIndex(index)}
+                  onKeyDown={(event) => navigateContexts(event, index)}
+                >
+                  {item.range && <span className="aim-context-range">{item.range}</span>}
+                  <span className="aim-context-label">{item.label}</span>
+                </button>
+              ))}
             </div>
-          </header>
-          <Actions items={stance.actions.boundary} />
-        </article>
-        <section
-          className="integration-section"
-          aria-labelledby="integration-title"
-        >
-          <header className="aim-section-heading">
-            <span>I</span>
-            <div>
-              <h2 id="integration-title">
-                Integration into the mentoring pipeline
-              </h2>
-              <p>
-                Put the {stance.name.toLowerCase()} stance into practice, with
-                checks that also support learning.
-              </p>
-            </div>
-          </header>
-          <div className="integration-grid">
-            {INTEGRATION.map((row) => (
-              <section className="integration-card" key={row.id}>
-                <span className="eyebrow subheader">{row.range}</span>
-                <h3>{row.name}</h3>
-                <Actions items={stance.actions[row.id]} />
-              </section>
-            ))}
-          </div>
-        </section>
-      </section>
-
-      <section className="capacity-section" aria-labelledby="capacity-title">
-        <header className="aim-section-heading">
-          <span>M</span>
-          <div>
-            <h2 id="capacity-title">Mentoring capacity</h2>
-            <p>
-              Name who checks the work, budget their time, and protect their
-              ability to return next cycle.
-            </p>
-          </div>
-        </header>
-        <div className="capacity-grid">
-          {capacity.map((dimension) => (
-            <section key={dimension.name}>
-              <h3>{dimension.name}</h3>
-              <Actions items={dimension.actions} />
-            </section>
           ))}
+          <div
+            className="aim-context-static"
+            aria-hidden="true"
+            title="Mentoring capacity is shown alongside every context"
+          >
+            <span className="aim-context-dimension aim-initial-m">M</span>
+            <span>Mentoring capacity</span>
+          </div>
+        </nav>
+        <div
+          className="aim-guidance"
+          id="aim-context-panel"
+          key={`${stance.id}-${context.id}`}
+          role="tabpanel"
+          tabIndex={0}
+          aria-labelledby={`aim-context-${context.id}`}
+        >
+          <section className="aim-guidance-card" aria-labelledby="stance-guidance-title">
+            <DimensionHeading
+              id="stance-guidance-title"
+              title={context.id === 'boundary' ? 'Acceptable GenAI Use' : 'Integration into the mentoring pipeline'}
+              question={context.id === 'boundary' ? 'What assistance does the project permit?' : 'How will mentors teach and check understanding?'}
+            />
+            <Actions items={stance.actions[context.id]} />
+          </section>
+          <section className="aim-guidance-card aim-capacity-card" aria-labelledby="capacity-title">
+            <DimensionHeading
+              id="capacity-title"
+              title="Mentoring capacity"
+              question="How much of this work can mentors sustain?"
+            />
+            <Actions items={capacityGuidance.actions} />
+          </section>
         </div>
       </section>
     </main>
