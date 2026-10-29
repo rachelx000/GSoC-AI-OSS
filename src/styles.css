@@ -1376,7 +1376,7 @@ summary {
 .excerpt blockquote {
   display: inline;
   margin: 0;
-  font-size: 0.875rem;
+  font-size: .80rem;
   color: var(--ink);
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -2539,7 +2539,7 @@ summary {
     font-size: 1rem;
   }
   .excerpt blockquote {
-    font-size: 0.85rem;
+    font-size: .80rem;
   }
   .implications li {
     font-size: 0.9375rem;
