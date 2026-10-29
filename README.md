@@ -1,4 +1,4 @@
-# GSoC as AI-to-OSS Infrastructure
+# GSoC AI-to-OSS
 
 ## Deployment Instructions
 

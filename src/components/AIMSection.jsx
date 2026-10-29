@@ -25,12 +25,15 @@ function Actions({ items }) {
   );
 }
 
-function DimensionHeading({ id, title, question }) {
+function DimensionHeading({ id, title, question, scope }) {
   return (
     <header className="aim-section-heading">
-      <h2 id={id}>
-        <span className={`aim-initial-${title[0].toLowerCase()}`}>{title[0]}</span>{title.slice(1)}
-      </h2>
+      <div className="aim-heading-row">
+        <h2 id={id}>
+          <span className={`aim-initial-${title[0].toLowerCase()}`}>{title[0]}</span>{title.slice(1)}
+        </h2>
+        {scope && <span className="aim-capacity-scope">{scope}</span>}
+      </div>
       <p>{question}</p>
     </header>
   );
@@ -174,7 +177,7 @@ export default function AIMSection() {
           <div
             className="aim-context-static"
             aria-hidden="true"
-            title="Mentoring capacity is shown alongside every context"
+            title="Capacity guidance applies to every stance; the effort required can vary."
           >
             <span className="aim-context-dimension aim-initial-m">M</span>
             <span>Mentoring capacity</span>
@@ -183,7 +186,7 @@ export default function AIMSection() {
         <div
           className="aim-guidance"
           id="aim-context-panel"
-          key={`${stance.id}-${context.id}`}
+          key={context.id}
           role="tabpanel"
           tabIndex={0}
           aria-labelledby={`aim-context-${context.id}`}
@@ -201,6 +204,7 @@ export default function AIMSection() {
               id="capacity-title"
               title="Mentoring capacity"
               question="How much of this work can mentors sustain?"
+              scope="Applies to all stances"
             />
             <Actions items={capacityGuidance.actions} />
           </section>

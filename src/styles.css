@@ -1894,7 +1894,7 @@ summary {
   border-radius: 6px;
   background: transparent;
   color: var(--muted);
-  font-size: 0.8125rem;
+  font-size: 0.85rem;
   font-weight: 500;
   line-height: 1.35;
   text-align: left;
@@ -1902,9 +1902,10 @@ summary {
 .aim-context-range {
   flex-shrink: 0;
   color: var(--muted);
-  font-size: 0.71875rem;
+  font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
+  font-family: var(--font-subheader);
 }
 .aim-context-label {
   min-width: 0;
@@ -1961,7 +1962,27 @@ summary {
   box-shadow: 0 2px 8px #23344904;
 }
 .aim-capacity-card {
+  --aim-accent: #3e4d6c;
+  --aim-line: var(--line);
   background: white;
+}
+.aim-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.aim-capacity-scope {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border: 1px solid var(--aim-line);
+  border-radius: 999px;
+  color: #3e4d6c;
+  background: #f7f8fc;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
 }
 .aim-section-heading h2 {
   color: var(--ink);
@@ -1987,12 +2008,15 @@ summary {
 .aim-actions li {
   padding: 10px 0 12px 5px;
   border-top: 1px solid var(--aim-line);
-  font-size: 0.96875rem;
+  font-size: 0.90rem;
   line-height: 1.5;
+}
+.aim-actions li:first-child {
+  border-top: 0;
 }
 .aim-actions li::marker {
   color: var(--aim-accent);
-  font-size: 0.75em;
+  font-size: 0.95em;
 }
 
 @media (min-width: 901px) {
@@ -2039,7 +2063,7 @@ summary {
     margin-bottom: 12px;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .aim-context-navigation {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 6px 10px;
@@ -2064,15 +2088,15 @@ summary {
   }
   .aim-context-group[data-dimension="I"] button {
     padding: 4px 5px;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     text-align: center;
   }
   .aim-context-group[data-dimension="I"] .aim-context-range {
-    min-height: 2.4em;
+    min-height: 1.5em;
     white-space: normal;
   }
   .aim-context-group[data-dimension="I"] .aim-context-label {
-    min-height: 2.7em;
+    min-height: 1.8em;
   }
   .aim-guidance {
     padding: 12px;
