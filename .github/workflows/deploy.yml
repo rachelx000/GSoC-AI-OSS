@@ -36,6 +36,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_VISIT_ENDPOINT: ${{ vars.VISIT_ENDPOINT }}
         run: npm run build
 
       - name: Configure Pages

@@ -1,0 +1,17 @@
+{
+  "name": "gsoc-visits",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-28",
+  "workers_dev": true,
+  "vars": {
+    "SITE_URL": "https://rachelx000.github.io/GSoC-AI-OSS/"
+  },
+  "ratelimits": [
+    {
+      "name": "VISIT_LIMITER",
+      "namespace_id": "20261028",
+      "simple": { "limit": 120, "period": 60 }
+    }
+  ],
+  "observability": { "enabled": false }
+}
